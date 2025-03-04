@@ -1,0 +1,20 @@
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+@code {
+    private bool isAdminOrMainAdmin;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        isAdminOrMainAdmin = user.IsInRole("Admin") || user.IsInRole("MainAdmin");
+    }
+}
+
+@if (isAdminOrMainAdmin)
+{
+    <NavLink href="admin" Match="NavLinkMatch.All">
+        Admin
+    </NavLink>
+} 
