@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
-
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
 <style>
   /* Global styles for html and body */
   html, body {
@@ -133,20 +134,36 @@
 </div>
 
 <!-- Main Content -->
+
+
 <div class="main-content">
     @Body
 </div>
-<div style="display: flex; justify-content: space-between; padding: 2rem;">
-    <button style="flex: 1; margin-right: 1rem; padding: 2rem; font-size: 1.5rem; background-color: #007bff; color: white; border: none; border-radius: 10px; cursor: pointer;"
-            @onclick="@(() => NavigationManager.NavigateTo("Account/Register"))">
-        Register
-    </button>
 
-    <button style="flex: 1; margin-left: 1rem; padding: 2rem; font-size: 1.5rem; background-color: #ffc107; color: white; border: none; border-radius: 10px; cursor: pointer;"
-            @onclick="@(() => NavigationManager.NavigateTo("Account/Login"))">
-        Login
-    </button>
+<div style="display: flex; justify-content: space-between; padding: 2rem;">
+    @if (!IsAuthenticated && !(NavigationManager.Uri.Contains("Account/Register") || NavigationManager.Uri.Contains("Account/Login")))
+    {
+        <button style="flex: 1; margin-right: 1rem; padding: 2rem; font-size: 1.5rem; background-color: #007bff; color: white; border: none; border-radius: 10px; cursor: pointer;"
+                @onclick="@(() => NavigationManager.NavigateTo("Account/Register"))">
+            Register
+        </button>
+
+        <button style="flex: 1; margin-left: 1rem; padding: 2rem; font-size: 1.5rem; background-color: #ffc107; color: white; border: none; border-radius: 10px; cursor: pointer;"
+                @onclick="@(() => NavigationManager.NavigateTo("Account/Login"))">
+            Login
+        </button>
+    }
 </div>
+
+@code {
+    private bool IsAuthenticated;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        IsAuthenticated = authState.User.Identity?.IsAuthenticated ?? false;
+    }
+}
 
 <div id="blazor-error-ui">
   An unhandled error has occurred.
