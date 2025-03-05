@@ -2,6 +2,8 @@
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject NavigationManager NavigationManager
+@using BlazorApp.Components.Layout
+
 <style>
   /* Global styles for html and body */
   html, body {
@@ -165,8 +167,10 @@
     }
 }
 
+
 <div id="blazor-error-ui">
   An unhandled error has occurred.
   <a href="" class="reload">Reload</a>
   <a class="dismiss">🗙</a>
 </div>
+
