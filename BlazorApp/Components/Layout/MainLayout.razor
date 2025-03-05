@@ -1,9 +1,10 @@
 ﻿@inherits LayoutComponentBase
 @using BlazorApp.Data
-@inject NavigationManager NavigationManager
+@using Microsoft.EntityFrameworkCore
+@inject NavigationManager Navigation
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ApplicationDbContext DbContext
-@using Microsoft.EntityFrameworkCore
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
 
 <style>
   /* Global styles for html and body */
@@ -127,7 +128,7 @@
     background: #218838;
   }
 
-  /* Registration/Login Buttons */
+  /* Authentication Buttons */
   .auth-buttons button {
     flex: 1;
     margin: 0 0.5rem;
@@ -146,6 +147,27 @@
   .auth-buttons .login {
     background-color: #ffc107;
     color: white;
+  }
+
+  /* Logout Button */
+  .logout-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .logout-button .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .logout-button .btn:hover {
+    background-color: #c82333;
   }
 
   /* Delete button styling */
@@ -203,16 +225,20 @@
 
 <!-- Authentication Buttons -->
 <div class="auth-buttons" style="display: flex; justify-content: space-between; padding: 2rem;">
-  @if (!IsAuthenticated && !(NavigationManager.Uri.Contains("Account/Register") || NavigationManager.Uri.Contains("Account/Login")))
+  @if (!IsAuthenticated)
   {
-      <button class="register" @onclick="@(() => NavigationManager.NavigateTo("Account/Register"))">
-          Register
-      </button>
-      <button class="login" @onclick="@(() => NavigationManager.NavigateTo("Account/Login"))">
-          Login
-      </button>
+      <button class="register" @onclick="NavigateToRegister">Register</button>
+      <button class="login" @onclick="NavigateToLogin">Login</button>
   }
 </div>
+
+<!-- Logout Button -->
+@if (IsAuthenticated)
+{
+  <div class="logout-button">
+      <button class="btn" @onclick="Logout">Log Out</button>
+  </div>
+}
 
 <!-- Blazor Error UI -->
 <div id="blazor-error-ui">
@@ -222,12 +248,18 @@
 </div>
 
 @code {
-  // Authentication state
+  // Authentication state and current user information.
   private bool IsAuthenticated;
   private string CurrentUser = "";
+  
+  // Chat functionality.
   private string CurrentChannel = "Film";
   private string NewMessage = "";
   private List<ChatMessage> AllMessages = new List<ChatMessage>();
+
+  // URLs for authentication navigation.
+  private const string RegisterUrl = "Account/Register";
+  private const string LoginUrl = "Account/Login";
 
   protected override async Task OnInitializedAsync()
   {
@@ -236,11 +268,11 @@
     IsAuthenticated = user.Identity?.IsAuthenticated ?? false;
     CurrentUser = IsAuthenticated ? (user.Identity?.Name ?? "Anonymous") : "Anonymous";
 
-    // Load persisted messages from the database
+    // Load persisted messages from the database.
     AllMessages = await DbContext.ChatMessages.ToListAsync();
   }
 
-  // Filter messages for the selected channel and order by timestamp.
+  // Filters messages for the current channel, ordered by timestamp.
   private IEnumerable<ChatMessage> FilteredMessages =>
     AllMessages.Where(m => m.Channel == CurrentChannel).OrderBy(m => m.Timestamp);
 
@@ -250,7 +282,7 @@
     CurrentChannel = channel;
   }
 
-  // Send a new message, persisting it to the database and updating the UI.
+  // Send a new message: persist it to the database and update the UI.
   private async Task SendMessage()
   {
     if (!string.IsNullOrWhiteSpace(NewMessage))
@@ -280,7 +312,26 @@
     }
   }
 
-  // Return a CSS class for active channel buttons.
+  // Return a CSS class for the active chat channel button.
   private string GetChannelButtonClass(string channel) =>
     channel == CurrentChannel ? "active" : "";
+
+  // Navigate to the Register page.
+  private void NavigateToRegister()
+  {
+    Navigation.NavigateTo(RegisterUrl);
+  }
+
+  // Navigate to the Login page.
+  private void NavigateToLogin()
+  {
+    Navigation.NavigateTo(LoginUrl);
+  }
+
+  // Log out the current user.
+  private async Task Logout()
+  {
+    await SignInManager.SignOutAsync();
+    Navigation.NavigateTo("/", forceLoad: true);
+  }
 }
