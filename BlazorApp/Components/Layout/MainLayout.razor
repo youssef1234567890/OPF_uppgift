@@ -1,8 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject NavigationManager NavigationManager
-@using BlazorApp.Components.Layout
 
 <style>
   /* Global styles for html and body */
@@ -49,6 +47,7 @@
   /* Main content area */
   .main-content {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: calc(100vh - 80px); /* Adjust based on navbar height */
@@ -56,50 +55,94 @@
     text-align: center;
   }
 
-  /* Button container styling */
-  .button-container {
+  /* Chat container styling */
+  .chat-container {
     background: rgba(255, 255, 255, 0.8);
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: flex;
-    gap: 1rem;
-    max-width: 500px;
+    max-width: 600px;
     width: 100%;
+    color: #000;
   }
 
-  /* Buttons styling */
-  .btn {
-    flex: 1;
-    padding: 1.5rem;
-    font-size: 1.25rem;
+  /* Chat Channel Buttons */
+  .chat-channel-buttons button {
+    padding: 0.5rem 1rem;
     border: none;
-    border-radius: 6px;
+    background: #007bff;
+    color: #fff;
+    border-radius: 4px;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: background 0.3s;
   }
 
-  .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  .chat-channel-buttons button.active {
+    background: #ffc107;
   }
 
-  .register {
+  .chat-channel-buttons button:hover {
+    opacity: 0.9;
+  }
+
+  /* Chat Window */
+  .chat-window {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    height: 300px;
+    overflow-y: auto;
+    margin-top: 1rem;
+    background: #fff;
+    color: #000;
+  }
+
+  /* Chat Input */
+  .chat-input {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .chat-input input[type="text"] {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  .chat-input button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    background: #28a745;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .chat-input button:hover {
+    background: #218838;
+  }
+
+  /* Registration/Login Buttons */
+  .auth-buttons button {
+    flex: 1;
+    margin: 0 0.5rem;
+    padding: 2rem;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .auth-buttons .register {
     background-color: #007bff;
-    color: #fff;
+    color: white;
   }
 
-  .register:hover {
-    background-color: #0069d9;
-  }
-
-  .login {
+  .auth-buttons .login {
     background-color: #ffc107;
-    color: #fff;
-  }
-
-  .login:hover {
-    background-color: #e0a800;
+    color: white;
   }
 
   /* Error UI styling */
@@ -123,8 +166,6 @@
   }
 </style>
 
-
-
 <!-- Navbar -->
 <div class="navbar">
     <div class="navbar-left">
@@ -136,28 +177,57 @@
 </div>
 
 <!-- Main Content -->
-
-
 <div class="main-content">
-    @Body
+    <div class="chat-container">
+        <!-- Chat Channel Buttons -->
+        <div class="chat-channel-buttons">
+            <button class="@GetChannelButtonClass("Film")" @onclick="@(() => SelectChannel("Film"))">Film</button>
+            <button class="@GetChannelButtonClass("Series")" @onclick="@(() => SelectChannel("Series"))">Series</button>
+            <button class="@GetChannelButtonClass("Games")" @onclick="@(() => SelectChannel("Games"))">Games</button>
+        </div>
+
+        <!-- Chat Window -->
+        <div class="chat-window">
+            @foreach (var message in FilteredMessages)
+            {
+                <div class="chat-message" style="margin-bottom: 0.5rem;">
+                    <strong>@message.User:</strong> @message.Text
+                </div>
+            }
+        </div>
+
+        <!-- Chat Input -->
+        <div class="chat-input">
+            <input type="text"
+                   @bind="NewMessage"
+                   placeholder="Type your message here..." />
+            <button @onclick="SendMessage">Send</button>
+        </div>
+    </div>
 </div>
 
-<div style="display: flex; justify-content: space-between; padding: 2rem;">
+<!-- Authentication Buttons -->
+<div class="auth-buttons" style="display: flex; justify-content: space-between; padding: 2rem;">
     @if (!IsAuthenticated && !(NavigationManager.Uri.Contains("Account/Register") || NavigationManager.Uri.Contains("Account/Login")))
     {
-        <button style="flex: 1; margin-right: 1rem; padding: 2rem; font-size: 1.5rem; background-color: #007bff; color: white; border: none; border-radius: 10px; cursor: pointer;"
-                @onclick="@(() => NavigationManager.NavigateTo("Account/Register"))">
+        <button class="register" @onclick="@(() => NavigationManager.NavigateTo("Account/Register"))">
             Register
         </button>
-
-        <button style="flex: 1; margin-left: 1rem; padding: 2rem; font-size: 1.5rem; background-color: #ffc107; color: white; border: none; border-radius: 10px; cursor: pointer;"
-                @onclick="@(() => NavigationManager.NavigateTo("Account/Login"))">
+        <button class="login" @onclick="@(() => NavigationManager.NavigateTo("Account/Login"))">
             Login
         </button>
     }
 </div>
 
+<!-- Blazor Error UI -->
+<div id="blazor-error-ui">
+  An unhandled error has occurred.
+  <a href="" class="reload">Reload</a>
+  <a class="dismiss">🗙</a>
+</div>
+
 @code {
+    // Authentication state
     private bool IsAuthenticated;
 
     protected override async Task OnInitializedAsync()
@@ -165,12 +235,54 @@
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         IsAuthenticated = authState.User.Identity?.IsAuthenticated ?? false;
     }
+
+    // Chat functionality
+    private string CurrentChannel = "Film";
+    private string NewMessage = "";
+
+    // Chat message model (ensure this is defined only once)
+    public class ChatMessage
+    {
+        public string User { get; set; }
+        public string Text { get; set; }
+        public string Channel { get; set; }
+    }
+
+    // In-memory storage for chat messages
+    private List<ChatMessage> AllMessages = new List<ChatMessage>();
+
+    // Filter messages for the current channel
+    private IEnumerable<ChatMessage> FilteredMessages =>
+        AllMessages.Where(m => m.Channel == CurrentChannel);
+
+    // Change the chat channel
+    private void SelectChannel(string channel)
+    {
+        CurrentChannel = channel;
+    }
+
+    // Send a chat message
+    private async Task SendMessage()
+    {
+        if (!string.IsNullOrWhiteSpace(NewMessage))
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var userName = authState.User.Identity?.IsAuthenticated == true
+                           ? authState.User.Identity.Name
+                           : "Anonymous";
+
+            AllMessages.Add(new ChatMessage
+            {
+                User = userName,
+                Text = NewMessage,
+                Channel = CurrentChannel
+            });
+
+            NewMessage = string.Empty;
+        }
+    }
+
+    // Return a CSS class to highlight the active channel button
+    private string GetChannelButtonClass(string channel) =>
+        channel == CurrentChannel ? "active" : "";
 }
-
-
-<div id="blazor-error-ui">
-  An unhandled error has occurred.
-  <a href="" class="reload">Reload</a>
-  <a class="dismiss">🗙</a>
-</div>
-
