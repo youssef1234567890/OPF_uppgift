@@ -1,6 +1,9 @@
 ﻿@inherits LayoutComponentBase
+@using BlazorApp.Data
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ApplicationDbContext DbContext
+@using Microsoft.EntityFrameworkCore
 
 <style>
   /* Global styles for html and body */
@@ -145,78 +148,70 @@
     color: white;
   }
 
-  /* Error UI styling */
-  #blazor-error-ui {
-    background: #2600ff;
-    border-top: 1px solid #ffeeba;
-    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
-    display: none;
-    left: 0;
-    padding: 0.6rem 1.25rem;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-  }
-
-  #blazor-error-ui .dismiss {
+  /* Delete button styling */
+  .delete-button {
+    background: none;
+    border: none;
+    color: red;
     cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
   }
 </style>
 
 <!-- Navbar -->
 <div class="navbar">
-    <div class="navbar-left">
-        <h1>This is my web app</h1>
-    </div>
-    <div class="navbar-right">
-        <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-    </div>
+  <div class="navbar-left">
+    <h1>This is my web app</h1>
+  </div>
+  <div class="navbar-right">
+    <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+  </div>
 </div>
 
 <!-- Main Content -->
 <div class="main-content">
-    <div class="chat-container">
-        <!-- Chat Channel Buttons -->
-        <div class="chat-channel-buttons">
-            <button class="@GetChannelButtonClass("Film")" @onclick="@(() => SelectChannel("Film"))">Film</button>
-            <button class="@GetChannelButtonClass("Series")" @onclick="@(() => SelectChannel("Series"))">Series</button>
-            <button class="@GetChannelButtonClass("Games")" @onclick="@(() => SelectChannel("Games"))">Games</button>
-        </div>
-
-        <!-- Chat Window -->
-        <div class="chat-window">
-            @foreach (var message in FilteredMessages)
-            {
-                <div class="chat-message" style="margin-bottom: 0.5rem;">
-                    <strong>@message.User:</strong> @message.Text
-                </div>
-            }
-        </div>
-
-        <!-- Chat Input -->
-        <div class="chat-input">
-            <input type="text"
-                   @bind="NewMessage"
-                   placeholder="Type your message here..." />
-            <button @onclick="SendMessage">Send</button>
-        </div>
+  <div class="chat-container">
+    <!-- Chat Channel Buttons -->
+    <div class="chat-channel-buttons">
+      <button class="@GetChannelButtonClass("Film")" @onclick="@(() => SelectChannel("Film"))">Film</button>
+      <button class="@GetChannelButtonClass("Series")" @onclick="@(() => SelectChannel("Series"))">Series</button>
+      <button class="@GetChannelButtonClass("Games")" @onclick="@(() => SelectChannel("Games"))">Games</button>
     </div>
+
+    <!-- Chat Window -->
+    <div class="chat-window">
+      @foreach (var message in FilteredMessages)
+      {
+          <div class="chat-message" style="margin-bottom: 0.5rem;">
+            <strong>@message.User:</strong> @message.Text
+            @if (message.User == CurrentUser)
+            {
+                <button class="delete-button" @onclick="@(() => DeleteMessage(message))">Delete</button>
+            }
+          </div>
+      }
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-input">
+      <input type="text" @bind="NewMessage" placeholder="Type your message here..." />
+      <button @onclick="SendMessage">Send</button>
+    </div>
+  </div>
 </div>
 
 <!-- Authentication Buttons -->
 <div class="auth-buttons" style="display: flex; justify-content: space-between; padding: 2rem;">
-    @if (!IsAuthenticated && !(NavigationManager.Uri.Contains("Account/Register") || NavigationManager.Uri.Contains("Account/Login")))
-    {
-        <button class="register" @onclick="@(() => NavigationManager.NavigateTo("Account/Register"))">
-            Register
-        </button>
-        <button class="login" @onclick="@(() => NavigationManager.NavigateTo("Account/Login"))">
-            Login
-        </button>
-    }
+  @if (!IsAuthenticated && !(NavigationManager.Uri.Contains("Account/Register") || NavigationManager.Uri.Contains("Account/Login")))
+  {
+      <button class="register" @onclick="@(() => NavigationManager.NavigateTo("Account/Register"))">
+          Register
+      </button>
+      <button class="login" @onclick="@(() => NavigationManager.NavigateTo("Account/Login"))">
+          Login
+      </button>
+  }
 </div>
 
 <!-- Blazor Error UI -->
@@ -227,62 +222,65 @@
 </div>
 
 @code {
-    // Authentication state
-    private bool IsAuthenticated;
+  // Authentication state
+  private bool IsAuthenticated;
+  private string CurrentUser = "";
+  private string CurrentChannel = "Film";
+  private string NewMessage = "";
+  private List<ChatMessage> AllMessages = new List<ChatMessage>();
 
-    protected override async Task OnInitializedAsync()
+  protected override async Task OnInitializedAsync()
+  {
+    var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+    var user = authState.User;
+    IsAuthenticated = user.Identity?.IsAuthenticated ?? false;
+    CurrentUser = IsAuthenticated ? (user.Identity?.Name ?? "Anonymous") : "Anonymous";
+
+    // Load persisted messages from the database
+    AllMessages = await DbContext.ChatMessages.ToListAsync();
+  }
+
+  // Filter messages for the selected channel and order by timestamp.
+  private IEnumerable<ChatMessage> FilteredMessages =>
+    AllMessages.Where(m => m.Channel == CurrentChannel).OrderBy(m => m.Timestamp);
+
+  // Change the current chat channel.
+  private void SelectChannel(string channel)
+  {
+    CurrentChannel = channel;
+  }
+
+  // Send a new message, persisting it to the database and updating the UI.
+  private async Task SendMessage()
+  {
+    if (!string.IsNullOrWhiteSpace(NewMessage))
     {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        IsAuthenticated = authState.User.Identity?.IsAuthenticated ?? false;
+      var message = new ChatMessage
+      {
+        User = CurrentUser,
+        Text = NewMessage,
+        Channel = CurrentChannel
+      };
+
+      DbContext.ChatMessages.Add(message);
+      await DbContext.SaveChangesAsync();
+      AllMessages.Add(message);
+      NewMessage = string.Empty;
     }
+  }
 
-    // Chat functionality
-    private string CurrentChannel = "Film";
-    private string NewMessage = "";
-
-    // Chat message model (ensure this is defined only once)
-    public class ChatMessage
+  // Delete a message if it belongs to the current user.
+  private async Task DeleteMessage(ChatMessage message)
+  {
+    if (message.User == CurrentUser)
     {
-        public string User { get; set; }
-        public string Text { get; set; }
-        public string Channel { get; set; }
+      DbContext.ChatMessages.Remove(message);
+      await DbContext.SaveChangesAsync();
+      AllMessages.Remove(message);
     }
+  }
 
-    // In-memory storage for chat messages
-    private List<ChatMessage> AllMessages = new List<ChatMessage>();
-
-    // Filter messages for the current channel
-    private IEnumerable<ChatMessage> FilteredMessages =>
-        AllMessages.Where(m => m.Channel == CurrentChannel);
-
-    // Change the chat channel
-    private void SelectChannel(string channel)
-    {
-        CurrentChannel = channel;
-    }
-
-    // Send a chat message
-    private async Task SendMessage()
-    {
-        if (!string.IsNullOrWhiteSpace(NewMessage))
-        {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var userName = authState.User.Identity?.IsAuthenticated == true
-                           ? authState.User.Identity.Name
-                           : "Anonymous";
-
-            AllMessages.Add(new ChatMessage
-            {
-                User = userName,
-                Text = NewMessage,
-                Channel = CurrentChannel
-            });
-
-            NewMessage = string.Empty;
-        }
-    }
-
-    // Return a CSS class to highlight the active channel button
-    private string GetChannelButtonClass(string channel) =>
-        channel == CurrentChannel ? "active" : "";
+  // Return a CSS class for active channel buttons.
+  private string GetChannelButtonClass(string channel) =>
+    channel == CurrentChannel ? "active" : "";
 }
