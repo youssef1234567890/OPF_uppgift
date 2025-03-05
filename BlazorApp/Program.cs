@@ -29,6 +29,12 @@ builder.Services.AddAuthentication(options =>
 })
 .AddIdentityCookies();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.Zero; // Forces logout when the browser is closed
+    options.SlidingExpiration = false;
+});
+
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 

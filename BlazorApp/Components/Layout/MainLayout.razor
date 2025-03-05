@@ -15,7 +15,6 @@
     color: #ffffff !important;
     background-image: none !important;
   }
-
   /* Navbar styles */
   .navbar {
     background: linear-gradient(135deg, #28a745, #218838);
@@ -25,14 +24,12 @@
     align-items: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
-
   .navbar-left h1 {
     color: #fff;
     margin: 0;
     font-size: 1.75rem;
     font-weight: 600;
   }
-
   .navbar-right a {
     color: #fff;
     text-decoration: none;
@@ -42,23 +39,20 @@
     border-radius: 4px;
     transition: background 0.3s, color 0.3s;
   }
-
   .navbar-right a:hover {
     background: #fff;
     color: #218838;
   }
-
   /* Main content area */
   .main-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 80px); /* Adjust based on navbar height */
+    min-height: calc(100vh - 80px);
     padding: 2rem;
     text-align: center;
   }
-
   /* Chat container styling */
   .chat-container {
     background: rgba(255, 255, 255, 0.8);
@@ -69,7 +63,6 @@
     width: 100%;
     color: #000;
   }
-
   /* Chat Channel Buttons */
   .chat-channel-buttons button {
     padding: 0.5rem 1rem;
@@ -80,15 +73,12 @@
     cursor: pointer;
     transition: background 0.3s;
   }
-
   .chat-channel-buttons button.active {
     background: #ffc107;
   }
-
   .chat-channel-buttons button:hover {
     opacity: 0.9;
   }
-
   /* Chat Window */
   .chat-window {
     border: 1px solid #ccc;
@@ -99,21 +89,18 @@
     background: #fff;
     color: #000;
   }
-
   /* Chat Input */
   .chat-input {
     margin-top: 1rem;
     display: flex;
     gap: 0.5rem;
   }
-
   .chat-input input[type="text"] {
     flex: 1;
     padding: 0.5rem;
     border-radius: 4px;
     border: 1px solid #ccc;
   }
-
   .chat-input button {
     padding: 0.5rem 1rem;
     border: none;
@@ -123,11 +110,9 @@
     cursor: pointer;
     transition: background 0.3s;
   }
-
   .chat-input button:hover {
     background: #218838;
   }
-
   /* Authentication Buttons */
   .auth-buttons button {
     flex: 1;
@@ -138,24 +123,20 @@
     border-radius: 10px;
     cursor: pointer;
   }
-
   .auth-buttons .register {
     background-color: #007bff;
     color: white;
   }
-
   .auth-buttons .login {
     background-color: #ffc107;
     color: white;
   }
-
   /* Logout Button */
   .logout-button {
     position: fixed;
     bottom: 20px;
     right: 20px;
   }
-  
   .logout-button .btn {
     padding: 0.75rem 1.5rem;
     font-size: 1rem;
@@ -165,11 +146,9 @@
     border-radius: 4px;
     cursor: pointer;
   }
-  
   .logout-button .btn:hover {
     background-color: #c82333;
   }
-
   /* Delete button styling */
   .delete-button {
     background: none;
@@ -191,50 +170,65 @@
   </div>
 </div>
 
-<!-- Main Content -->
-<div class="main-content">
-  <div class="chat-container">
-    <!-- Chat Channel Buttons -->
-    <div class="chat-channel-buttons">
-      <button class="@GetChannelButtonClass("Film")" @onclick="@(() => SelectChannel("Film"))">Film</button>
-      <button class="@GetChannelButtonClass("Series")" @onclick="@(() => SelectChannel("Series"))">Series</button>
-      <button class="@GetChannelButtonClass("Games")" @onclick="@(() => SelectChannel("Games"))">Games</button>
-    </div>
-
-    <!-- Chat Window -->
-    <div class="chat-window">
-      @foreach (var message in FilteredMessages)
-      {
-          <div class="chat-message" style="margin-bottom: 0.5rem;">
-            <strong>@message.User:</strong> @message.Text
-            @if (message.User == CurrentUser)
-            {
-                <button class="delete-button" @onclick="@(() => DeleteMessage(message))">Delete</button>
-            }
-          </div>
-      }
-    </div>
-
-    <!-- Chat Input -->
-    <div class="chat-input">
-      <input type="text" @bind="NewMessage" placeholder="Type your message here..." />
-      <button @onclick="SendMessage">Send</button>
-    </div>
-  </div>
-</div>
-
-<!-- Authentication Buttons -->
-<div class="auth-buttons" style="display: flex; justify-content: space-between; padding: 2rem;">
-  @if (!IsAuthenticated)
-  {
-      <button class="register" @onclick="NavigateToRegister">Register</button>
-      <button class="login" @onclick="NavigateToLogin">Login</button>
-  }
-</div>
-
-<!-- Logout Button -->
+@* Main layout rendering differs for authenticated users and for unauthenticated users *@
 @if (IsAuthenticated)
 {
+    <!-- Authenticated view (chat content) -->
+    <div class="main-content">
+      <div class="chat-container">
+        <!-- Chat Channel Buttons -->
+        <div class="chat-channel-buttons">
+          <button class="@GetChannelButtonClass("Film")" @onclick="@(() => SelectChannel("Film"))">Film</button>
+          <button class="@GetChannelButtonClass("Series")" @onclick="@(() => SelectChannel("Series"))">Series</button>
+          <button class="@GetChannelButtonClass("Games")" @onclick="@(() => SelectChannel("Games"))">Games</button>
+        </div>
+        <!-- Chat Window -->
+        <div class="chat-window">
+          @foreach (var message in FilteredMessages)
+          {
+              <div class="chat-message" style="margin-bottom: 0.5rem;">
+                <strong>@message.User:</strong> @message.Text
+                @if (message.User == CurrentUser)
+                {
+                    <button class="delete-button" @onclick="@(() => DeleteMessage(message))">Delete</button>
+                }
+              </div>
+          }
+        </div>
+        <!-- Chat Input -->
+        <div class="chat-input">
+          <input type="text" @bind="NewMessage" placeholder="Type your message here..." />
+          <button @onclick="SendMessage">Send</button>
+        </div>
+      </div>
+    </div>
+}
+else
+{
+    <!-- Unauthenticated view -->
+    <div class="main-content">
+        @if (IsLoginPage)
+        {
+            @Body  @* Render the login page content if the current URL is the login page *@
+        }
+        else if (!IsRedirecting)
+        {
+            <p>You must be logged in to access this application.</p>
+            <div class="auth-buttons" style="justify-content: center;">
+                <button class="register" @onclick="NavigateToRegister">Register</button>
+                <button class="login" @onclick="NavigateToLogin">Login</button>
+            </div>
+        }
+        else
+        {
+            <p>Redirecting...</p>
+        }
+    </div>
+}
+
+@if (IsAuthenticated)
+{
+  <!-- Logout Button (only visible when authenticated) -->
   <div class="logout-button">
       <button class="btn" @onclick="Logout">Log Out</button>
   </div>
@@ -248,18 +242,25 @@
 </div>
 
 @code {
-  // Authentication state and current user information.
+  // Authentication state and user information.
   private bool IsAuthenticated;
   private string CurrentUser = "";
-  
+  // Flag used to hide the buttons while redirecting.
+  private bool IsRedirecting = false;
+
   // Chat functionality.
   private string CurrentChannel = "Film";
   private string NewMessage = "";
   private List<ChatMessage> AllMessages = new List<ChatMessage>();
 
-  // URLs for authentication navigation.
-  private const string RegisterUrl = "Account/Register";
-  private const string LoginUrl = "Account/Login";
+  // URLs for login/register navigation.
+  private const string RegisterUrl = "/Account/Register";
+  private const string LoginUrl = "/Identity/Account/Login";
+
+  // Computed property: if current URL ends with the login route.
+  private bool IsLoginPage =>
+      Navigation.Uri.EndsWith("/Identity/Account/Login", StringComparison.OrdinalIgnoreCase) ||
+      Navigation.Uri.EndsWith("/Account/Login", StringComparison.OrdinalIgnoreCase);
 
   protected override async Task OnInitializedAsync()
   {
@@ -268,24 +269,21 @@
     IsAuthenticated = user.Identity?.IsAuthenticated ?? false;
     CurrentUser = IsAuthenticated ? (user.Identity?.Name ?? "Anonymous") : "Anonymous";
 
-    // Load persisted messages from the database.
-    AllMessages = await DbContext.ChatMessages.ToListAsync();
+    if (IsAuthenticated)
+    {
+        AllMessages = await DbContext.ChatMessages.ToListAsync();
+    }
   }
 
-  // Filters messages for the current channel, ordered by timestamp.
+  // Filters messages by channel.
   private IEnumerable<ChatMessage> FilteredMessages =>
     AllMessages.Where(m => m.Channel == CurrentChannel).OrderBy(m => m.Timestamp);
 
-  // Change the current chat channel.
-  private void SelectChannel(string channel)
-  {
-    CurrentChannel = channel;
-  }
+  private void SelectChannel(string channel) => CurrentChannel = channel;
 
-  // Send a new message: persist it to the database and update the UI.
   private async Task SendMessage()
   {
-    if (!string.IsNullOrWhiteSpace(NewMessage))
+    if (!string.IsNullOrWhiteSpace(NewMessage) && IsAuthenticated)
     {
       var message = new ChatMessage
       {
@@ -301,7 +299,6 @@
     }
   }
 
-  // Delete a message if it belongs to the current user.
   private async Task DeleteMessage(ChatMessage message)
   {
     if (message.User == CurrentUser)
@@ -312,26 +309,34 @@
     }
   }
 
-  // Return a CSS class for the active chat channel button.
   private string GetChannelButtonClass(string channel) =>
     channel == CurrentChannel ? "active" : "";
 
-  // Navigate to the Register page.
+  // Navigate to the Register page. Use forceLoad so a full page load occurs.
   private void NavigateToRegister()
   {
-    Navigation.NavigateTo(RegisterUrl);
+    IsRedirecting = true;
+    Navigation.NavigateTo(RegisterUrl, forceLoad: true);
   }
 
-  // Navigate to the Login page.
+  // Navigate to the Login page. Use forceLoad to ensure a full navigation.
   private void NavigateToLogin()
   {
-    Navigation.NavigateTo(LoginUrl);
+    IsRedirecting = true;
+    Navigation.NavigateTo(LoginUrl, forceLoad: true);
   }
 
   // Log out the current user.
   private async Task Logout()
   {
-    await SignInManager.SignOutAsync();
-    Navigation.NavigateTo("/", forceLoad: true);
+    try
+    {
+        await SignInManager.SignOutAsync();
+        Navigation.NavigateTo("/", forceLoad: true);
+    }
+    catch (Exception ex)
+    {
+        Console.Error.WriteLine("Error during logout: " + ex.Message);
+    }
   }
 }
