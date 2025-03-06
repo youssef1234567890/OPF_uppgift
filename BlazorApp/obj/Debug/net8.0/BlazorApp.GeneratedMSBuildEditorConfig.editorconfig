@@ -180,6 +180,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/46706/Desktop/Development/Projekt/OOP Fortsättning/SlutProjekt/OPF_uppgift/BlazorApp/Components/Pages/Admin/RoleManagement.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxSb2xlTWFuYWdlbWVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/46706/Desktop/Development/Projekt/OOP Fortsättning/SlutProjekt/OPF_uppgift/BlazorApp/Components/Pages/Auth.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBdXRoLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -194,6 +198,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/46706/Desktop/Development/Projekt/OOP Fortsättning/SlutProjekt/OPF_uppgift/BlazorApp/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/46706/Desktop/Development/Projekt/OOP Fortsättning/SlutProjekt/OPF_uppgift/BlazorApp/Components/Pages/UserProfile.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xVc2VyUHJvZmlsZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/46706/Desktop/Development/Projekt/OOP Fortsättning/SlutProjekt/OPF_uppgift/BlazorApp/Components/Pages/Weather.razor]
