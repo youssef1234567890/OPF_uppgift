@@ -39,7 +39,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
 // Add Role services
 builder.Services.AddScoped<IRoleService, RoleService>();
-builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 
 // Add Authorization handlers
 builder.Services.AddScoped<IAuthorizationHandler, RoleAuthorizationHandler>();

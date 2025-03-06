@@ -1,5 +1,8 @@
 namespace BlazorApp.Common.Constants;
 
+/// <summary>
+/// Contains all role-related constants and helper methods for role management
+/// </summary>
 public static class RoleConstants
 {
     public const string MainAdmin = "MainAdmin";
@@ -15,12 +18,20 @@ public static class RoleConstants
         { User, new[] { User } }                   // User can only access User role permissions
     };
 
-    // Helper method to check if a role has higher or equal privilege
+    /// <summary>
+    /// Checks if a role has higher or equal privilege compared to the required role
+    /// </summary>
+    /// <param name="currentRole">The role to check privileges for</param>
+    /// <param name="requiredRole">The role level required</param>
+    /// <returns>True if the current role has sufficient privileges</returns>
     public static bool HasPrivilege(string currentRole, string requiredRole)
     {
-        if (!RoleHierarchy.ContainsKey(currentRole))
+        if (string.IsNullOrEmpty(currentRole) || string.IsNullOrEmpty(requiredRole))
+        {
             return false;
+        }
 
-        return RoleHierarchy[currentRole].Contains(requiredRole);
+        return RoleHierarchy.TryGetValue(currentRole, out var allowedRoles) && 
+               allowedRoles.Contains(requiredRole);
     }
 } 

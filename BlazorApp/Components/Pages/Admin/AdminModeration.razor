@@ -1,0 +1,442 @@
+@page "/admin/moderation"
+@using BlazorApp.Data
+@using BlazorApp.Data.Models
+@using BlazorApp.Services.Interfaces
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Authorization
+
+@attribute [Authorize(Roles = "MainAdmin,Admin")]
+@inject UserManager<ApplicationUser> UserManager
+@inject IRoleService RoleService
+@inject ILogger<AdminModeration> Logger
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Admin Moderation</PageTitle>
+
+<div class="container-fluid py-4">
+    <div class="row g-4">
+        <!-- Header -->
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center bg-light rounded p-4 shadow-sm">
+                <div>
+                    <h2 class="mb-0">Admin Moderation</h2>
+                    <p class="text-muted mb-0">Manage users and monitor system activity</p>
+                </div>
+                @if (message != null)
+                {
+                    <div class="alert @(isError ? "alert-danger" : "alert-success") mb-0 px-4 py-2">
+                        @message
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- User Management Section -->
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h4 class="mb-0">User Management</h4>
+                </div>
+                <div class="card-body">
+                    @if (users == null)
+                    {
+                        <div class="d-flex justify-content-center p-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <div class="mb-3">
+                                <div class="btn-group">
+                                    <button class="btn btn-outline-primary" @onclick="() => ApplyBulkAction(BulkAction.AssignRole)" disabled="@(!SelectedUsers.Any())">
+                                        <i class="bi bi-people"></i> Assign Role
+                                    </button>
+                                    @if (IsMainAdmin)
+                                    {
+                                        <button class="btn btn-outline-success" @onclick="() => ApplyBulkAction(BulkAction.ConfirmEmail)" disabled="@(!SelectedUsers.Any())">
+                                            <i class="bi bi-envelope-check"></i> Confirm Email
+                                        </button>
+                                        <button class="btn btn-outline-danger" @onclick="() => ApplyBulkAction(BulkAction.Delete)" disabled="@(!SelectedUsers.Any())">
+                                            <i class="bi bi-trash"></i> Delete Selected
+                                        </button>
+                                    }
+                                </div>
+                                <span class="ms-3 text-muted">
+                                    @SelectedUsers.Count users selected
+                                </span>
+                            </div>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       checked="@(users.Any() && users.All(u => SelectedUsers.Contains(u.Id)))"
+                                                       @onchange="@(e => ToggleAllUsers((bool)e.Value!))" />
+                                            </div>
+                                        </th>
+                                        <th>Email</th>
+                                        <th>Roles</th>
+                                        <th>Email Confirmed</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in users)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" 
+                                                           checked="@SelectedUsers.Contains(user.Id)"
+                                                           @onchange="@(e => ToggleUserSelection(user.Id, (bool)e.Value!))" />
+                                                </div>
+                                            </td>
+                                            <td>@user.Email</td>
+                                            <td>
+                                                @string.Join(", ", user.Roles)
+                                            </td>
+                                            <td>
+                                                @if (user.EmailConfirmed)
+                                                {
+                                                    <span class="badge bg-success">Confirmed</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-warning">Pending</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-sm btn-outline-primary" @onclick="() => OpenUserDetails(user)">
+                                                        <i class="bi bi-info-circle"></i> Details
+                                                    </button>
+                                                    @if (IsMainAdmin)
+                                                    {
+                                                        <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteUser(user.Id)">
+                                                            <i class="bi bi-trash"></i> Delete
+                                                        </button>
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (selectedUser != null)
+    {
+        <div class="modal fade show" style="display: block;" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">User Details - @selectedUser.Email</h5>
+                        <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="text" class="form-control" value="@selectedUser.Email" readonly />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Roles</label>
+                            @foreach (var role in availableRoles)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" 
+                                           checked="@selectedUser.Roles.Contains(role)"
+                                           @onchange="@(e => OnRoleToggle(selectedUser, role, (bool)e.Value!))"
+                                           disabled="@(!CanModifyUserRoles(selectedUser, role))" />
+                                    <label class="form-check-label">@role</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="CloseModal">Close</button>
+                        <button type="button" class="btn btn-primary" @onclick="SaveUserChanges">Save changes</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop fade show"></div>
+        </div>
+    }
+</div>
+
+@code {
+    private List<UserRoleDto>? users;
+    private UserRoleDto? selectedUser;
+    private List<string> availableRoles = new();
+    private string? message;
+    private bool isError;
+    private bool IsMainAdmin = false;
+    private HashSet<string> SelectedUsers = new();
+    private string? selectedRoleForBulk;
+
+    private enum BulkAction
+    {
+        AssignRole,
+        ConfirmEmail,
+        Delete
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Get current user's roles
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            IsMainAdmin = user.IsInRole("MainAdmin");
+
+            // Load users and roles
+            await LoadUsers();
+            availableRoles = new List<string> { "User", "Admin", "MainAdmin" };
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error initializing AdminModeration page");
+            message = "Error loading user data";
+            isError = true;
+        }
+    }
+
+    private async Task LoadUsers()
+    {
+        users = new List<UserRoleDto>();
+        foreach (var role in new[] { "MainAdmin", "Admin", "User" })
+        {
+            var usersInRole = await RoleService.GetUsersInRoleAsync(role);
+            foreach (var user in usersInRole)
+            {
+                if (!users.Any(u => u.Id == user.Id))
+                {
+                    users.Add(user);
+                }
+            }
+        }
+    }
+
+    private void OpenUserDetails(UserRoleDto user)
+    {
+        selectedUser = new UserRoleDto
+        {
+            Id = user.Id,
+            Email = user.Email,
+            UserName = user.UserName,
+            Roles = new List<string>(user.Roles)
+        };
+    }
+
+    private void CloseModal()
+    {
+        selectedUser = null;
+    }
+
+    private bool CanModifyUserRoles(UserRoleDto user, string role)
+    {
+        if (!IsMainAdmin)
+        {
+            // Non-MainAdmin users can't modify MainAdmin role or other admins
+            if (role == "MainAdmin" || user.Roles.Contains("MainAdmin") || user.Roles.Contains("Admin"))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private async Task OnRoleToggle(UserRoleDto user, string role, bool isChecked)
+    {
+        if (!CanModifyUserRoles(user, role))
+        {
+            return;
+        }
+
+        if (isChecked)
+        {
+            if (!user.Roles.Contains(role))
+            {
+                user.Roles.Add(role);
+            }
+        }
+        else
+        {
+            user.Roles.Remove(role);
+        }
+    }
+
+    private async Task SaveUserChanges()
+    {
+        if (selectedUser == null) return;
+
+        try
+        {
+            var currentRoles = await RoleService.GetUserRolesAsync(selectedUser.Id);
+            
+            // Remove roles that were unchecked
+            foreach (var role in currentRoles)
+            {
+                if (!selectedUser.Roles.Contains(role))
+                {
+                    await RoleService.RemoveUserFromRoleAsync(new AssignRoleRequest 
+                    { 
+                        UserId = selectedUser.Id, 
+                        RoleName = role 
+                    });
+                }
+            }
+
+            // Add new roles that were checked
+            foreach (var role in selectedUser.Roles)
+            {
+                if (!currentRoles.Contains(role))
+                {
+                    await RoleService.AssignRoleToUserAsync(new AssignRoleRequest 
+                    { 
+                        UserId = selectedUser.Id, 
+                        RoleName = role 
+                    });
+                }
+            }
+
+            message = "User roles updated successfully";
+            isError = false;
+            await LoadUsers();
+            CloseModal();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error updating user roles");
+            message = "Error updating user roles";
+            isError = true;
+        }
+    }
+
+    private async Task DeleteUser(string userId)
+    {
+        if (!IsMainAdmin) return;
+
+        try
+        {
+            var user = await UserManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var result = await UserManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    message = "User deleted successfully";
+                    isError = false;
+                    await LoadUsers();
+                }
+                else
+                {
+                    message = "Error deleting user: " + string.Join(", ", result.Errors.Select(e => e.Description));
+                    isError = true;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error deleting user");
+            message = "Error deleting user";
+            isError = true;
+        }
+    }
+
+    private void ToggleUserSelection(string userId, bool isChecked)
+    {
+        if (isChecked)
+        {
+            SelectedUsers.Add(userId);
+        }
+        else
+        {
+            SelectedUsers.Remove(userId);
+        }
+    }
+
+    private void ToggleAllUsers(bool isChecked)
+    {
+        if (users == null) return;
+
+        if (isChecked)
+        {
+            SelectedUsers = users.Select(u => u.Id).ToHashSet();
+        }
+        else
+        {
+            SelectedUsers.Clear();
+        }
+    }
+
+    private async Task ApplyBulkAction(BulkAction action)
+    {
+        if (!SelectedUsers.Any()) return;
+
+        try
+        {
+            switch (action)
+            {
+                case BulkAction.AssignRole:
+                    await ShowBulkRoleAssignmentModal();
+                    break;
+
+                case BulkAction.ConfirmEmail:
+                    if (!IsMainAdmin) return;
+                    foreach (var userId in SelectedUsers)
+                    {
+                        var user = await UserManager.FindByIdAsync(userId);
+                        if (user != null && !user.EmailConfirmed)
+                        {
+                            user.EmailConfirmed = true;
+                            await UserManager.UpdateAsync(user);
+                        }
+                    }
+                    message = "Selected users' emails have been confirmed";
+                    isError = false;
+                    break;
+
+                case BulkAction.Delete:
+                    if (!IsMainAdmin) return;
+                    foreach (var userId in SelectedUsers)
+                    {
+                        var user = await UserManager.FindByIdAsync(userId);
+                        if (user != null)
+                        {
+                            await UserManager.DeleteAsync(user);
+                        }
+                    }
+                    message = "Selected users have been deleted";
+                    isError = false;
+                    break;
+            }
+
+            await LoadUsers();
+            SelectedUsers.Clear();
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Error performing bulk action");
+            message = "Error performing bulk action";
+            isError = true;
+        }
+    }
+
+    private async Task ShowBulkRoleAssignmentModal()
+    {
+        // Implementation for bulk role assignment modal
+        // This would show a modal dialog for selecting the role to assign
+        // Similar to the existing user details modal but simpler
+    }
+} 

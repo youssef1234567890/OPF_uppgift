@@ -99,9 +99,10 @@ public class RoleService : IRoleService
             var roles = await _userManager.GetRolesAsync(user);
             userRoleDtos.Add(new UserRoleDto
             {
-                UserId = user.Id,
+                Id = user.Id,
                 UserName = user.UserName!,
                 Email = user.Email!,
+                EmailConfirmed = user.EmailConfirmed,
                 Roles = roles.ToList()
             });
         }

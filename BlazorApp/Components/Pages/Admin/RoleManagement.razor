@@ -177,7 +177,7 @@
                     var usersInRole = await RoleService.GetUsersInRoleAsync(role);
                     foreach (var user in usersInRole)
                     {
-                        var existingUser = userRoles.FirstOrDefault(u => u.UserId == user.UserId);
+                        var existingUser = userRoles.FirstOrDefault(u => u.Id == user.Id);
                         if (existingUser != null)
                         {
                             existingUser.Roles.AddRange(user.Roles.Except(existingUser.Roles));
@@ -245,7 +245,7 @@
 
             var request = new AssignRoleRequest
             {
-                UserId = user.UserId,
+                UserId = user.Id,
                 RoleName = user.Roles.First()
             };
 
