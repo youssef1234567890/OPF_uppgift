@@ -1,149 +1,23 @@
 ﻿@inherits LayoutComponentBase
-@inject NavigationManager NavigationManager
 
-<style>
-  /* Global styles for html and body */
-  html, body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #001f3d !important;
-    color: #ffffff !important;
-    background-image: none !important;
-  }
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
 
-  /* Navbar styles */
-  .navbar {
-    background: linear-gradient(135deg, #28a745, #218838);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
+    <main>
+        <div class="top-row px-4">
+            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        </div>
 
-  .navbar-left h1 {
-    color: #fff;
-    margin: 0;
-    font-size: 1.75rem;
-    font-weight: 600;
-  }
-
-  .navbar-right a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.1rem;
-    border: 2px solid #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background 0.3s, color 0.3s;
-  }
-
-  .navbar-right a:hover {
-    background: #fff;
-    color: #218838;
-  }
-
-  /* Main content area */
-  .main-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 80px); /* Adjust based on navbar height */
-    padding: 2rem;
-    text-align: center;
-  }
-
-  /* Button container styling */
-  .button-container {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    display: flex;
-    gap: 1rem;
-    max-width: 500px;
-    width: 100%;
-  }
-
-  /* Buttons styling */
-  .btn {
-    flex: 1;
-    padding: 1.5rem;
-    font-size: 1.25rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
-
-  .register {
-    background-color: #007bff;
-    color: #fff;
-  }
-
-  .register:hover {
-    background-color: #0069d9;
-  }
-
-  .login {
-    background-color: #ffc107;
-    color: #fff;
-  }
-
-  .login:hover {
-    background-color: #e0a800;
-  }
-
-  /* Error UI styling */
-  #blazor-error-ui {
-    background: #2600ff;
-    border-top: 1px solid #ffeeba;
-    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
-    display: none;
-    left: 0;
-    padding: 0.6rem 1.25rem;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-  }
-
-  #blazor-error-ui .dismiss {
-    cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
-  }
-</style>
-
-<div class="navbar">
-  <div class="navbar-left">
-    <h1>This is my web app</h1>
-  </div>
-  <div class="navbar-right">
-    <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-  </div>
-</div>
-
-<div class="main-content">
-  <div class="button-container">
-    <button class="btn register" 
-            @onclick="@(() => NavigationManager.NavigateTo("Account/Register"))">
-      Register
-    </button>
-    <button class="btn login" 
-            @onclick="@(() => NavigationManager.NavigateTo("Account/Login"))">
-      Login
-    </button>
-  </div>
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
 </div>
 
 <div id="blazor-error-ui">
-  An unhandled error has occurred.
-  <a href="" class="reload">Reload</a>
-  <a class="dismiss">🗙</a>
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
 </div>
