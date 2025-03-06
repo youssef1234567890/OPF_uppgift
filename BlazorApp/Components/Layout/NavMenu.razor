@@ -1,6 +1,7 @@
 ﻿@implements IDisposable
 
 @inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Components.Authorization
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -36,29 +37,33 @@
             </NavLink>
         </div>
 
-        <AuthorizeView>
+        <AuthorizeView Context="authContext">
             <Authorized>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Manage">
-                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
+                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> Manage Account
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
-    <NavLink class="nav-link" href="/chat/Film">
-        <span class="bi bi-chat-dots-fill-nav-menu" aria-hidden="true"></span> Chat for Films
-    </NavLink>
-</div>
-<div class="nav-item px-3">
-    <NavLink class="nav-link" href="/chat/Games">
-        <span class="bi bi-chat-dots-fill-nav-menu" aria-hidden="true"></span> Chat for Games
-    </NavLink>
-</div>
-<div class="nav-item px-3">
-    <NavLink class="nav-link" href="/chat/Series">
-        <span class="bi bi-chat-dots-fill-nav-menu" aria-hidden="true"></span> Chat for Series
-    </NavLink>
-</div>
-
+                    <NavLink class="nav-link" href="mainadmin">
+                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> mainadmin
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/chat/Film">
+                        <span class="bi bi-chat-dots-fill-nav-menu" aria-hidden="true"></span> Chat for Films
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/chat/Games">
+                        <span class="bi bi-chat-dots-fill-nav-menu" aria-hidden="true"></span> Chat for Games
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/chat/Series">
+                        <span class="bi bi-chat-dots-fill-nav-menu" aria-hidden="true"></span> Chat for Series
+                    </NavLink>
+                </div>
                 <div class="nav-item px-3">
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken />

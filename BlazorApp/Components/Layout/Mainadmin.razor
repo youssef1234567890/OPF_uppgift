@@ -1,0 +1,144 @@
+@page "/mainadmin"
+@using BlazorApp.Data
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@attribute [Authorize(Roles = "mainadmin")]
+
+<h3>Main Admin Dashboard</h3>
+<p>Welcome, Main Admin!</p>
+
+@if (loading)
+{
+    <p>Loading users...</p>
+}
+else if (users.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@(user.IsAdmin ? "Admin" : "User")</td>
+                    <td>
+                        @if (user.IsAdmin)
+                        {
+                            <button class="btn btn-warning" @onclick="() => DemoteToUser(user.Id)">Demote to User</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary" @onclick="() => PromoteToAdmin(user.Id)">Promote to Admin</button>
+                        }
+                        <button class="btn btn-danger" @onclick="() => DeleteUser(user.Id)">Delete User</button>
+                        <button class="btn btn-secondary" @onclick="() => DeleteUserMessages(user.UserName)">Delete Messages</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No users found.</p>
+}
+
+@code {
+    private List<UserViewModel> users = new();
+    private bool loading = true;
+
+    [Inject] private UserManager<ApplicationUser> UserManager { get; set; } = default!;
+    [Inject] private RoleManager<IdentityRole> RoleManager { get; set; } = default!;
+    [Inject] private ApplicationDbContext DbContext { get; set; } = default!;
+    [Inject] private NavigationManager Navigation { get; set; } = default!;
+
+    // Load users on component initialization
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUsersAsync();
+    }
+
+    // Load all users with role information
+    private async Task LoadUsersAsync()
+    {
+        loading = true;
+        var allUsers = UserManager.Users.ToList();
+        users = new();
+
+        foreach (var user in allUsers)
+        {
+            var roles = await UserManager.GetRolesAsync(user);
+            users.Add(new UserViewModel
+            {
+                Id = user.Id,
+                Email = user.Email!,
+                UserName = user.UserName!,
+                IsAdmin = roles.Contains("admin")
+            });
+        }
+        loading = false;
+    }
+
+    // Promote user to Admin role
+    private async Task PromoteToAdmin(string userId)
+    {
+        var user = await UserManager.FindByIdAsync(userId);
+        if (user != null && !await UserManager.IsInRoleAsync(user, "admin"))
+        {
+            await UserManager.AddToRoleAsync(user, "admin");
+            await LoadUsersAsync(); // Refresh user list
+        }
+    }
+
+    // Demote Admin to User role
+    private async Task DemoteToUser(string userId)
+    {
+        var user = await UserManager.FindByIdAsync(userId);
+        if (user != null && await UserManager.IsInRoleAsync(user, "admin"))
+        {
+            await UserManager.RemoveFromRoleAsync(user, "admin");
+            await LoadUsersAsync(); // Refresh user list
+        }
+    }
+
+    // Delete a user
+    private async Task DeleteUser(string userId)
+    {
+        var user = await UserManager.FindByIdAsync(userId);
+        if (user != null)
+        {
+            await UserManager.DeleteAsync(user);
+            await LoadUsersAsync(); // Refresh list after deletion
+        }
+    }
+
+    // Delete user messages from three chat rooms
+    private async Task DeleteUserMessages(string userName)
+    {
+        var chatRooms = new[] { "chat1", "chat2", "chat3" };
+
+        var messages = DbContext.Messages
+            .Where(m => m.UserName == userName && chatRooms.Contains(m.ChatRoom))
+            .ToList();
+
+        DbContext.Messages.RemoveRange(messages);
+        await DbContext.SaveChangesAsync();
+
+        Console.WriteLine($"Deleted messages for user {userName} in 3 chat rooms.");
+    }
+
+    // ViewModel to hold user information
+    private class UserViewModel
+    {
+        public required string Id { get; set; }
+        public required string Email { get; set; }
+        public required string UserName { get; set; }
+        public bool IsAdmin { get; set; }
+    }
+}

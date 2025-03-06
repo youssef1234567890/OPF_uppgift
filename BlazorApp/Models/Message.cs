@@ -5,6 +5,6 @@ public class Message
     public string Text { get; set; } = string.Empty;
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 
-    // Add this to track chat rooms
+    // Tracks which chat room the message belongs to
     public string ChatRoom { get; set; } = string.Empty; 
 }

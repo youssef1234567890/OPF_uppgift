@@ -1,0 +1,61 @@
+@page "/admin"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "admin")]
+
+<h3>Admin Dashboard</h3>
+<p>Welcome, Admin!</p>
+
+<!-- Example table to list user messages with deletion options -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>User Email</th>
+            <th>Message</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var message in messages)
+        {
+            <tr>
+                <td>@message.UserEmail</td>
+                <td>@message.Content</td>
+                <td>
+                    <button class="btn btn-danger" @onclick="() => DeleteMessage(message.Id)">Delete Message</button>
+                    <button class="btn btn-danger" @onclick="() => DeleteUser(message.UserId)">Delete User</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    // Dummy message model for demonstration.
+    public class MessageModel
+    {
+        public string Id { get; set; }
+        public string UserId { get; set; }
+        public string UserEmail { get; set; }
+        public string Content { get; set; }
+    }
+
+    // Dummy list; in a real app, this data would come from your database.
+    private List<MessageModel> messages = new List<MessageModel>
+    {
+        new MessageModel { Id = "msg1", UserId = "1", UserEmail = "user1@example.com", Content = "Hello World" },
+        new MessageModel { Id = "msg2", UserId = "2", UserEmail = "user2@example.com", Content = "Test message" },
+    };
+
+    // Methods to delete a message or a user. Replace with your actual service calls.
+    private async Task DeleteMessage(string messageId)
+    {
+        // Example: await messageService.DeleteMessageAsync(messageId);
+        Console.WriteLine($"Delete message {messageId}");
+    }
+
+    private async Task DeleteUser(string userId)
+    {
+        // Example: await UserManager.DeleteAsync(user);
+        Console.WriteLine($"Delete user {userId}");
+    }
+}
