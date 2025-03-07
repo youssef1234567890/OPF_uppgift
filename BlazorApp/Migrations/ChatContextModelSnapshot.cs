@@ -2,19 +2,16 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BlazorApp.Migrations.Chat
+namespace BlazorApp.Migrations
 {
     [DbContext(typeof(ChatContext))]
-    [Migration("20250306200831_InitialMigration")]
-    partial class InitialMigration
+    partial class ChatContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.2");
@@ -26,6 +23,10 @@ namespace BlazorApp.Migrations.Chat
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ChatRoom")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ReplyTo")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.EntityFrameworkCore
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Web
 @attribute [Authorize]
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ChatContext dbContext
@@ -13,13 +14,23 @@
 
 <AuthorizeView>
     <Authorized>
+        <!-- Message Input -->
         <div>
-            <input type="text" @bind="newMessageText" placeholder="Enter message..." />
-            <button @onclick="SendMessage">Send</button>
+            <input type="text" @bind="newMessageText" @onkeypress="HandleKeyPress" placeholder="Enter message..." />
+            <button @onclick="SendMessage" disabled="@string.IsNullOrWhiteSpace(newMessageText)">Send</button>
         </div>
 
-        <!-- Chat messages container -->
-        <div style="border: 1px solid #ccc; width: 400px; height: 250px; overflow-y: auto; margin-top: 10px;">
+        <!-- Display Reply Context if exists -->
+        @if (!string.IsNullOrEmpty(replyingToMessage))
+        {
+            <div style="margin-top: 10px; padding: 5px; border-left: 3px solid #007bff;">
+                <strong>Replying to:</strong> @replyingToMessage
+                <button @onclick="CancelReply" style="margin-left: 10px;">Cancel</button>
+            </div>
+        }
+
+        <!-- Chat Messages Container -->
+        <div style="border: 1px solid #ccc; width: 600px; height: 400px; overflow-y: auto; margin-top: 10px;">
             @if (messages.Any())
             {
                 @foreach (var message in messages)
@@ -28,7 +39,17 @@
                         <strong>@message.UserName</strong>: @message.Text
                         <em>(@message.Timestamp.ToLocalTime())</em>
 
-                        <!-- Allow admins to delete any message -->
+                        <!-- Display reply reference if present -->
+                        @if (!string.IsNullOrEmpty(message.ReplyTo))
+                        {
+                            <div style="margin-left: 20px; font-style: italic; color: #555;">
+                                ↪️ Replying to: @message.ReplyTo
+                            </div>
+                        }
+
+                        <!-- Action Buttons: Reply/Delete -->
+                        <button @onclick="() => SetReplyContext(message.Text)">Reply</button>
+
                         @if (message.UserName == currentUser || isAdmin)
                         {
                             <button @onclick="() => DeleteMessage(message.Id)">Delete</button>
@@ -42,6 +63,7 @@
             }
         </div>
     </Authorized>
+
     <NotAuthorized>
         <p>You must be logged in to access the chat.</p>
     </NotAuthorized>
@@ -50,8 +72,9 @@
 @code {
     private string currentUser = string.Empty;
     private string newMessageText = string.Empty;
+    private string replyingToMessage = string.Empty; // Holds the message being replied to
     private List<Message> messages = new();
-    private bool isAdmin = false; // Flag to track admin status
+    private bool isAdmin = false; // Admin check
 
     protected override async Task OnInitializedAsync()
     {
@@ -62,7 +85,7 @@
         {
             currentUser = user.Identity.Name ?? "Unknown";
 
-            // Check if the current user is an admin or mainadmin
+            // Check if user is admin or mainadmin
             var identityUser = await UserManager.FindByNameAsync(currentUser);
             if (identityUser != null)
             {
@@ -71,13 +94,14 @@
             }
         }
 
-        // Load messages for the "Series" chat room
+        // Load Series chat messages
         messages = await dbContext.Messages
                                   .Where(m => m.ChatRoom == "Series")
                                   .OrderBy(m => m.Timestamp)
                                   .ToListAsync();
     }
 
+    // Send message (with optional reply)
     private async Task SendMessage()
     {
         if (!string.IsNullOrWhiteSpace(newMessageText))
@@ -87,24 +111,51 @@
                 UserName = currentUser,
                 Text = newMessageText,
                 Timestamp = DateTime.UtcNow,
-                ChatRoom = "Series"
+                ChatRoom = "Series",
+                ReplyTo = replyingToMessage
             };
 
             dbContext.Messages.Add(message);
             await dbContext.SaveChangesAsync();
             messages.Add(message);
+
             newMessageText = string.Empty;
+            replyingToMessage = string.Empty; // Clear reply context
+            StateHasChanged();
         }
     }
 
+    // Allow sending message by pressing Enter key
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SendMessage();
+        }
+    }
+
+    // Delete a message (only if owner or admin)
     private async Task DeleteMessage(int messageId)
     {
         var message = await dbContext.Messages.FindAsync(messageId);
-        if (message is not null && (message.UserName == currentUser || isAdmin))
+        if (message != null && (message.UserName == currentUser || isAdmin))
         {
             dbContext.Messages.Remove(message);
             await dbContext.SaveChangesAsync();
             messages.Remove(message);
+            StateHasChanged();
         }
+    }
+
+    // Set the reply context
+    private void SetReplyContext(string originalMessage)
+    {
+        replyingToMessage = originalMessage;
+    }
+
+    // Cancel replying
+    private void CancelReply()
+    {
+        replyingToMessage = string.Empty;
     }
 }

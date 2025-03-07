@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BlazorApp.Migrations.Chat
+namespace BlazorApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class AddReplyToColumn : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,8 @@ namespace BlazorApp.Migrations.Chat
                     UserName = table.Column<string>(type: "TEXT", nullable: false),
                     Text = table.Column<string>(type: "TEXT", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ChatRoom = table.Column<string>(type: "TEXT", nullable: false)
+                    ChatRoom = table.Column<string>(type: "TEXT", nullable: false),
+                    ReplyTo = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -4,7 +4,8 @@ public class Message
     public string UserName { get; set; } = string.Empty;
     public string Text { get; set; } = string.Empty;
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+    public string ChatRoom { get; set; } = string.Empty;
 
-    // Tracks which chat room the message belongs to
-    public string ChatRoom { get; set; } = string.Empty; 
+    // New property to track the message being replied to
+    public string ReplyTo { get; set; } = string.Empty;
 }

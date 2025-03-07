@@ -147,7 +147,6 @@ C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\bin\Debug\net8.0\appset
 C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\bin\Debug\net8.0\appsettings.json
 C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\bin\Debug\net8.0\BlazorApp.staticwebassets.runtime.json
 C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\bin\Debug\net8.0\BlazorApp.staticwebassets.endpoints.json
-C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\bin\Debug\net8.0\Data\app.db
 C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\bin\Debug\net8.0\BlazorApp.exe
 C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\bin\Debug\net8.0\BlazorApp.deps.json
 C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\bin\Debug\net8.0\BlazorApp.runtimeconfig.json
@@ -340,3 +339,4 @@ C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\obj\Debug\net8.0\refint
 C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\obj\Debug\net8.0\BlazorApp.pdb
 C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\obj\Debug\net8.0\BlazorApp.genruntimeconfig.cache
 C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\obj\Debug\net8.0\ref\BlazorApp.dll
+C:\Users\kgayo\Desktop\OPF_uppgift\OPF_uppgift\BlazorApp\bin\Debug\net8.0\Data\app.db

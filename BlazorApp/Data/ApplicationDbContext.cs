@@ -9,5 +9,4 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    public DbSet<Message> Messages { get; set; } = default!;
 }
