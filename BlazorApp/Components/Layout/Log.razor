@@ -1,0 +1,74 @@
+@page "/log"
+@using BlazorApp.Data
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@attribute [Authorize(Roles = "admin,mainadmin")]
+@inject ChatContext dbContext
+@inject UserManager<ApplicationUser> UserManager
+
+<h3>Chat Log History</h3>
+<p>View messages from Film, Games, and Series chat rooms.</p>
+
+@if (loading)
+{
+    <p>Loading logs...</p>
+}
+else if (logs.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Chat Room</th>
+                <th>Message</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var log in logs)
+            {
+                <tr>
+                    <td>@log.UserName</td>
+                    <td>@log.ChatRoom</td>
+                    <td>@log.Text</td>
+                    <td>@log.Timestamp.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No logs found.</p>
+}
+
+@code {
+    private List<Message> logs = new();
+    private bool loading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLogsAsync();
+    }
+
+    private async Task LoadLogsAsync()
+    {
+        loading = true;
+
+        try
+        {
+            // Fetch messages from Film, Games, and Series chat rooms
+            logs = await dbContext.Messages
+                .Where(m => m.ChatRoom == "Film" || m.ChatRoom == "Games" || m.ChatRoom == "Series")
+                .OrderByDescending(m => m.Timestamp) // Show newest messages first
+                .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading logs: {ex.Message}");
+        }
+
+        loading = false;
+    }
+}

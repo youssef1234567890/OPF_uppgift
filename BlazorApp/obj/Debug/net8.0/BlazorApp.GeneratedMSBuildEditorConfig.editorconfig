@@ -196,6 +196,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcR2FtZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Layout/Log.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTG9nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Layout/Mainadmin.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbmFkbWluLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
