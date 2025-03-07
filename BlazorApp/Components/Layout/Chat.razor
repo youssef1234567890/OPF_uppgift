@@ -1,10 +1,13 @@
 @page "/chat/Film"
+@using BlazorApp.Data
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity
 @attribute [Authorize]
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject ChatContext dbContext
+@inject UserManager<ApplicationUser> UserManager
 
 <h3>Chat Film</h3>
 
@@ -24,7 +27,9 @@
                     <div style="margin: 5px;">
                         <strong>@message.UserName</strong>: @message.Text
                         <em>(@message.Timestamp.ToLocalTime())</em>
-                        @if (message.UserName == currentUser)
+
+                        <!-- Delete button logic -->
+                        @if (message.UserName == currentUser || isAdmin)
                         {
                             <button @onclick="() => DeleteMessage(message.Id)">Delete</button>
                         }
@@ -37,6 +42,7 @@
             }
         </div>
     </Authorized>
+
     <NotAuthorized>
         <p>You must be logged in to access the chat.</p>
     </NotAuthorized>
@@ -46,7 +52,9 @@
     private string currentUser = string.Empty;
     private string newMessageText = string.Empty;
     private List<Message> messages = new();
+    private bool isAdmin = false; // Flag to check if user is mainadmin or admin
 
+    // On Initialization: Get user and load messages
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -55,15 +63,25 @@
         if (user.Identity is { IsAuthenticated: true })
         {
             currentUser = user.Identity.Name ?? "Unknown";
+
+            // Fetch user from Identity database
+            var identityUser = await UserManager.FindByNameAsync(currentUser);
+            if (identityUser != null)
+            {
+                // Check if the user is either "mainadmin" or "admin"
+                var roles = await UserManager.GetRolesAsync(identityUser);
+                isAdmin = roles.Contains("mainadmin") || roles.Contains("admin");
+            }
         }
 
-        // Load messages only for the "Film" chat room (Fixed here)
+        // Load messages for the "Film" chat room
         messages = await dbContext.Messages
                                   .Where(m => m.ChatRoom == "Film")
                                   .OrderBy(m => m.Timestamp)
                                   .ToListAsync();
     }
 
+    // Send Message to Database
     private async Task SendMessage()
     {
         if (!string.IsNullOrWhiteSpace(newMessageText))
@@ -83,10 +101,13 @@
         }
     }
 
+    // Delete Message (Allow admins to delete any message)
     private async Task DeleteMessage(int messageId)
     {
         var message = await dbContext.Messages.FindAsync(messageId);
-        if (message is not null && message.UserName == currentUser)
+        
+        // Only allow deletion if user owns the message OR is an admin
+        if (message is not null && (message.UserName == currentUser || isAdmin))
         {
             dbContext.Messages.Remove(message);
             await dbContext.SaveChangesAsync();

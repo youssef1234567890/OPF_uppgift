@@ -1,61 +1,81 @@
 @page "/admin"
+@using BlazorApp.Data
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
 @attribute [Authorize(Roles = "admin")]
+@inject UserManager<ApplicationUser> UserManager
+@inject NavigationManager Navigation
 
 <h3>Admin Dashboard</h3>
 <p>Welcome, Admin!</p>
 
-<!-- Example table to list user messages with deletion options -->
-<table class="table">
-    <thead>
-        <tr>
-            <th>User Email</th>
-            <th>Message</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var message in messages)
-        {
+@if (loading)
+{
+    <p>Loading accounts...</p>
+}
+else if (users.Any())
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@message.UserEmail</td>
-                <td>@message.Content</td>
-                <td>
-                    <button class="btn btn-danger" @onclick="() => DeleteMessage(message.Id)">Delete Message</button>
-                    <button class="btn btn-danger" @onclick="() => DeleteUser(message.UserId)">Delete User</button>
-                </td>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <button class="btn btn-danger" @onclick="() => DeleteUser(user.Id)">Delete User</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No accounts found.</p>
+}
 
 @code {
-    // Dummy message model for demonstration.
-    public class MessageModel
+    private List<ApplicationUser> users = new();
+    private bool loading = true;
+
+    protected override async Task OnInitializedAsync()
     {
-        public string Id { get; set; }
-        public string UserId { get; set; }
-        public string UserEmail { get; set; }
-        public string Content { get; set; }
+        await LoadUsersAsync();
     }
 
-    // Dummy list; in a real app, this data would come from your database.
-    private List<MessageModel> messages = new List<MessageModel>
+    private async Task LoadUsersAsync()
     {
-        new MessageModel { Id = "msg1", UserId = "1", UserEmail = "user1@example.com", Content = "Hello World" },
-        new MessageModel { Id = "msg2", UserId = "2", UserEmail = "user2@example.com", Content = "Test message" },
-    };
-
-    // Methods to delete a message or a user. Replace with your actual service calls.
-    private async Task DeleteMessage(string messageId)
-    {
-        // Example: await messageService.DeleteMessageAsync(messageId);
-        Console.WriteLine($"Delete message {messageId}");
+        loading = true;
+        // Retrieve all users from UserManager
+        // UserManager.Users returns an IQueryable, so we use ToList() (or ToListAsync() if supported)
+        users = await Task.Run(() => UserManager.Users.ToList());
+        loading = false;
     }
 
     private async Task DeleteUser(string userId)
     {
-        // Example: await UserManager.DeleteAsync(user);
-        Console.WriteLine($"Delete user {userId}");
+        var user = await UserManager.FindByIdAsync(userId);
+        if (user != null)
+        {
+            var result = await UserManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                // Refresh the list of users after deletion
+                await LoadUsersAsync();
+            }
+            else
+            {
+                Console.WriteLine($"Failed to delete user {userId}.");
+            }
+        }
     }
 }

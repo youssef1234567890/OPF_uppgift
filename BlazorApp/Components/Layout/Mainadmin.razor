@@ -37,7 +37,6 @@ else if (users.Any())
                             <button class="btn btn-primary" @onclick="() => PromoteToAdmin(user.Id)">Promote to Admin</button>
                         }
                         <button class="btn btn-danger" @onclick="() => DeleteUser(user.Id)">Delete User</button>
-                        <button class="btn btn-secondary" @onclick="() => DeleteUserMessages(user.UserName)">Delete Messages</button>
                     </td>
                 </tr>
             }
@@ -116,21 +115,6 @@ else
             await UserManager.DeleteAsync(user);
             await LoadUsersAsync(); // Refresh list after deletion
         }
-    }
-
-    // Delete user messages from three chat rooms
-    private async Task DeleteUserMessages(string userName)
-    {
-        var chatRooms = new[] { "chat1", "chat2", "chat3" };
-
-        var messages = DbContext.Messages
-            .Where(m => m.UserName == userName && chatRooms.Contains(m.ChatRoom))
-            .ToList();
-
-        DbContext.Messages.RemoveRange(messages);
-        await DbContext.SaveChangesAsync();
-
-        Console.WriteLine($"Deleted messages for user {userName} in 3 chat rooms.");
     }
 
     // ViewModel to hold user information
