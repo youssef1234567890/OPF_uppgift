@@ -6,107 +6,101 @@
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">BlazorApp</a>
+        <button @onclick="ToggleNavMenu" class="navbar-toggler">
+            ☰
+        </button>
     </div>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+@if (isNavOpen)
+{
+    <div class="nav-scrollable">
+        <nav class="d-flex flex-column">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="bi bi-house-door-fill" aria-hidden="true"></span> Home
+                </NavLink>
+            </div>
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="auth">
+                    <span class="bi bi-lock" aria-hidden="true"></span> Auth Required
+                </NavLink>
+            </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="auth">
-                <span class="bi bi-lock-nav-menu" aria-hidden="true"></span> Auth Required
-            </NavLink>
-        </div>
-
-        <AuthorizeView Context="authContext">
-            <Authorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Manage">
-                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> Manage Account
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/mainadmin">
-                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> mainadmin
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/admin">
-                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> admin
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/log">
-                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> Log messages
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/chat/Film">
-                        <span class="bi bi-chat-dots-fill-nav-menu" aria-hidden="true"></span> Chat for Films
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/chat/Games">
-                        <span class="bi bi-chat-dots-fill-nav-menu" aria-hidden="true"></span> Chat for Games
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/chat/Series">
-                        <span class="bi bi-chat-dots-fill-nav-menu" aria-hidden="true"></span> Chat for Series
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <form action="Account/Logout" method="post">
-                        <AntiforgeryToken />
-                        <input type="hidden" name="ReturnUrl" value="@currentUrl" />
-                        <button type="submit" class="nav-link">
-                            <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+            <AuthorizeView>
+                <Authorized>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Account/Manage">
+                            <span class="bi bi-person-fill" aria-hidden="true"></span> Manage Account
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/mainadmin">
+                            <span class="bi bi-person-fill" aria-hidden="true"></span> Main Admin
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/admin">
+                            <span class="bi bi-person-fill" aria-hidden="true"></span> Admin
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/log">
+                            <span class="bi bi-file-earmark-text" aria-hidden="true"></span> Log Messages
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/chat/Film">
+                            <span class="bi bi-chat-dots-fill" aria-hidden="true"></span> Chat for Films
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/chat/Games">
+                            <span class="bi bi-chat-dots-fill" aria-hidden="true"></span> Chat for Games
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/chat/Series">
+                            <span class="bi bi-chat-dots-fill" aria-hidden="true"></span> Chat for Series
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <button @onclick="Logout" class="nav-link">
+                            <span class="bi bi-arrow-bar-left" aria-hidden="true"></span> Logout
                         </button>
-                    </form>
-                </div>
-            </Authorized>
-            <NotAuthorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Register">
-                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Login">
-                        <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
-                    </NavLink>
-                </div>
-            </NotAuthorized>
-        </AuthorizeView>
-    </nav>
-</div>
+                    </div>
+                </Authorized>
+                <NotAuthorized>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Account/Register">
+                            <span class="bi bi-person" aria-hidden="true"></span> Register
+                        </NavLink>
+                    </div>
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="Account/Login">
+                            <span class="bi bi-person-badge" aria-hidden="true"></span> Login
+                        </NavLink>
+                    </div>
+                </NotAuthorized>
+            </AuthorizeView>
+        </nav>
+    </div>
+}
 
 @code {
     private string? currentUrl;
+    private bool isNavOpen = false;
 
     protected override void OnInitialized()
     {
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void ToggleNavMenu()
+    {
+        isNavOpen = !isNavOpen;
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
@@ -118,15 +112,17 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error updating location: {ex.Message}");
+            Console.Error.WriteLine($"Navigation error: {ex}");
         }
+    }
+
+    private void Logout()
+    {
+        NavigationManager.NavigateTo("Account/Logout", forceLoad: true);
     }
 
     public void Dispose()
     {
-        if (NavigationManager is not null)
-        {
-            NavigationManager.LocationChanged -= OnLocationChanged;
-        }
+        NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }
