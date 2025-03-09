@@ -13,48 +13,48 @@
 
 <PageTitle>Profile</PageTitle>
 
-<h3>Profile</h3>
-<StatusMessage />
+<div class="container mt-5">
+    <div class="card p-4 shadow-sm">
+        <h3 class="text-center mb-4">Manage Your Profile</h3>
+        <StatusMessage />
 
-<div class="row">
-    <div class="col-md-6">
         <EditForm Model="Input" FormName="profile" OnValidSubmit="OnValidSubmitAsync" method="post">
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert" />
             
             <div class="form-floating mb-3">
-                <input type="text" value="@username" class="form-control" placeholder="Please choose your username." disabled />
-                <label for="username" class="form-label">Username</label>
+                <input type="text" value="@username" class="form-control" placeholder="Username" disabled />
+                <label class="form-label">Username</label>
             </div>
 
             <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.Email" class="form-control" placeholder="Please enter your email." />
-                <label for="email" class="form-label">Email</label>
+                <InputText @bind-Value="Input.Email" class="form-control" placeholder="Email" />
+                <label class="form-label">Email</label>
                 <ValidationMessage For="() => Input.Email" class="text-danger" />
             </div>
 
             <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
-                <label for="phone-number" class="form-label">Phone number</label>
+                <InputText @bind-Value="Input.PhoneNumber" class="form-control" placeholder="Phone number" />
+                <label class="form-label">Phone Number</label>
                 <ValidationMessage For="() => Input.PhoneNumber" class="text-danger" />
             </div>
 
             <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="Input.NewPassword" class="form-control" placeholder="New password" />
-                <label for="new-password" class="form-label">New Password</label>
+                <label class="form-label">New Password</label>
                 <ValidationMessage For="() => Input.NewPassword" class="text-danger" />
             </div>
 
             <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control" placeholder="Confirm new password" />
-                <label for="confirm-password" class="form-label">Confirm Password</label>
+                <label class="form-label">Confirm Password</label>
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
             </div>
 
             <button type="submit" class="w-100 btn btn-lg btn-primary mb-3">Save Changes</button>
         </EditForm>
 
-        <div class="mt-4 border-top pt-4">
+        <div class="mt-4 border-top pt-4 text-center">
             <h4>Delete Account</h4>
             <p class="text-danger">Warning: This action cannot be undone.</p>
             <button @onclick="DeleteAccountAsync" class="btn btn-danger">Delete Account</button>

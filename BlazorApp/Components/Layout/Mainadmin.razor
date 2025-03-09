@@ -1,52 +1,59 @@
 @page "/mainadmin"
+
 @using BlazorApp.Data
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
 @attribute [Authorize(Roles = "mainadmin")]
 
-<h3>Main Admin Dashboard</h3>
-<p>Welcome, Main Admin!</p>
+<div class="container mt-5">
+    <div class="card p-4 shadow-sm">
+        <h3 class="text-center mb-4">Main Admin Dashboard</h3>
+        <p class="text-center">Welcome, Main Admin!</p>
 
-@if (loading)
-{
-    <p>Loading users...</p>
-}
-else if (users.Any())
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in users)
-            {
-                <tr>
-                    <td>@user.Email</td>
-                    <td>@(user.IsAdmin ? "Admin" : "User")</td>
-                    <td>
-                        @if (user.IsAdmin)
+        @if (loading)
+        {
+            <p class="text-center">Loading users...</p>
+        }
+        else if (users.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in users)
                         {
-                            <button class="btn btn-warning" @onclick="() => DemoteToUser(user.Id)">Demote to User</button>
+                            <tr>
+                                <td>@user.Email</td>
+                                <td>@(user.IsAdmin ? "Admin" : "User")</td>
+                                <td>
+                                    @if (user.IsAdmin)
+                                    {
+                                        <button class="btn btn-warning btn-sm" @onclick="() => DemoteToUser(user.Id)">Demote to User</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-primary btn-sm" @onclick="() => PromoteToAdmin(user.Id)">Promote to Admin</button>
+                                    }
+                                    <button class="btn btn-danger btn-sm ms-2" @onclick="() => DeleteUser(user.Id)">Delete User</button>
+                                </td>
+                            </tr>
                         }
-                        else
-                        {
-                            <button class="btn btn-primary" @onclick="() => PromoteToAdmin(user.Id)">Promote to Admin</button>
-                        }
-                        <button class="btn btn-danger" @onclick="() => DeleteUser(user.Id)">Delete User</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>No users found.</p>
-}
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-center text-muted">No users found.</p>
+        }
+    </div>
+</div>
 
 @code {
     private List<UserViewModel> users = new();
