@@ -1,4 +1,5 @@
 @page "/chat/Games"
+
 @using BlazorApp.Data
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
@@ -10,71 +11,74 @@
 @inject ChatContext dbContext
 @inject UserManager<ApplicationUser> UserManager
 
-<h3>Games Chat</h3>
+<div class="container mt-5">
+    <div class="card p-4 shadow-sm">
+        <h3 class="text-center mb-4">Games Chat</h3>
 
-<AuthorizeView>
-    <Authorized>
-        <!-- Message Input -->
-        <div>
-            <input type="text" @bind="newMessageText" @onkeypress="HandleKeyPress" placeholder="Enter message..." />
-            <button @onclick="SendMessage" disabled="@string.IsNullOrWhiteSpace(newMessageText)">Send</button>
-        </div>
+        <AuthorizeView>
+            <Authorized>
+                <div class="mb-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" @bind="newMessageText" @onkeypress="HandleKeyPress" placeholder="Enter message..." />
+                        <button class="btn btn-primary" @onclick="SendMessage" disabled="@string.IsNullOrWhiteSpace(newMessageText)">Send</button>
+                    </div>
+                </div>
 
-        <!-- Display Reply Context if exists -->
-        @if (!string.IsNullOrEmpty(replyingToMessage))
-        {
-            <div style="margin-top: 10px; padding: 5px; border-left: 3px solid #007bff;">
-                <strong>Replying to:</strong> @replyingToMessage
-                <button @onclick="CancelReply" style="margin-left: 10px;">Cancel</button>
-            </div>
-        }
-
-        <!-- Chat Messages Container -->
-        <div style="border: 1px solid #ccc; width: 600px; height: 400px; overflow-y: auto; margin-top: 10px;">
-            @if (messages.Any())
-            {
-                @foreach (var message in messages)
+                @if (!string.IsNullOrEmpty(replyingToMessage))
                 {
-                    <div style="margin: 5px;">
-                        <strong>@message.UserName</strong>: @message.Text
-                        <em>(@message.Timestamp.ToLocalTime())</em>
-
-                        <!-- Display reply reference if present -->
-                        @if (!string.IsNullOrEmpty(message.ReplyTo))
-                        {
-                            <div style="margin-left: 20px; font-style: italic; color: #555;">
-                                ↪️ Replying to: @message.ReplyTo
-                            </div>
-                        }
-
-                        <!-- Action Buttons: Reply/Delete -->
-                        <button @onclick="() => SetReplyContext(message.Text)">Reply</button>
-
-                        @if (message.UserName == currentUser || isAdmin)
-                        {
-                            <button @onclick="() => DeleteMessage(message.Id)">Delete</button>
-                        }
+                    <div class="alert alert-info d-flex justify-content-between align-items-center">
+                        <span><strong>Replying to:</strong> @replyingToMessage</span>
+                        <button class="btn btn-sm btn-outline-danger" @onclick="CancelReply">Cancel</button>
                     </div>
                 }
-            }
-            else
-            {
-                <div style="margin: 5px;">No messages yet.</div>
-            }
-        </div>
-    </Authorized>
 
-    <NotAuthorized>
-        <p>You must be logged in to access the chat.</p>
-    </NotAuthorized>
-</AuthorizeView>
+                <div class="chat-box border rounded p-3" style="max-width: 600px; height: 400px; overflow-y: auto; background-color: #f8f9fa;">
+                    @if (messages.Any())
+                    {
+                        @foreach (var message in messages)
+                        {
+                            <div class="border-bottom pb-2 mb-2">
+                                <strong>@message.UserName</strong>: @message.Text
+                                <em class="text-muted" style="font-size: 0.8rem;">(@message.Timestamp.ToLocalTime())</em>
+
+                                @if (!string.IsNullOrEmpty(message.ReplyTo))
+                                {
+                                    <div class="text-muted" style="margin-left: 20px; font-style: italic; font-size: 0.9rem;">
+                                        ↪️ Replying to: @message.ReplyTo
+                                    </div>
+                                }
+
+                                <div class="mt-2">
+                                    <button class="btn btn-sm btn-outline-primary" @onclick="() => SetReplyContext(message.Text)">Reply</button>
+
+                                    @if (message.UserName == currentUser || isAdmin)
+                                    {
+                                        <button class="btn btn-sm btn-outline-danger ms-2" @onclick="() => DeleteMessage(message.Id)">Delete</button>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center text-muted">No messages yet.</div>
+                    }
+                </div>
+            </Authorized>
+
+            <NotAuthorized>
+                <p class="text-center text-danger">You must be logged in to access the chat.</p>
+            </NotAuthorized>
+        </AuthorizeView>
+    </div>
+</div>
 
 @code {
     private string currentUser = string.Empty;
     private string newMessageText = string.Empty;
-    private string replyingToMessage = string.Empty; // Holds the message being replied to
+    private string replyingToMessage = string.Empty;
     private List<Message> messages = new();
-    private bool isAdmin = false; // Admin check
+    private bool isAdmin = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -85,7 +89,6 @@
         {
             currentUser = user.Identity.Name ?? "Unknown";
 
-            // Check if user is admin or mainadmin
             var identityUser = await UserManager.FindByNameAsync(currentUser);
             if (identityUser != null)
             {
@@ -94,14 +97,12 @@
             }
         }
 
-        // Load Games chat messages
         messages = await dbContext.Messages
                                   .Where(m => m.ChatRoom == "Games")
                                   .OrderBy(m => m.Timestamp)
                                   .ToListAsync();
     }
 
-    // Send message (with optional reply)
     private async Task SendMessage()
     {
         if (!string.IsNullOrWhiteSpace(newMessageText))
@@ -120,12 +121,11 @@
             messages.Add(message);
 
             newMessageText = string.Empty;
-            replyingToMessage = string.Empty; // Clear reply context
+            replyingToMessage = string.Empty;
             StateHasChanged();
         }
     }
 
-    // Allow sending message by pressing Enter key
     private async Task HandleKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
@@ -134,7 +134,6 @@
         }
     }
 
-    // Delete a message (only if owner or admin)
     private async Task DeleteMessage(int messageId)
     {
         var message = await dbContext.Messages.FindAsync(messageId);
@@ -147,13 +146,11 @@
         }
     }
 
-    // Set the reply context
     private void SetReplyContext(string originalMessage)
     {
         replyingToMessage = originalMessage;
     }
 
-    // Cancel replying
     private void CancelReply()
     {
         replyingToMessage = string.Empty;
