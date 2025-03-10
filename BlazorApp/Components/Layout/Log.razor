@@ -13,6 +13,21 @@
         <h3 class="text-center mb-4">Chat Log History</h3>
         <p class="text-center">View messages from Film, Games, and Series chat rooms.</p>
 
+        <!-- Sorting and filtering controls -->
+        <div class="mb-3 d-flex justify-content-between align-items-center">
+            <button class="btn btn-secondary" @onclick="ToggleSortOrder">
+                Sort by Date: @(sortDescending ? "Newest First" : "Oldest First")
+            </button>
+
+            <select class="form-select w-auto" @onchange="OnUserFilterChanged">
+                <option value="All" selected="@("All" == selectedUser)">All Users</option>
+                @foreach (var user in distinctUsers)
+                {
+                    <option value="@user" selected="@(user == selectedUser)">@user</option>
+                }
+            </select>
+        </div>
+
         @if (loading)
         {
             <p class="text-center">Loading logs...</p>
@@ -52,30 +67,71 @@
 
 @code {
     private List<Message> logs = new();
+    private List<string> distinctUsers = new();
     private bool loading = true;
+    private bool sortDescending = true;
+    private string selectedUser = "All";
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadDistinctUsersAsync();
         await LoadLogsAsync();
     }
 
+    // Loads a list of distinct users from the specified chat rooms for filtering
+    private async Task LoadDistinctUsersAsync()
+    {
+        try
+        {
+            distinctUsers = await dbContext.Messages
+                .Where(m => m.ChatRoom == "Film" || m.ChatRoom == "Games" || m.ChatRoom == "Series")
+                .Select(m => m.UserName)
+                .Distinct()
+                .OrderBy(u => u)
+                .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading distinct users: {ex.Message}");
+        }
+    }
+
+    // Loads logs based on the current filter (selectedUser) and sort order (sortDescending)
     private async Task LoadLogsAsync()
     {
         loading = true;
-
         try
         {
-            // Fetch messages from Film, Games, and Series chat rooms
-            logs = await dbContext.Messages
-                .Where(m => m.ChatRoom == "Film" || m.ChatRoom == "Games" || m.ChatRoom == "Series")
-                .OrderByDescending(m => m.Timestamp) // Show newest messages first
-                .ToListAsync();
+            IQueryable<Message> query = dbContext.Messages
+                .Where(m => m.ChatRoom == "Film" || m.ChatRoom == "Games" || m.ChatRoom == "Series");
+
+            if (selectedUser != "All")
+            {
+                query = query.Where(m => m.UserName == selectedUser);
+            }
+
+            query = sortDescending ? query.OrderByDescending(m => m.Timestamp) : query.OrderBy(m => m.Timestamp);
+
+            logs = await query.ToListAsync();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error loading logs: {ex.Message}");
         }
-
         loading = false;
+    }
+
+    // Toggle sort order between newest-first and oldest-first
+    private async Task ToggleSortOrder()
+    {
+        sortDescending = !sortDescending;
+        await LoadLogsAsync();
+    }
+
+    // Update the selected user filter when dropdown changes
+    private async Task OnUserFilterChanged(ChangeEventArgs e)
+    {
+        selectedUser = e.Value?.ToString() ?? "All";
+        await LoadLogsAsync();
     }
 }
