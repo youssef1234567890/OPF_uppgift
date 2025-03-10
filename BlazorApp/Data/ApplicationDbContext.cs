@@ -9,4 +9,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
+    public DbSet<Message> Messages { get; set; }  // Add this line
 }
