@@ -7,8 +7,10 @@ Detta projekt är en **forumapplikation byggd med Blazor Server**. Applikationen
 Projektet använder följande tekniker:  
 **Frontend:** Blazor Server (C\# och .NET)  
 **Backend:** ASP.NET Core  
-**Databas:** SQL Server / Entity Framework Core  
+**Databas:** SQLite / Entity Framework Core  
 **Autentisering & Auktorisering:** Identity Framework (för hantering av användare och roller)
+**How to use Main Admin role:** Navigera till Models/RoleInitializer.cs, på rad 30 finner du användarnamn med lösenord 
+på rad 43. Använd dom när du loggar in på Applikationen i syfte av full funktionalitetstest.
 
 1.---
 
