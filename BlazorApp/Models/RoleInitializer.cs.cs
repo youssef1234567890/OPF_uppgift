@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace YourAppNamespace.Identity
 {
-    // Replace 'ApplicationUser' with your actual Identity user class if it's named differently.
     public static class RoleInitializer
     {
         public static async Task InitializeAsync(IServiceProvider serviceProvider)
@@ -27,7 +26,6 @@ namespace YourAppNamespace.Identity
                 }
             }
 
-            // Optionally create the main admin account if it does not exist.
             // Use a secure email and password in a production environment.
             string mainAdminEmail = "mainadmin@example.com";
             var mainAdminUser = await userManager.FindByEmailAsync(mainAdminEmail);

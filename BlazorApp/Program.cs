@@ -32,9 +32,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 
-// You can switch to SQL Server by uncommenting below and commenting the SQLite code:
-// builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//     options.UseSqlServer(connectionString));
+
 
 // Add Identity services (this will configure authentication and role-based authorization)
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()

@@ -1,5 +1,5 @@
+@* Page declaration, using directives, and dependency injection *@
 @page "/chat/Games"
-
 @using BlazorApp.Data
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
@@ -11,12 +11,16 @@
 @inject ChatContext dbContext
 @inject UserManager<ApplicationUser> UserManager
 
+@* Main container for the Games chat UI *@
 <div class="container mt-5">
     <div class="card p-4 shadow-sm">
+        @* Chat title *@
         <h3 class="text-center mb-4">Games Chat</h3>
 
+        @* Display content based on user authorization *@
         <AuthorizeView>
             <Authorized>
+                @* Message input area with send button *@
                 <div class="mb-3">
                     <div class="input-group">
                         <input type="text" class="form-control" @bind="newMessageText" @onkeypress="HandleKeyPress" placeholder="Enter message..." />
@@ -24,6 +28,7 @@
                     </div>
                 </div>
 
+                @* If replying to a message, show the reply context with a cancel option *@
                 @if (!string.IsNullOrEmpty(replyingToMessage))
                 {
                     <div class="alert alert-info d-flex justify-content-between align-items-center">
@@ -32,6 +37,7 @@
                     </div>
                 }
 
+                @* Chat box: displays all messages in a scrollable container *@
                 <div class="chat-box border rounded p-3" style="max-width: 600px; height: 400px; overflow-y: auto; background-color: #f8f9fa;">
                     @if (messages.Any())
                     {
@@ -41,6 +47,7 @@
                                 <strong>@message.UserName</strong>: @message.Text
                                 <em class="text-muted" style="font-size: 0.8rem;">(@message.Timestamp.ToLocalTime())</em>
 
+                                @* Display reply context if available *@
                                 @if (!string.IsNullOrEmpty(message.ReplyTo))
                                 {
                                     <div class="text-muted" style="margin-left: 20px; font-style: italic; font-size: 0.9rem;">
@@ -48,9 +55,9 @@
                                     </div>
                                 }
 
+                                @* Action buttons for replying and deleting a message (if authorized) *@
                                 <div class="mt-2">
                                     <button class="btn btn-sm btn-outline-primary" @onclick="() => SetReplyContext(message.Text)">Reply</button>
-
                                     @if (message.UserName == currentUser || isAdmin)
                                     {
                                         <button class="btn btn-sm btn-outline-danger ms-2" @onclick="() => DeleteMessage(message.Id)">Delete</button>
@@ -66,6 +73,7 @@
                 </div>
             </Authorized>
 
+            @* Display message if user is not authorized *@
             <NotAuthorized>
                 <p class="text-center text-danger">You must be logged in to access the chat.</p>
             </NotAuthorized>
@@ -73,13 +81,16 @@
     </div>
 </div>
 
+@* Code block: handles state and event logic for the Games chat *@
 @code {
+    // Variables to track current user, message input, reply context, and chat messages
     private string currentUser = string.Empty;
     private string newMessageText = string.Empty;
     private string replyingToMessage = string.Empty;
     private List<Message> messages = new();
     private bool isAdmin = false;
 
+    // Initialization: fetch current user info and load chat messages for "Games"
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -97,12 +108,14 @@
             }
         }
 
+        // Load messages only from the "Games" chat room ordered by timestamp
         messages = await dbContext.Messages
                                   .Where(m => m.ChatRoom == "Games")
                                   .OrderBy(m => m.Timestamp)
                                   .ToListAsync();
     }
 
+    // SendMessage: creates and saves a new message, then updates the UI
     private async Task SendMessage()
     {
         if (!string.IsNullOrWhiteSpace(newMessageText))
@@ -126,6 +139,7 @@
         }
     }
 
+    // HandleKeyPress: sends the message when Enter key is pressed
     private async Task HandleKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
@@ -134,6 +148,7 @@
         }
     }
 
+    // DeleteMessage: removes a message if the current user is the owner or an admin
     private async Task DeleteMessage(int messageId)
     {
         var message = await dbContext.Messages.FindAsync(messageId);
@@ -146,11 +161,13 @@
         }
     }
 
+    // SetReplyContext: sets the reply context to the selected message text
     private void SetReplyContext(string originalMessage)
     {
         replyingToMessage = originalMessage;
     }
 
+    // CancelReply: clears the current reply context
     private void CancelReply()
     {
         replyingToMessage = string.Empty;

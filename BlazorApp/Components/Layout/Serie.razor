@@ -80,6 +80,7 @@
     private List<Message> messages = new();
     private bool isAdmin = false;
 
+    // Initializes the component and loads messages from the database
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
@@ -103,6 +104,7 @@
                                   .ToListAsync();
     }
 
+    // Sends a new message to the chat
     private async Task SendMessage()
     {
         if (!string.IsNullOrWhiteSpace(newMessageText))
@@ -126,6 +128,7 @@
         }
     }
 
+    // Handles the Enter key press to send a message
     private async Task HandleKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
@@ -134,6 +137,7 @@
         }
     }
 
+    // Deletes a message from the chat
     private async Task DeleteMessage(int messageId)
     {
         var message = await dbContext.Messages.FindAsync(messageId);
@@ -146,11 +150,13 @@
         }
     }
 
+    // Sets the context for replying to a message
     private void SetReplyContext(string originalMessage)
     {
         replyingToMessage = originalMessage;
     }
 
+    // Cancels the reply context
     private void CancelReply()
     {
         replyingToMessage = string.Empty;

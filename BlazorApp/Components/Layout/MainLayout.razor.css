@@ -1,17 +1,21 @@
+/* Page container styling: sets relative positioning and vertical flex layout */
 .page {
     position: relative;
     display: flex;
     flex-direction: column;
 }
 
+/* Main content area styling: allows main to grow and fill available space */
 main {
     flex: 1;
 }
 
+/* Sidebar styling: applies a vertical gradient background */
 .sidebar {
     background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
 }
 
+/* Top row styling: header bar with light background and bottom border */
 .top-row {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
@@ -21,36 +25,45 @@ main {
     align-items: center;
 }
 
-    .top-row ::deep a, .top-row ::deep .btn-link {
-        white-space: nowrap;
-        margin-left: 1.5rem;
-        text-decoration: none;
-    }
+/* Styling for links and button links in top row: prevents wrapping and adds margin */
+.top-row ::deep a, .top-row ::deep .btn-link {
+    white-space: nowrap;
+    margin-left: 1.5rem;
+    text-decoration: none;
+}
 
-    .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
-        text-decoration: underline;
-    }
+/* Hover effects for top row links and button links */
+.top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
+    text-decoration: underline;
+}
 
-    .top-row ::deep a:first-child {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+/* First link in top row: ensures text overflow is handled with ellipsis */
+.top-row ::deep a:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
+/* Responsive styling for small screens (max-width: 640.98px) */
 @media (max-width: 640.98px) {
+    /* Adjust top row layout to space items evenly */
     .top-row {
         justify-content: space-between;
     }
 
+    /* Remove left margin for links and button links in top row */
     .top-row ::deep a, .top-row ::deep .btn-link {
         margin-left: 0;
     }
 }
 
+/* Responsive styling for larger screens (min-width: 641px) */
 @media (min-width: 641px) {
+    /* Change page layout to row direction for wider displays */
     .page {
         flex-direction: row;
     }
 
+    /* Sidebar becomes sticky and fixed width on large screens */
     .sidebar {
         width: 250px;
         height: 100vh;
@@ -58,24 +71,28 @@ main {
         top: 0;
     }
 
+    /* Top row becomes sticky and stays on top with high z-index */
     .top-row {
         position: sticky;
         top: 0;
         z-index: 1;
     }
 
+    /* Adjust first link styling in top row for authenticated views */
     .top-row.auth ::deep a:first-child {
         flex: 1;
         text-align: right;
         width: 0;
     }
 
+    /* Add horizontal padding to top row and article elements */
     .top-row, article {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }
 }
 
+/* Blazor error UI panel styling */
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -88,9 +105,10 @@ main {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+/* Styling for the dismiss button inside the Blazor error UI panel */
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}

@@ -1,5 +1,5 @@
+@* Page declaration, using directives, and dependency injection *@
 @page "/log"
-
 @using BlazorApp.Data
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
@@ -8,17 +8,21 @@
 @inject ChatContext dbContext
 @inject UserManager<ApplicationUser> UserManager
 
+@* Container for the Chat Log History UI *@
 <div class="container mt-5">
     <div class="card p-4 shadow-sm">
+        @* Page title and description *@
         <h3 class="text-center mb-4">Chat Log History</h3>
         <p class="text-center">View messages from Film, Games, and Series chat rooms.</p>
 
-        <!-- Sorting and filtering controls -->
+        @* Sorting and filtering controls block *@
         <div class="mb-3 d-flex justify-content-between align-items-center">
+            @* Toggle button for sorting by date (newest or oldest first) *@
             <button class="btn btn-secondary" @onclick="ToggleSortOrder">
                 Sort by Date: @(sortDescending ? "Newest First" : "Oldest First")
             </button>
 
+            @* Dropdown to filter logs by user *@
             <select class="form-select w-auto" @onchange="OnUserFilterChanged">
                 <option value="All" selected="@("All" == selectedUser)">All Users</option>
                 @foreach (var user in distinctUsers)
@@ -28,6 +32,7 @@
             </select>
         </div>
 
+        @* Display loading message or logs table if available *@
         @if (loading)
         {
             <p class="text-center">Loading logs...</p>
@@ -65,20 +70,23 @@
     </div>
 </div>
 
+@* Code block: handles data loading, sorting, and filtering logic *@
 @code {
+    // Local variables to store logs, distinct user list, and UI state flags
     private List<Message> logs = new();
     private List<string> distinctUsers = new();
     private bool loading = true;
     private bool sortDescending = true;
     private string selectedUser = "All";
 
+    // On component initialization, load distinct users and logs
     protected override async Task OnInitializedAsync()
     {
         await LoadDistinctUsersAsync();
         await LoadLogsAsync();
     }
 
-    // Loads a list of distinct users from the specified chat rooms for filtering
+    // LoadDistinctUsersAsync: Fetch distinct users from specified chat rooms for filtering
     private async Task LoadDistinctUsersAsync()
     {
         try
@@ -96,7 +104,7 @@
         }
     }
 
-    // Loads logs based on the current filter (selectedUser) and sort order (sortDescending)
+    // LoadLogsAsync: Retrieve logs based on selected user filter and sort order
     private async Task LoadLogsAsync()
     {
         loading = true;
@@ -111,7 +119,6 @@
             }
 
             query = sortDescending ? query.OrderByDescending(m => m.Timestamp) : query.OrderBy(m => m.Timestamp);
-
             logs = await query.ToListAsync();
         }
         catch (Exception ex)
@@ -121,14 +128,14 @@
         loading = false;
     }
 
-    // Toggle sort order between newest-first and oldest-first
+    // ToggleSortOrder: Toggle between newest-first and oldest-first, then reload logs
     private async Task ToggleSortOrder()
     {
         sortDescending = !sortDescending;
         await LoadLogsAsync();
     }
 
-    // Update the selected user filter when dropdown changes
+    // OnUserFilterChanged: Update the selected user filter and reload logs when dropdown changes
     private async Task OnUserFilterChanged(ChangeEventArgs e)
     {
         selectedUser = e.Value?.ToString() ?? "All";

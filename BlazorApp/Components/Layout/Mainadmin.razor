@@ -1,15 +1,18 @@
+@* Page declaration and role restriction: Only mainadmin can access *@
 @page "/mainadmin"
-
 @using BlazorApp.Data
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
 @attribute [Authorize(Roles = "mainadmin")]
 
+@* Main container for the Main Admin Dashboard UI *@
 <div class="container mt-5">
     <div class="card p-4 shadow-sm">
+        @* Dashboard title and welcome message *@
         <h3 class="text-center mb-4">Main Admin Dashboard</h3>
         <p class="text-center">Welcome, Main Admin!</p>
 
+        @* Loading indicator or user table based on data availability *@
         @if (loading)
         {
             <p class="text-center">Loading users...</p>
@@ -26,11 +29,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @* Iterate over users and display their info with action buttons *@
                         @foreach (var user in users)
                         {
                             <tr>
                                 <td>@user.Email</td>
                                 <td>
+                                    @* Show role based on user flags *@
                                     @if (user.IsMainAdmin)
                                     {
                                         <span>Main Admin</span>
@@ -45,6 +50,7 @@
                                     }
                                 </td>
                                 <td>
+                                    @* Show action buttons only if the user is not a mainadmin *@
                                     @if (!user.IsMainAdmin)
                                     {
                                         @if (user.IsAdmin)
@@ -75,18 +81,23 @@
     </div>
 </div>
 
+@* Code block: handles user management and dashboard actions *@
 @code {
+    // List to hold user view models and loading flag
     private List<UserViewModel> users = new();
     private bool loading = true;
 
+    // Inject UserManager and NavigationManager services
     [Inject] private UserManager<ApplicationUser> UserManager { get; set; } = default!;
     [Inject] private NavigationManager Navigation { get; set; } = default!;
 
+    // On initialization, load user data asynchronously
     protected override async Task OnInitializedAsync()
     {
         await LoadUsersAsync();
     }
 
+    // LoadUsersAsync: Retrieve all users and map roles to view models
     private async Task LoadUsersAsync()
     {
         loading = true;
@@ -108,6 +119,7 @@
         loading = false;
     }
 
+    // PromoteToAdmin: Adds "admin" role to the user if not already an admin
     private async Task PromoteToAdmin(string userId)
     {
         var user = await UserManager.FindByIdAsync(userId);
@@ -118,6 +130,7 @@
         }
     }
 
+    // DemoteToUser: Removes "admin" role from the user if they are currently an admin
     private async Task DemoteToUser(string userId)
     {
         var user = await UserManager.FindByIdAsync(userId);
@@ -128,6 +141,7 @@
         }
     }
 
+    // DeleteUser: Deletes a user if they are not a mainadmin
     private async Task DeleteUser(string userId)
     {
         var user = await UserManager.FindByIdAsync(userId);
@@ -145,6 +159,7 @@
         }
     }
 
+    // UserViewModel: Holds user data and role flags for display
     private class UserViewModel
     {
         public required string Id { get; set; }
