@@ -30,17 +30,37 @@
                         {
                             <tr>
                                 <td>@user.Email</td>
-                                <td>@(user.IsAdmin ? "Admin" : "User")</td>
                                 <td>
-                                    @if (user.IsAdmin)
+                                    @if (user.IsMainAdmin)
                                     {
-                                        <button class="btn btn-warning btn-sm" @onclick="() => DemoteToUser(user.Id)">Demote to User</button>
+                                        <span>Main Admin</span>
+                                    }
+                                    else if (user.IsAdmin)
+                                    {
+                                        <span>Admin</span>
                                     }
                                     else
                                     {
-                                        <button class="btn btn-primary btn-sm" @onclick="() => PromoteToAdmin(user.Id)">Promote to Admin</button>
+                                        <span>User</span>
                                     }
-                                    <button class="btn btn-danger btn-sm ms-2" @onclick="() => DeleteUser(user.Id)">Delete User</button>
+                                </td>
+                                <td>
+                                    @if (!user.IsMainAdmin)
+                                    {
+                                        @if (user.IsAdmin)
+                                        {
+                                            <button class="btn btn-warning btn-sm" @onclick="() => DemoteToUser(user.Id)">Demote to User</button>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-primary btn-sm" @onclick="() => PromoteToAdmin(user.Id)">Promote to Admin</button>
+                                        }
+                                        <button class="btn btn-danger btn-sm ms-2" @onclick="() => DeleteUser(user.Id)">Delete User</button>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No actions</span>
+                                    }
                                 </td>
                             </tr>
                         }
@@ -60,17 +80,13 @@
     private bool loading = true;
 
     [Inject] private UserManager<ApplicationUser> UserManager { get; set; } = default!;
-    [Inject] private RoleManager<IdentityRole> RoleManager { get; set; } = default!;
-    [Inject] private ApplicationDbContext DbContext { get; set; } = default!;
     [Inject] private NavigationManager Navigation { get; set; } = default!;
 
-    // Load users on component initialization
     protected override async Task OnInitializedAsync()
     {
         await LoadUsersAsync();
     }
 
-    // Load all users with role information
     private async Task LoadUsersAsync()
     {
         loading = true;
@@ -85,13 +101,13 @@
                 Id = user.Id,
                 Email = user.Email!,
                 UserName = user.UserName!,
-                IsAdmin = roles.Contains("admin")
+                IsAdmin = roles.Contains("admin"),
+                IsMainAdmin = roles.Contains("mainadmin")
             });
         }
         loading = false;
     }
 
-    // Promote user to Admin role
     private async Task PromoteToAdmin(string userId)
     {
         var user = await UserManager.FindByIdAsync(userId);
@@ -102,7 +118,6 @@
         }
     }
 
-    // Demote Admin to User role
     private async Task DemoteToUser(string userId)
     {
         var user = await UserManager.FindByIdAsync(userId);
@@ -113,23 +128,29 @@
         }
     }
 
-    // Delete a user
     private async Task DeleteUser(string userId)
     {
         var user = await UserManager.FindByIdAsync(userId);
         if (user != null)
         {
+            // Prevent deletion if the user is a mainadmin
+            if (await UserManager.IsInRoleAsync(user, "mainadmin"))
+            {
+                Console.WriteLine("Cannot delete a mainadmin.");
+                return;
+            }
+
             await UserManager.DeleteAsync(user);
             await LoadUsersAsync(); // Refresh list after deletion
         }
     }
 
-    // ViewModel to hold user information
     private class UserViewModel
     {
         public required string Id { get; set; }
         public required string Email { get; set; }
         public required string UserName { get; set; }
         public bool IsAdmin { get; set; }
+        public bool IsMainAdmin { get; set; }
     }
 }
