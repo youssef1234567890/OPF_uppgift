@@ -4,7 +4,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.EntityFrameworkCore
-@attribute [Authorize(Roles = "admin,mainadmin")]
+@attribute [Authorize]
 @inject ChatContext dbContext
 @inject UserManager<ApplicationUser> UserManager
 
