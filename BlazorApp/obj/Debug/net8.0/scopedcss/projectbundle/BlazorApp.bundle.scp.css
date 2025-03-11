@@ -1,22 +1,22 @@
 /* _content/BlazorApp/Components/Layout/MainLayout.razor.rz.scp.css */
-/* Page container styling: sets relative positioning and vertical flex layout */
+
 .page[b-qgsvw684bo] {
     position: relative;
     display: flex;
     flex-direction: column;
 }
 
-/* Main content area styling: allows main to grow and fill available space */
+
 main[b-qgsvw684bo] {
     flex: 1;
 }
 
-/* Sidebar styling: applies a vertical gradient background */
+
 .sidebar[b-qgsvw684bo] {
     background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
 }
 
-/* Top row styling: header bar with light background and bottom border */
+
 .top-row[b-qgsvw684bo] {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
@@ -26,45 +26,45 @@ main[b-qgsvw684bo] {
     align-items: center;
 }
 
-/* Styling for links and button links in top row: prevents wrapping and adds margin */
+
 .top-row[b-qgsvw684bo]  a, .top-row[b-qgsvw684bo]  .btn-link {
     white-space: nowrap;
     margin-left: 1.5rem;
     text-decoration: none;
 }
 
-/* Hover effects for top row links and button links */
+
 .top-row[b-qgsvw684bo]  a:hover, .top-row[b-qgsvw684bo]  .btn-link:hover {
     text-decoration: underline;
 }
 
-/* First link in top row: ensures text overflow is handled with ellipsis */
+
 .top-row[b-qgsvw684bo]  a:first-child {
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* Responsive styling for small screens (max-width: 640.98px) */
+
 @media (max-width: 640.98px) {
-    /* Adjust top row layout to space items evenly */
+    
     .top-row[b-qgsvw684bo] {
         justify-content: space-between;
     }
 
-    /* Remove left margin for links and button links in top row */
+    
     .top-row[b-qgsvw684bo]  a, .top-row[b-qgsvw684bo]  .btn-link {
         margin-left: 0;
     }
 }
 
-/* Responsive styling for larger screens (min-width: 641px) */
+
 @media (min-width: 641px) {
-    /* Change page layout to row direction for wider displays */
+    
     .page[b-qgsvw684bo] {
         flex-direction: row;
     }
 
-    /* Sidebar becomes sticky and fixed width on large screens */
+    
     .sidebar[b-qgsvw684bo] {
         width: 250px;
         height: 100vh;
@@ -72,28 +72,28 @@ main[b-qgsvw684bo] {
         top: 0;
     }
 
-    /* Top row becomes sticky and stays on top with high z-index */
+    
     .top-row[b-qgsvw684bo] {
         position: sticky;
         top: 0;
         z-index: 1;
     }
 
-    /* Adjust first link styling in top row for authenticated views */
+    
     .top-row.auth[b-qgsvw684bo]  a:first-child {
         flex: 1;
         text-align: right;
         width: 0;
     }
 
-    /* Add horizontal padding to top row and article elements */
+    
     .top-row[b-qgsvw684bo], article[b-qgsvw684bo] {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }
 }
 
-/* Blazor error UI panel styling */
+
 #blazor-error-ui[b-qgsvw684bo] {
     background: lightyellow;
     bottom: 0;
@@ -106,7 +106,7 @@ main[b-qgsvw684bo] {
     z-index: 1000;
 }
 
-/* Styling for the dismiss button inside the Blazor error UI panel */
+
 #blazor-error-ui .dismiss[b-qgsvw684bo] {
     cursor: pointer;
     position: absolute;
@@ -114,15 +114,15 @@ main[b-qgsvw684bo] {
     top: 0.5rem;
 }
 /* _content/BlazorApp/Components/Layout/NavMenu.razor.rz.scp.css */
-/* Navbar styling */
+
 .navbar[b-g8o6n169oq] {
-    background-color: #343a40; /* Dark background */
+    background-color: #343a40; 
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Navbar brand (logo) */
+
 .navbar-brand[b-g8o6n169oq] {
     font-size: 1.4rem;
     font-weight: bold;
@@ -133,7 +133,7 @@ main[b-qgsvw684bo] {
     text-decoration: none;
 }
 
-/* Navbar toggle button (for mobile menu) */
+
 .navbar-toggler[b-g8o6n169oq] {
     border: none;
     background: none;
@@ -147,7 +147,7 @@ main[b-qgsvw684bo] {
     transform: scale(1.1);
 }
 
-/* Navigation container */
+
 .nav-scrollable[b-g8o6n169oq] {
     display: flex;
     flex-direction: column;
@@ -156,7 +156,7 @@ main[b-qgsvw684bo] {
     margin-top: 1rem;
 }
 
-/* Navigation items */
+
 .nav-item[b-g8o6n169oq] {
     list-style: none;
     padding: 0.75rem 1rem;
@@ -167,13 +167,13 @@ main[b-qgsvw684bo] {
 }
 
 .nav-item:hover[b-g8o6n169oq] {
-    transform: translateX(5px); /* Moves slightly to the right when hovered */
+    transform: translateX(5px); 
 }
 
-/* NavLink styling */
+
 .nav-link[b-g8o6n169oq] {
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.75); /* Slightly transparent white */
+    color: rgba(255, 255, 255, 0.75); 
     font-size: 1rem;
     font-weight: 500;
     padding: 0.5rem 1rem;
@@ -185,20 +185,20 @@ main[b-qgsvw684bo] {
     transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
 }
 
-/* Hover effect: Turns text pure white */
+
 .nav-link:hover[b-g8o6n169oq],
 .nav-link:focus[b-g8o6n169oq] {
     color: white;
-    background: rgba(255, 255, 255, 0.1); /* Slightly highlights the background */
+    background: rgba(255, 255, 255, 0.1); 
 }
 
-/* Active link styling */
+
 .nav-link.active[b-g8o6n169oq] {
     background: rgba(255, 255, 255, 0.3);
     color: white;
 }
 
-/* Navbar icons */
+
 .nav-icon[b-g8o6n169oq] {
     width: 20px;
     height: 20px;
@@ -207,7 +207,7 @@ main[b-qgsvw684bo] {
     background-repeat: no-repeat;
 }
 
-/* Responsive styling: Desktop layout */
+
 @media (min-width: 768px) {
     .nav-scrollable[b-g8o6n169oq] {
         flex-direction: row;
