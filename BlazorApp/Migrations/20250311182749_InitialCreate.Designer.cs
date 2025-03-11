@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BlazorApp.Migrations.ApplicationDb
+namespace BlazorApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250311155341_UpdateMessageAndIdentity")]
-    partial class UpdateMessageAndIdentity
+    [Migration("20250311182749_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

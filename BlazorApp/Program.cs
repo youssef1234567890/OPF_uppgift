@@ -13,7 +13,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // Configure ChatContext for your chat data (Messages table)
-builder.Services.AddDbContext<ChatContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite("Data Source=chat.db"));
 
 // Set up Blazor authentication and authorization
@@ -26,16 +26,14 @@ builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuth
 // For a unified database, point this to the same chat.db file.
 // Ensure your connection string (or fallback) is set correctly.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-    ?? "Data Source=chat.db;Cache=Shared";
+?? "Data Source=chat.db;Cache=Shared";
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
-
-
-// Add Identity services to enable user authentication and role management.
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
 
 // If needed, you can configure IdentityCore with additional options as well:
 // builder.Services.AddIdentityCore<ApplicationUser>(options =>
