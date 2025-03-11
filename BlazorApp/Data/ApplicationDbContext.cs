@@ -1,24 +1,33 @@
-using BlazorApp.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+namespace BlazorApp.Data
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-    }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
 
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
-        // Configure the relationship between Message and ApplicationUser
-        builder.Entity<Message>()
-            .HasOne(m => m.ApplicationUser)
-            .WithMany(u => u.Messages)
-            .HasForeignKey(m => m.ApplicationUserId)
-            .OnDelete(DeleteBehavior.Cascade); // This will cascade delete messages when the user is deleted.
-    }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Thread> Threads { get; set; }
 
-    public DbSet<Message> Messages { get; set; }  // Add this line
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            // Configure relationships as needed
+            builder.Entity<Message>()
+                .HasOne(m => m.ApplicationUser)
+                .WithMany(u => u.Messages)
+                .HasForeignKey(m => m.ApplicationUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Message>()
+                .HasOne(m => m.Thread)
+                .WithMany(static t => t.Messages)
+                .HasForeignKey(m => m.ThreadId)
+                .OnDelete(DeleteBehavior.SetNull);
+        }
+    }
 }

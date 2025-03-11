@@ -3,51 +3,6 @@
   "ManifestType": "Build",
   "Endpoints": [
     {
-      "Route": "BlazorApp.eh41u7y1nw.styles.css",
-      "AssetFile": "BlazorApp.styles.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "5865"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 16:39:41 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "eh41u7y1nw"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs="
-        },
-        {
-          "Name": "label",
-          "Value": "BlazorApp.styles.css"
-        }
-      ]
-    },
-    {
       "Route": "BlazorApp.styles.css",
       "AssetFile": "BlazorApp.styles.css",
       "Selectors": [],
@@ -62,7 +17,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5865"
+          "Value": "4287"
         },
         {
           "Name": "Content-Type",
@@ -70,17 +25,62 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs=\""
+          "Value": "\"15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 16:39:41 GMT"
+          "Value": "Tue, 11 Mar 2025 20:16:27 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs="
+          "Value": "sha256-15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI="
+        }
+      ]
+    },
+    {
+      "Route": "BlazorApp.tndg6gwn0h.styles.css",
+      "AssetFile": "BlazorApp.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4287"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 11 Mar 2025 20:16:27 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tndg6gwn0h"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI="
+        },
+        {
+          "Name": "label",
+          "Value": "BlazorApp.styles.css"
         }
       ]
     },

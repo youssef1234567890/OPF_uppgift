@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "OOtY2PeVsfBXqBst1dMyQh8U+iQPJfHsTCyQGyjY35w=",
+  "Hash": "HY725EUqPF1i++kqRrTX+F9rA0LQrv7sCACo+3XgoXU=",
   "Source": "BlazorApp",
   "BasePath": "_content/BlazorApp",
   "Mode": "Default",
@@ -31,8 +31,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ApplicationBundle",
-      "Fingerprint": "eh41u7y1nw",
-      "Integrity": "8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs=",
+      "Fingerprint": "tndg6gwn0h",
+      "Integrity": "15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp.styles.css"
@@ -52,8 +52,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ProjectBundle",
-      "Fingerprint": "eh41u7y1nw",
-      "Integrity": "8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs=",
+      "Fingerprint": "tndg6gwn0h",
+      "Integrity": "15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css"
@@ -237,7 +237,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5865"
+          "Value": "4287"
         },
         {
           "Name": "Content-Type",
@@ -245,11 +245,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs=\""
+          "Value": "\"15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 16:39:41 GMT"
+          "Value": "Tue, 11 Mar 2025 20:16:27 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -259,97 +259,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs="
-        }
-      ]
-    },
-    {
-      "Route": "BlazorApp.eh41u7y1nw.bundle.scp.css",
-      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "5865"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 16:39:41 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "eh41u7y1nw"
-        },
-        {
-          "Name": "label",
-          "Value": "BlazorApp.bundle.scp.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs="
-        }
-      ]
-    },
-    {
-      "Route": "BlazorApp.eh41u7y1nw.styles.css",
-      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp.styles.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "5865"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 16:39:41 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "eh41u7y1nw"
-        },
-        {
-          "Name": "label",
-          "Value": "BlazorApp.styles.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs="
+          "Value": "sha256-15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI="
         }
       ]
     },
@@ -364,7 +274,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5865"
+          "Value": "4287"
         },
         {
           "Name": "Content-Type",
@@ -372,11 +282,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs=\""
+          "Value": "\"15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 11 Mar 2025 16:39:41 GMT"
+          "Value": "Tue, 11 Mar 2025 20:16:27 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -386,7 +296,97 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-8oYxER6kKHk27MspzsZ7Vub48SBEmoCBKxXinbBcSBs="
+          "Value": "sha256-15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI="
+        }
+      ]
+    },
+    {
+      "Route": "BlazorApp.tndg6gwn0h.bundle.scp.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4287"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 11 Mar 2025 20:16:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tndg6gwn0h"
+        },
+        {
+          "Name": "label",
+          "Value": "BlazorApp.bundle.scp.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI="
+        }
+      ]
+    },
+    {
+      "Route": "BlazorApp.tndg6gwn0h.styles.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4287"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 11 Mar 2025 20:16:27 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tndg6gwn0h"
+        },
+        {
+          "Name": "label",
+          "Value": "BlazorApp.styles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-15DiAYemuhynTdj1j2KnLgS2/vhtXoejR3ZHnJjkyNI="
         }
       ]
     },
