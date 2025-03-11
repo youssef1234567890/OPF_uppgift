@@ -40,6 +40,13 @@
             </div>
 
             <div class="form-floating mb-3">
+                <InputText type="password" @bind-Value="Input.CurrentPassword" class="form-control" placeholder="Current password" />
+                <label class="form-label">Current Password</label>
+                <ValidationMessage For="() => Input.CurrentPassword" class="text-danger" />
+            </div>
+
+
+            <div class="form-floating mb-3">
                 <InputText type="password" @bind-Value="Input.NewPassword" class="form-control" placeholder="New password" />
                 <label class="form-label">New Password</label>
                 <ValidationMessage For="() => Input.NewPassword" class="text-danger" />
@@ -86,71 +93,106 @@
     }
 
     private async Task OnValidSubmitAsync()
+{
+    var hasChanges = false;
+
+    if (Input.PhoneNumber != phoneNumber)
     {
-        var hasChanges = false;
-
-        if (Input.PhoneNumber != phoneNumber)
+        var setPhoneResult = await UserManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
+        if (!setPhoneResult.Succeeded)
         {
-            var setPhoneResult = await UserManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-            if (!setPhoneResult.Succeeded)
-            {
-                RedirectManager.RedirectToCurrentPageWithStatus("Error: Failed to set phone number.", HttpContext);
-                return;
-            }
-            hasChanges = true;
+            RedirectManager.RedirectToCurrentPageWithStatus("Error: Failed to set phone number.", HttpContext);
+            return;
+        }
+        hasChanges = true;
+    }
+
+    if (!string.IsNullOrEmpty(Input.Email) && Input.Email != email)
+    {
+        var setEmailResult = await UserManager.SetEmailAsync(user, Input.Email);
+        if (!setEmailResult.Succeeded)
+        {
+            RedirectManager.RedirectToCurrentPageWithStatus("Error: Failed to update email.", HttpContext);
+            return;
+        }
+        hasChanges = true;
+    }
+
+    if (!string.IsNullOrEmpty(Input.NewPassword))
+    {
+        if (Input.NewPassword != Input.ConfirmPassword)
+        {
+            RedirectManager.RedirectToCurrentPageWithStatus("Error: Passwords do not match.", HttpContext);
+            return;
         }
 
-        if (!string.IsNullOrEmpty(Input.Email) && Input.Email != email)
+        if (await UserManager.HasPasswordAsync(user))
         {
-            var setEmailResult = await UserManager.SetEmailAsync(user, Input.Email);
-            if (!setEmailResult.Succeeded)
+            // If the user already has a password, require the current password
+            if (string.IsNullOrEmpty(Input.CurrentPassword))
             {
-                RedirectManager.RedirectToCurrentPageWithStatus("Error: Failed to update email.", HttpContext);
-                return;
-            }
-            hasChanges = true;
-        }
-
-        if (!string.IsNullOrEmpty(Input.NewPassword))
-        {
-            if (Input.NewPassword != Input.ConfirmPassword)
-            {
-                RedirectManager.RedirectToCurrentPageWithStatus("Error: Passwords do not match.", HttpContext);
+                RedirectManager.RedirectToCurrentPageWithStatus("Error: Please enter your current password.", HttpContext);
                 return;
             }
 
-            var changePasswordResult = await UserManager.AddPasswordAsync(user, Input.NewPassword);
+            var changePasswordResult = await UserManager.ChangePasswordAsync(user, Input.CurrentPassword, Input.NewPassword);
             if (!changePasswordResult.Succeeded)
             {
                 RedirectManager.RedirectToCurrentPageWithStatus("Error: Failed to update password.", HttpContext);
                 return;
             }
-            hasChanges = true;
         }
-
-        if (hasChanges)
+        else
         {
-            await SignInManager.RefreshSignInAsync(user);
-            RedirectManager.RedirectToCurrentPageWithStatus("Your profile has been updated", HttpContext);
+            // If the user does not have a password, add one
+            var addPasswordResult = await UserManager.AddPasswordAsync(user, Input.NewPassword);
+            if (!addPasswordResult.Succeeded)
+            {
+                RedirectManager.RedirectToCurrentPageWithStatus("Error: Failed to update password.", HttpContext);
+                return;
+            }
         }
+        hasChanges = true;
     }
+
+    if (hasChanges)
+    {
+        await SignInManager.RefreshSignInAsync(user);
+        RedirectManager.RedirectToCurrentPageWithStatus("Your profile has been updated", HttpContext);
+    }
+}
+
 
     private async Task DeleteAccountAsync()
+{
+    Console.WriteLine("DeleteAccountAsync triggered.");
+    
+    // Confirm deletion using JavaScript
+    bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete your account? This action cannot be undone.");
+    Console.WriteLine($"Confirm result: {confirmed}");
+    
+    if (!confirmed)
     {
-        if (await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete your account? This action cannot be undone."))
-        {
-            var result = await UserManager.DeleteAsync(user);
-            if (result.Succeeded)
-            {
-                await SignInManager.SignOutAsync();
-                NavigationManager.NavigateTo("/");
-            }
-            else
-            {
-                RedirectManager.RedirectToCurrentPageWithStatus("Error: Failed to delete account.", HttpContext);
-            }
-        }
+        Console.WriteLine("User cancelled deletion.");
+        return;
     }
+
+    // Attempt to delete the user
+    var result = await UserManager.DeleteAsync(user);
+    if (result.Succeeded)
+    {
+        Console.WriteLine("User deleted successfully.");
+        await SignInManager.SignOutAsync();
+        NavigationManager.NavigateTo("/");
+    }
+    else
+    {
+        var errors = string.Join("; ", result.Errors.Select(e => e.Description));
+        Console.WriteLine($"Deletion failed: {errors}");
+        RedirectManager.RedirectToCurrentPageWithStatus($"Error: Failed to delete account. {errors}", HttpContext);
+    }
+}
+
 
     private sealed class InputModel
     {
@@ -161,6 +203,9 @@
         [EmailAddress]
         [Display(Name = "Email")]
         public string? Email { get; set; }
+
+        [Display(Name = "Current password")]
+        public string? CurrentPassword { get; set; }
 
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [Display(Name = "New password")]

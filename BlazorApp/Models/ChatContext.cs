@@ -18,6 +18,6 @@ public class ChatContext : IdentityDbContext<ApplicationUser>
             .HasOne(m => m.ApplicationUser)
             .WithMany(u => u.Messages)
             .HasForeignKey(m => m.ApplicationUserId)
-            .IsRequired();
+            .OnDelete(DeleteBehavior.Cascade); // This will cascade delete messages when the user is deleted.
     }
 }
