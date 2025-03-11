@@ -5,7 +5,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.EntityFrameworkCore
 @attribute [Authorize]
-@inject ChatContext dbContext
+@inject ApplicationDbContext dbContext
 @inject UserManager<ApplicationUser> UserManager
 
 @* Container for the Chat Log History UI *@
@@ -86,14 +86,16 @@
         await LoadLogsAsync();
     }
 
-    // LoadDistinctUsersAsync: Fetch distinct users from specified chat rooms for filtering
+    // LoadDistinctUsersAsync: Fetch distinct users from specified chat rooms for filtering.
+    // We include the ApplicationUser so we can select the user's UserName.
     private async Task LoadDistinctUsersAsync()
     {
         try
         {
             distinctUsers = await dbContext.Messages
+                .Include(m => m.ApplicationUser)
                 .Where(m => m.ChatRoom == "Film" || m.ChatRoom == "Games" || m.ChatRoom == "Series")
-                .Select(m => m.UserName)
+                .Select(m => m.ApplicationUser.UserName!)
                 .Distinct()
                 .OrderBy(u => u)
                 .ToListAsync();
@@ -104,18 +106,20 @@
         }
     }
 
-    // LoadLogsAsync: Retrieve logs based on selected user filter and sort order
+    // LoadLogsAsync: Retrieve logs based on selected user filter and sort order.
+    // Again, we include ApplicationUser so that filtering uses ApplicationUser.UserName.
     private async Task LoadLogsAsync()
     {
         loading = true;
         try
         {
             IQueryable<Message> query = dbContext.Messages
+                .Include(m => m.ApplicationUser)
                 .Where(m => m.ChatRoom == "Film" || m.ChatRoom == "Games" || m.ChatRoom == "Series");
 
             if (selectedUser != "All")
             {
-                query = query.Where(m => m.UserName == selectedUser);
+                query = query.Where(m => m.ApplicationUser.UserName == selectedUser);
             }
 
             query = sortDescending ? query.OrderByDescending(m => m.Timestamp) : query.OrderBy(m => m.Timestamp);
@@ -128,14 +132,14 @@
         loading = false;
     }
 
-    // ToggleSortOrder: Toggle between newest-first and oldest-first, then reload logs
+    // ToggleSortOrder: Toggle between newest-first and oldest-first, then reload logs.
     private async Task ToggleSortOrder()
     {
         sortDescending = !sortDescending;
         await LoadLogsAsync();
     }
 
-    // OnUserFilterChanged: Update the selected user filter and reload logs when dropdown changes
+    // OnUserFilterChanged: Update the selected user filter and reload logs when dropdown changes.
     private async Task OnUserFilterChanged(ChangeEventArgs e)
     {
         selectedUser = e.Value?.ToString() ?? "All";

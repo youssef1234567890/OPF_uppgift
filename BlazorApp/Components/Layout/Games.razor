@@ -8,7 +8,7 @@
 @using Microsoft.AspNetCore.Components.Web
 @attribute [Authorize]
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject ChatContext dbContext
+@inject ApplicationDbContext dbContext
 @inject UserManager<ApplicationUser> UserManager
 
 @* Main container for the Games chat UI *@
@@ -85,6 +85,8 @@
 @code {
     // Variables to track current user, message input, reply context, and chat messages
     private string currentUser = string.Empty;
+    private string currentUserId = string.Empty;  // New: store current user's ID
+    private ApplicationUser currentUserEntity = null!; // New: store the current ApplicationUser entity
     private string newMessageText = string.Empty;
     private string replyingToMessage = string.Empty;
     private List<Message> messages = new();
@@ -103,6 +105,8 @@
             var identityUser = await UserManager.FindByNameAsync(currentUser);
             if (identityUser != null)
             {
+                currentUserId = identityUser.Id;
+                currentUserEntity = identityUser;
                 var roles = await UserManager.GetRolesAsync(identityUser);
                 isAdmin = roles.Contains("mainadmin") || roles.Contains("admin");
             }
@@ -122,7 +126,9 @@
         {
             var message = new Message
             {
-                UserName = currentUser,
+                // Removed assignment to UserName; assign foreign key and navigation property instead.
+                ApplicationUserId = currentUserId,
+                ApplicationUser = currentUserEntity,
                 Text = newMessageText,
                 Timestamp = DateTime.UtcNow,
                 ChatRoom = "Games",

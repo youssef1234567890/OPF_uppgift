@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
-namespace BlazorApp.Data;
-
-// Add profile data for application users by adding properties to the ApplicationUser class
-public class ApplicationUser : IdentityUser
+namespace BlazorApp.Data
 {
+    public class ApplicationUser : IdentityUser
+    {
+        // Optional: add extra properties for your application
+        public ICollection<Message> Messages { get; set; } = new List<Message>();
+    }
 }
-

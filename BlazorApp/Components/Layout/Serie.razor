@@ -8,7 +8,7 @@
 @using Microsoft.AspNetCore.Components.Web
 @attribute [Authorize]
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject ChatContext dbContext
+@inject ApplicationDbContext dbContext
 @inject UserManager<ApplicationUser> UserManager
 
 <div class="container mt-5">
@@ -75,6 +75,8 @@
 
 @code {
     private string currentUser = string.Empty;
+    private string currentUserId = string.Empty; //  store the user's ID
+    private ApplicationUser currentUserEntity = null!; //  store the ApplicationUser entity
     private string newMessageText = string.Empty;
     private string replyingToMessage = string.Empty;
     private List<Message> messages = new();
@@ -93,6 +95,8 @@
             var identityUser = await UserManager.FindByNameAsync(currentUser);
             if (identityUser != null)
             {
+                currentUserId = identityUser.Id;
+                currentUserEntity = identityUser;
                 var roles = await UserManager.GetRolesAsync(identityUser);
                 isAdmin = roles.Contains("mainadmin") || roles.Contains("admin");
             }
@@ -111,7 +115,9 @@
         {
             var message = new Message
             {
-                UserName = currentUser,
+                // Remove assignment to UserName; assign ApplicationUserId and ApplicationUser instead.
+                ApplicationUserId = currentUserId,
+                ApplicationUser = currentUserEntity,
                 Text = newMessageText,
                 Timestamp = DateTime.UtcNow,
                 ChatRoom = "Series",
