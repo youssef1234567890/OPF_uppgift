@@ -1,0 +1,247 @@
+@page "/thread/{ThreadId:int}"
+@using BlazorApp.Data
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Web
+@attribute [Authorize]
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ApplicationDbContext dbContext
+@inject UserManager<ApplicationUser> UserManager
+@inject NavigationManager NavigationManager
+
+<div class="container mt-5">
+    @if (thread != null)
+    {
+        <div class="mb-3">
+            <a href="/category/@thread.Category" class="btn btn-sm btn-outline-secondary">&laquo; Back to @thread.Category</a>
+        </div>
+        
+        <div class="card p-4 shadow-sm mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>@thread.Title</h3>
+                <small class="text-muted">Created @thread.CreatedAt.ToLocalTime().ToString("g")</small>
+            </div>
+            
+            @if (!string.IsNullOrEmpty(thread.Description))
+            {
+                <p class="lead mb-3">@thread.Description</p>
+            }
+            
+            <div class="mb-2">
+                <span class="badge bg-info">@thread.Category</span>
+                <small class="ms-2">Posted by @thread.ApplicationUser?.UserName</small>
+            </div>
+            
+            @if (thread.ApplicationUserId == currentUserId || isAdmin)
+            {
+                <div class="mt-2 mb-3">
+                    <button class="btn btn-sm btn-outline-danger" @onclick="DeleteThread">Delete Thread</button>
+                </div>
+            }
+        </div>
+
+        <AuthorizeView>
+            <Authorized>
+                <div class="card p-4 shadow-sm">
+                    <h4 class="mb-4">Messages</h4>
+                    
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" @bind="newMessageText" @onkeypress="HandleKeyPress" placeholder="Write a message..." />
+                            <button class="btn btn-primary" @onclick="SendMessage" disabled="@string.IsNullOrWhiteSpace(newMessageText)">Send</button>
+                        </div>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(replyingToMessage))
+                    {
+                        <div class="alert alert-info d-flex justify-content-between align-items-center mb-3">
+                            <span><strong>Replying to:</strong> @replyingToMessage</span>
+                            <button class="btn btn-sm btn-outline-danger" @onclick="CancelReply">Cancel</button>
+                        </div>
+                    }
+
+                    <div class="messages-box border rounded p-3" style="max-height: 500px; overflow-y: auto; background-color: #f8f9fa;">
+                        @if (messages.Any())
+                        {
+                            @foreach (var message in messages)
+                            {
+                                <div class="border-bottom pb-2 mb-2">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <strong>@message.UserName</strong>
+                                        <small class="text-muted">@message.Timestamp.ToLocalTime().ToString("g")</small>
+                                    </div>
+                                    
+                                    <div class="mt-1 mb-2">@message.Text</div>
+
+                                    @if (!string.IsNullOrEmpty(message.ReplyTo))
+                                    {
+                                        <div class="text-muted mb-2" style="margin-left: 20px; font-style: italic; font-size: 0.9rem;">
+                                            ↪️ Replying to: @message.ReplyTo
+                                        </div>
+                                    }
+
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-primary" @onclick="() => SetReplyContext(message.Text)">Reply</button>
+                                        @if (message.ApplicationUserId == currentUserId || isAdmin)
+                                        {
+                                            <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteMessage(message.Id)">Delete</button>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center text-muted">No messages in this thread yet. Start the conversation!</div>
+                        }
+                    </div>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <p class="text-center text-danger">You must be logged in to participate in discussions.</p>
+            </NotAuthorized>
+        </AuthorizeView>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Loading thread information...
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public int ThreadId { get; set; }
+
+    private Thread? thread;
+    private List<Message> messages = new();
+    private string currentUser = string.Empty;
+    private string currentUserId = string.Empty;
+    private ApplicationUser currentUserEntity = null!;
+    private string newMessageText = string.Empty;
+    private string replyingToMessage = string.Empty;
+    private bool isAdmin = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is { IsAuthenticated: true })
+        {
+            currentUser = user.Identity.Name ?? "Unknown";
+
+            var identityUser = await UserManager.FindByNameAsync(currentUser);
+            if (identityUser != null)
+            {
+                currentUserId = identityUser.Id;
+                currentUserEntity = identityUser;
+                var roles = await UserManager.GetRolesAsync(identityUser);
+                isAdmin = roles.Contains("mainadmin") || roles.Contains("admin");
+            }
+        }
+
+        await LoadThreadData();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadThreadData();
+    }
+
+    private async Task LoadThreadData()
+    {
+        thread = await dbContext.Threads
+            .Include(t => t.ApplicationUser)
+            .FirstOrDefaultAsync(t => t.Id == ThreadId);
+
+        if (thread != null)
+        {
+            messages = await dbContext.Messages
+                .Where(m => m.ThreadId == ThreadId)
+                .OrderBy(m => m.Timestamp)
+                .Include(m => m.ApplicationUser)
+                .ToListAsync();
+        }
+    }
+
+    private async Task SendMessage()
+    {
+        if (!string.IsNullOrWhiteSpace(newMessageText) && thread != null)
+        {
+            var message = new Message
+            {
+                ApplicationUserId = currentUserId,
+                ApplicationUser = currentUserEntity,
+                Text = newMessageText,
+                Timestamp = DateTime.UtcNow,
+                ThreadId = ThreadId,
+                Thread = thread,
+                ReplyTo = replyingToMessage
+            };
+
+            dbContext.Messages.Add(message);
+            await dbContext.SaveChangesAsync();
+            
+            messages.Add(message);
+            newMessageText = string.Empty;
+            replyingToMessage = string.Empty;
+            
+            StateHasChanged();
+        }
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SendMessage();
+        }
+    }
+
+    private async Task DeleteMessage(int messageId)
+    {
+        var message = await dbContext.Messages.FindAsync(messageId);
+        if (message != null && (message.ApplicationUserId == currentUserId || isAdmin))
+        {
+            dbContext.Messages.Remove(message);
+            await dbContext.SaveChangesAsync();
+            
+            messages.Remove(message);
+            StateHasChanged();
+        }
+    }
+
+    private async Task DeleteThread()
+    {
+        if (thread != null && (thread.ApplicationUserId == currentUserId || isAdmin))
+        {
+            // First, delete all messages in the thread
+            var threadMessages = await dbContext.Messages
+                .Where(m => m.ThreadId == ThreadId)
+                .ToListAsync();
+                
+            dbContext.Messages.RemoveRange(threadMessages);
+            
+            // Then delete the thread itself
+            dbContext.Threads.Remove(thread);
+            await dbContext.SaveChangesAsync();
+            
+            // Navigate back to the category page
+            NavigationManager.NavigateTo($"/category/{thread.Category}");
+        }
+    }
+
+    private void SetReplyContext(string originalMessage)
+    {
+        replyingToMessage = originalMessage;
+    }
+
+    private void CancelReply()
+    {
+        replyingToMessage = string.Empty;
+    }
+}

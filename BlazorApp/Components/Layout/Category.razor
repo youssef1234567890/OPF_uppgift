@@ -1,0 +1,148 @@
+@page "/category/{CategoryName}"
+@using BlazorApp.Data
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity
+@attribute [Authorize]
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ApplicationDbContext dbContext
+@inject UserManager<ApplicationUser> UserManager
+@inject NavigationManager NavigationManager
+
+<div class="container mt-5">
+    <div class="card p-4 shadow-sm">
+        <h3 class="text-center mb-4">@CategoryName Discussions</h3>
+
+        <AuthorizeView>
+            <Authorized>
+                <div class="mb-4">
+                    <button class="btn btn-primary" @onclick="() => showCreateThread = true">Create New Thread</button>
+                </div>
+
+                @if (showCreateThread)
+                {
+                    <div class="mb-4 border p-3 rounded">
+                        <h5>Create New Thread</h5>
+                        <div class="mb-3">
+                            <label for="threadTitle" class="form-label">Title</label>
+                            <input id="threadTitle" class="form-control" @bind="newThreadTitle" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="threadDescription" class="form-label">Description (Optional)</label>
+                            <textarea id="threadDescription" class="form-control" @bind="newThreadDescription" rows="3"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-secondary me-2" @onclick="CancelCreateThread">Cancel</button>
+                            <button class="btn btn-success" @onclick="CreateThread" disabled="@string.IsNullOrWhiteSpace(newThreadTitle)">Create Thread</button>
+                        </div>
+                    </div>
+                }
+
+                @if (threads.Any())
+                {
+                    <div class="list-group">
+                        @foreach (var thread in threads.OrderByDescending(t => t.CreatedAt))
+                        {
+                            <a href="/thread/@thread.Id" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">@thread.Title</h5>
+                                    <small>@thread.CreatedAt.ToLocalTime().ToString("g")</small>
+                                </div>
+                                @if (!string.IsNullOrEmpty(thread.Description))
+                                {
+                                    <p class="mb-1">@thread.Description</p>
+                                }
+                                <small>Created by @thread.ApplicationUser?.UserName</small>
+                                <span class="badge bg-primary rounded-pill ms-2">@thread.Messages.Count messages</span>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        No threads have been created yet in this category. Be the first to start a discussion!
+                    </div>
+                }
+            </Authorized>
+            <NotAuthorized>
+                <p class="text-center text-danger">You must be logged in to access forums.</p>
+            </NotAuthorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string CategoryName { get; set; } = string.Empty;
+
+    private List<Thread> threads = new();
+    private string currentUserId = string.Empty;
+    private bool showCreateThread = false;
+    private string newThreadTitle = string.Empty;
+    private string newThreadDescription = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity is { IsAuthenticated: true })
+        {
+            var identityUser = await UserManager.FindByNameAsync(user.Identity.Name ?? string.Empty);
+            if (identityUser != null)
+            {
+                currentUserId = identityUser.Id;
+            }
+        }
+
+        await LoadThreads();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadThreads();
+    }
+
+    private async Task LoadThreads()
+    {
+        threads = await dbContext.Threads
+            .Where(t => t.Category == CategoryName)
+            .Include(t => t.ApplicationUser)
+            .Include(t => t.Messages)
+            .ToListAsync();
+    }
+
+    private async Task CreateThread()
+    {
+        if (!string.IsNullOrWhiteSpace(newThreadTitle))
+        {
+            var thread = new Thread
+            {
+                Title = newThreadTitle,
+                Description = newThreadDescription,
+                Category = CategoryName,
+                CreatedAt = DateTime.UtcNow,
+                ApplicationUserId = currentUserId
+            };
+
+            dbContext.Threads.Add(thread);
+            await dbContext.SaveChangesAsync();
+            
+            
+            newThreadTitle = string.Empty;
+            newThreadDescription = string.Empty;
+            showCreateThread = false;
+            
+            await LoadThreads();
+        }
+    }
+
+    private void CancelCreateThread()
+    {
+        newThreadTitle = string.Empty;
+        newThreadDescription = string.Empty;
+        showCreateThread = false;
+    }
+}
