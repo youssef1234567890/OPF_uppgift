@@ -1,12 +1,23 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using BlazorApp.Data; // Ensure this namespace is included so ApplicationUser is found
 
-public class ChatContext : DbContext
+public class ChatContext : IdentityDbContext<ApplicationUser>
 {
-    // Constructor that accepts DbContextOptions and passes them to the base DbContext class
     public ChatContext(DbContextOptions<ChatContext> options) : base(options)
     {
     }
 
-    // DbSet representing the collection of Message entities in the database
     public DbSet<Message> Messages { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        // Configure the relationship between Message and ApplicationUser
+        builder.Entity<Message>()
+            .HasOne(m => m.ApplicationUser)
+            .WithMany(u => u.Messages)
+            .HasForeignKey(m => m.ApplicationUserId)
+            .IsRequired();
+    }
 }

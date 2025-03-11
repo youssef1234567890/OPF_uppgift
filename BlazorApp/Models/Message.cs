@@ -1,20 +1,23 @@
+using System;
+using BlazorApp.Data;
+
 public class Message
 {
-    // Unique identifier for the message
     public int Id { get; set; }
 
-    // Username of the person who sent the message
-    public string UserName { get; set; } = string.Empty;
+    // Reintroduce a computed property for backward compatibility.
+    // This property returns the ApplicationUser's UserName if available.
+    public string UserName => ApplicationUser?.UserName ?? string.Empty;
 
-    // Content of the message
     public string Text { get; set; } = string.Empty;
-
-    // Timestamp when the message was sent, defaulting to the current UTC time
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-
-    // Name of the chat room where the message was sent
     public string ChatRoom { get; set; } = string.Empty;
-
-    // Identifier of the message this message is replying to, if any
     public string ReplyTo { get; set; } = string.Empty;
+
+    // Foreign key to the ApplicationUser (Identity)
+    // Use a default empty string (or consider making it nullable if preferred)
+    public string ApplicationUserId { get; set; } = string.Empty;
+
+    // Navigation property; using null-forgiving operator if you're sure it will be set later.
+    public ApplicationUser ApplicationUser { get; set; } = null!;
 }

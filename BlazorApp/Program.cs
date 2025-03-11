@@ -12,76 +12,73 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Configure the ChatContext (e.g., if using SQLite)
+// Configure ChatContext for your chat data (Messages table)
 builder.Services.AddDbContext<ChatContext>(options =>
-    options.UseSqlite("Data Source=chat.db")); // SQLite connection for the chat data
+    options.UseSqlite("Data Source=chat.db"));
 
-// Set up authentication and authorization
+// Set up Blazor authentication and authorization
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
-// Configure the application database context
+// Configure the application database context for Identity.
+// For a unified database, point this to the same chat.db file.
+// Ensure your connection string (or fallback) is set correctly.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+    ?? "Data Source=chat.db;Cache=Shared";
 
-// Choose which DbContext to use, here it's SQLite. To switch to SQL Server, change the `UseSqlite` to `UseSqlServer`.
-
-// Use SQLite for the ApplicationDbContext
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 
 
-
-// Add Identity services (this will configure authentication and role-based authorization)
+// Add Identity services to enable user authentication and role management.
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-// Configure IdentityCore with roles support. For testing, you can set RequireConfirmedAccount to false.
-// If you keep it true, ensure that in your RoleInitializer you mark the main admin's EmailConfirmed as true.
-builder.Services.AddIdentityCore<ApplicationUser>(options =>
-{
-    options.SignIn.RequireConfirmedAccount = false; // Set to false for testing if desired.
-})
-    .AddRoles<IdentityRole>() // Adds role support
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddSignInManager()
-    .AddDefaultTokenProviders();
+// If needed, you can configure IdentityCore with additional options as well:
+// builder.Services.AddIdentityCore<ApplicationUser>(options =>
+// {
+//     options.SignIn.RequireConfirmedAccount = false; // For testing
+// })
+// .AddRoles<IdentityRole>()
+// .AddEntityFrameworkStores<ApplicationDbContext>()
+// .AddSignInManager()
+// .AddDefaultTokenProviders();
 
-// Configure email sender (no-op sender for now)
+// Configure a no-op email sender (for development/testing purposes).
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
 
-// Seed roles and the main admin account before the app starts.
+// Seed roles and main admin account before the app starts.
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    await RoleInitializer.InitializeAsync(services); // Ensure roles and admin account are created
+    await RoleInitializer.InitializeAsync(services);
 }
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint(); // Migration endpoint for development
+    app.UseMigrationsEndPoint(); // Expose migration endpoint in development
 }
 else
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true); // Global error handling
-    app.UseHsts(); // Enforce HTTPS
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    app.UseHsts();
 }
 
-app.UseHttpsRedirection(); // Force HTTPS for production
-app.UseStaticFiles(); // Serve static files (CSS, JS, images, etc.)
-app.UseAntiforgery(); // Use anti-forgery protection (important for POST requests)
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseAntiforgery();
 
-// Map Blazor components and interactive server components
+// Map Blazor components and interactive server components.
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
-// Add additional endpoints required by Identity Razor components for login, registration, etc.
+// Map additional endpoints required for Identity (e.g., for login, registration).
 app.MapAdditionalIdentityEndpoints();
 
-app.Run(); // Run the application
+app.Run();

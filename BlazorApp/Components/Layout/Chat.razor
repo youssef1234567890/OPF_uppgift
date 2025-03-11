@@ -8,7 +8,7 @@
 @using Microsoft.AspNetCore.Components.Web
 @attribute [Authorize]
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject ChatContext dbContext
+@inject ApplicationDbContext dbContext
 @inject UserManager<ApplicationUser> UserManager
 
 @* Main container for the Film Chat UI *@
@@ -83,8 +83,10 @@
 
 @* Code block: handles chat state and events *@
 @code {
-    // Variables to store current user, new message input, reply context, and messages list.
+    // Variables to store current user info, new message input, reply context, and messages list.
     private string currentUser = string.Empty;
+    private string currentUserId = string.Empty; // New: store the user's ID
+    private ApplicationUser currentUserEntity = null!; // New: store the ApplicationUser entity
     private string newMessageText = string.Empty;
     private string replyingToMessage = string.Empty;
     private List<Message> messages = new();
@@ -103,6 +105,8 @@
             var identityUser = await UserManager.FindByNameAsync(currentUser);
             if (identityUser != null)
             {
+                currentUserId = identityUser.Id;      // Save the user's ID
+                currentUserEntity = identityUser;       // Save the entire user object
                 var roles = await UserManager.GetRolesAsync(identityUser);
                 isAdmin = roles.Contains("mainadmin") || roles.Contains("admin");
             }
@@ -121,7 +125,10 @@
         {
             var message = new Message
             {
-                UserName = currentUser,
+                // Removed: UserName = currentUser,
+                // Instead, assign the foreign key and navigation property:
+                ApplicationUserId = currentUserId,
+                ApplicationUser = currentUserEntity,
                 Text = newMessageText,
                 Timestamp = DateTime.UtcNow,
                 ChatRoom = "Film",
