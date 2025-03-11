@@ -9,5 +9,16 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        // Configure the relationship between Message and ApplicationUser
+        builder.Entity<Message>()
+            .HasOne(m => m.ApplicationUser)
+            .WithMany(u => u.Messages)
+            .HasForeignKey(m => m.ApplicationUserId)
+            .OnDelete(DeleteBehavior.Cascade); // This will cascade delete messages when the user is deleted.
+    }
+
     public DbSet<Message> Messages { get; set; }  // Add this line
 }
