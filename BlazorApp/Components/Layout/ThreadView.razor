@@ -180,7 +180,8 @@
                 Timestamp = DateTime.UtcNow,
                 ThreadId = ThreadId,
                 Thread = thread,
-                ReplyTo = replyingToMessage
+                ReplyTo = replyingToMessage,
+                ChatRoom = thread.Title
             };
 
             dbContext.Messages.Add(message);
