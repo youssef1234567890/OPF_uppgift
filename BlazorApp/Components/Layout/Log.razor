@@ -1,4 +1,3 @@
-@* Page declaration, using directives, and dependency injection *@
 @page "/log"
 @using BlazorApp.Data
 @using Microsoft.AspNetCore.Authorization
@@ -8,21 +7,18 @@
 @inject ApplicationDbContext dbContext
 @inject UserManager<ApplicationUser> UserManager
 
-@* Container for the Chat Log History UI *@
 <div class="container mt-5">
     <div class="card p-4 shadow-sm">
-        @* Page title and description *@
-        <h3 class="text-center mb-4">Chat Log History</h3>
-        <p class="text-center">View messages from Film, Games, and Series chat rooms.</p>
+        <h3 class="text-center mb-4">Messages Overview</h3>
+        <p class="text-center">Overview of all chats within threads.</p>
 
-        @* Sorting and filtering controls block *@
         <div class="mb-3 d-flex justify-content-between align-items-center">
-            @* Toggle button for sorting by date (newest or oldest first) *@
+            <!-- Toggle button for sorting by date (newest or oldest first) -->
             <button class="btn btn-secondary" @onclick="ToggleSortOrder">
                 Sort by Date: @(sortDescending ? "Newest First" : "Oldest First")
             </button>
 
-            @* Dropdown to filter logs by user *@
+            <!-- Dropdown to filter logs by user -->
             <select class="form-select w-auto" @onchange="OnUserFilterChanged">
                 <option value="All" selected="@("All" == selectedUser)">All Users</option>
                 @foreach (var user in distinctUsers)
@@ -32,36 +28,41 @@
             </select>
         </div>
 
-        @* Display loading message or logs table if available *@
         @if (loading)
         {
             <p class="text-center">Loading logs...</p>
         }
-        else if (logs.Any())
+        else if (groupedLogs.Any())
         {
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>User Name</th>
-                            <th>Chat Room</th>
-                            <th>Message</th>
-                            <th>Timestamp</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var log in logs)
-                        {
-                            <tr>
-                                <td>@log.UserName</td>
-                                <td>@log.ChatRoom</td>
-                                <td>@log.Text</td>
-                                <td>@log.Timestamp.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+            @foreach (var group in groupedLogs)
+            {
+                <div class="mb-4">
+                    <h4 class="mb-2">@group.Key</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Thread</th>
+                                    <th>Message</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var log in group)
+                                {
+                                    <tr>
+                                        <td>@log.ApplicationUser.UserName</td>
+                                        <td>@log.ChatRoom</td>
+                                        <td>@log.Text</td>
+                                        <td>@log.Timestamp.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
         }
         else
         {
@@ -70,31 +71,28 @@
     </div>
 </div>
 
-@* Code block: handles data loading, sorting, and filtering logic *@
 @code {
-    // Local variables to store logs, distinct user list, and UI state flags
-    private List<Message> logs = new();
+    // Grouped logs by thread (ChatRoom)
+    private List<IGrouping<string, Message>> groupedLogs = new();
     private List<string> distinctUsers = new();
     private bool loading = true;
     private bool sortDescending = true;
     private string selectedUser = "All";
 
-    // On component initialization, load distinct users and logs
     protected override async Task OnInitializedAsync()
     {
         await LoadDistinctUsersAsync();
-        await LoadLogsAsync();
+        await LoadGroupedLogsAsync();
     }
 
-    // LoadDistinctUsersAsync: Fetch distinct users from specified chat rooms for filtering.
-    // We include the ApplicationUser so we can select the user's UserName.
+    // Load a list of distinct users for the dropdown filter.
     private async Task LoadDistinctUsersAsync()
     {
         try
         {
             distinctUsers = await dbContext.Messages
                 .Include(m => m.ApplicationUser)
-                .Where(m => m.ChatRoom == "Film" || m.ChatRoom == "Games" || m.ChatRoom == "Series")
+                .Where(m => m.ChatRoom != null)
                 .Select(m => m.ApplicationUser.UserName!)
                 .Distinct()
                 .OrderBy(u => u)
@@ -106,16 +104,15 @@
         }
     }
 
-    // LoadLogsAsync: Retrieve logs based on selected user filter and sort order.
-    // Again, we include ApplicationUser so that filtering uses ApplicationUser.UserName.
-    private async Task LoadLogsAsync()
+    // Load logs based on filter and sort order, then group them by ChatRoom.
+    private async Task LoadGroupedLogsAsync()
     {
         loading = true;
         try
         {
             IQueryable<Message> query = dbContext.Messages
                 .Include(m => m.ApplicationUser)
-                .Where(m => m.ChatRoom == "Film" || m.ChatRoom == "Games" || m.ChatRoom == "Series");
+                .Where(m => m.ChatRoom != null);
 
             if (selectedUser != "All")
             {
@@ -123,7 +120,9 @@
             }
 
             query = sortDescending ? query.OrderByDescending(m => m.Timestamp) : query.OrderBy(m => m.Timestamp);
-            logs = await query.ToListAsync();
+            var logs = await query.ToListAsync();
+
+            groupedLogs = logs.GroupBy(m => m.ChatRoom).ToList();
         }
         catch (Exception ex)
         {
@@ -132,17 +131,17 @@
         loading = false;
     }
 
-    // ToggleSortOrder: Toggle between newest-first and oldest-first, then reload logs.
+    // Toggle sort order (newest-first vs oldest-first) and reload logs.
     private async Task ToggleSortOrder()
     {
         sortDescending = !sortDescending;
-        await LoadLogsAsync();
+        await LoadGroupedLogsAsync();
     }
 
-    // OnUserFilterChanged: Update the selected user filter and reload logs when dropdown changes.
+    // Update the user filter and reload logs when selection changes.
     private async Task OnUserFilterChanged(ChangeEventArgs e)
     {
         selectedUser = e.Value?.ToString() ?? "All";
-        await LoadLogsAsync();
+        await LoadGroupedLogsAsync();
     }
 }

@@ -1,18 +1,17 @@
-@* Page declaration and role restriction: Only mainadmin can access *@
 @page "/mainadmin"
 @using BlazorApp.Data
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
 @attribute [Authorize(Roles = "mainadmin")]
 
-@* Main container for the Main Admin Dashboard UI *@
+
 <div class="container mt-5">
     <div class="card p-4 shadow-sm">
-        @* Dashboard title and welcome message *@
+        
         <h3 class="text-center mb-4">Main Admin Dashboard</h3>
         <p class="text-center">Welcome, Main Admin!</p>
 
-        @* Loading indicator or user table based on data availability *@
+        
         @if (loading)
         {
             <p class="text-center">Loading users...</p>
@@ -29,7 +28,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @* Iterate over users and display their info with action buttons *@
+                        
                         @foreach (var user in users)
                         {
                             <tr>
@@ -50,7 +49,7 @@
                                     }
                                 </td>
                                 <td>
-                                    @* Show action buttons only if the user is not a mainadmin *@
+                                    
                                     @if (!user.IsMainAdmin)
                                     {
                                         @if (user.IsAdmin)
@@ -81,7 +80,7 @@
     </div>
 </div>
 
-@* Code block: handles user management and dashboard actions *@
+
 @code {
     // List to hold user view models and loading flag
     private List<UserViewModel> users = new();

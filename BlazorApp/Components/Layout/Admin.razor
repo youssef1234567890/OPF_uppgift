@@ -1,29 +1,29 @@
-@* Page setup and dependencies *@
+
 @page "/admin"
 @using BlazorApp.Data
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.EntityFrameworkCore
 
-@* Restrict access to users with "admin" role *@
+
 @attribute [Authorize(Roles = "admin")]
 
 @inject UserManager<ApplicationUser> UserManager
 @inject NavigationManager Navigation
 
-@* Main container for the Admin Dashboard *@
+
 <div class="container mt-5">
     <div class="card p-4 shadow-sm">
-        @* Dashboard header *@
+        
         <h3 class="text-center mb-4">Admin Dashboard</h3>
         <p class="text-center">Welcome, Admin!</p>
 
-        @* Loading indicator while fetching user data *@
+        
         @if (loading)
         {
             <p class="text-center">Loading accounts...</p>
         }
-        @* Display user list if available *@
+        
         else if (users.Any())
         {
             <div class="table-responsive">
@@ -50,7 +50,7 @@
                 </table>
             </div>
         }
-        @* Message when no users are found *@
+        
         else
         {
             <p class="text-center text-muted">No accounts found.</p>

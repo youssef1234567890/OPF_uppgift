@@ -1,11 +1,19 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Components.Authorization
 
 <PageTitle>Welcome</PageTitle>
 
 <div class="container mt-5">
     <!-- Hero Section -->
     <div class="text-center">
-        <h1 class="display-4">Welcome to BlazorApp!</h1>
+        <AuthorizeView>
+            <Authorized>
+                <h1 class="display-4">Welcome, @context.User.Identity.Name, to BlazorApp!</h1>
+            </Authorized>
+            <NotAuthorized>
+                <h1 class="display-4">Welcome to BlazorApp!</h1>
+            </NotAuthorized>
+        </AuthorizeView>
         <p class="lead">Your one-stop platform for engaging discussions and easy navigation.</p>
         <a href="/Account/Register" class="btn btn-primary btn-lg">Get Started</a>
     </div>
@@ -17,22 +25,22 @@
             <div class="col-md-4">
                 <div class="card p-3 shadow-sm">
                     <h3>1. Create an Account</h3>
-                    <p>Register to access exclusive features like chat rooms and admin panels.</p>
+                    <p>Register to access exclusive features like discussions and admin panels.</p>
                     <a href="/Account/Register" class="btn btn-outline-primary">Register Now</a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card p-3 shadow-sm">
-                    <h3>2. Explore & Interact</h3>
-                    <p>Join discussions, browse logs, and manage your account effortlessly.</p>
-                    <a href="/chat/Film" class="btn btn-outline-primary">Join a Chat</a>
+                    <h3>2. Explore Threads</h3>
+                    <p>Join discussions by exploring threads and topics available on the platform.</p>
+                    <a href="/threads" class="btn btn-outline-primary">Explore Threads</a>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card p-3 shadow-sm">
-                    <h3>3. Manage Your Profile</h3>
-                    <p>Stay updated, edit your details, and take control of your settings.</p>
-                    <a href="/Account/Manage" class="btn btn-outline-primary">Manage Account</a>
+                    <h3>3. Browse Categories</h3>
+                    <p>Navigate different categories to find discussions that interest you.</p>
+                    <a href="/categories" class="btn btn-outline-primary">Browse Categories</a>
                 </div>
             </div>
         </div>
@@ -44,10 +52,9 @@
         <p>Navigate to key features instantly.</p>
         <div class="d-flex justify-content-center gap-3 flex-wrap">
             <a href="/Account/Login" class="btn btn-secondary">Login</a>
-            <a href="/chat/Games" class="btn btn-success">Chat for Games</a>
-            <a href="/chat/Series" class="btn btn-info">Chat for Series</a>
+            <a href="/threads" class="btn btn-success">Threads</a>
+            <a href="/categories" class="btn btn-info">Categories</a>
             <a href="/log" class="btn btn-dark">View Logs</a>
         </div>
     </section>
 </div>
-
