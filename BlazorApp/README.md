@@ -1,16 +1,74 @@
 \# Vårt Projekt
 
-\#\# Beskrivning  
-Detta projekt är en **forumapplikation byggd med Blazor Server**. Applikationen ger användare möjlighet att delta i diskussioner genom att skapa och hantera trådar samt kommentera andras inlägg. Forumet är uppdelat i olika kategorier, och användare kan organisera och filtrera innehåll baserat på deras intressen.  
+## Projektöversikt
 
-\#\# Teknologi  
-Projektet använder följande tekniker:  
-**Frontend:** Blazor Server (C\# och .NET)  
-**Backend:** ASP.NET Core  
-**Databas:** SQLite / Entity Framework Core  
-**Autentisering & Auktorisering:** Identity Framework (för hantering av användare och roller)
+Detta Blazor-projekt implementerar ett forumliknande system där användare kan skapa trådar, skicka meddelanden och interagera med varandra. Projektet använder ASP.NET Core Identity för användarhantering och Entity Framework Core för databasinteraktioner.
+
+## Huvudfunktionalitet
+
+### Meddelandehantering
+
+Projektet innehåller följande meddelandefunktioner:
+
+- **Loggöversikt**: Visar alla meddelanden grupperade efter tråd.
+- **Roller baserad åtkomst**: Administratörer kan se alla meddelanden medan vanliga användare endast kan se sina egna.
+- **Redigering av meddelanden**: Användare kan redigera sina egna meddelanden, administratörer kan redigera alla.
+- **Radering av meddelanden**: Användare kan radera sina egna meddelanden, administratörer kan radera alla.
+- **Svara på meddelanden**: Användare kan svara på befintliga meddelanden med visuell indentering för svar.
+
+### Trådhantering
+
+- **Trådöversikt**: Visar alla trådar i systemet.
+- **Trådvy**: Visar alla meddelanden i en specifik tråd med svarsfunktionalitet.
+- **Radering av trådar**: Trådägare och administratörer kan radera trådar.
+
+### Kontohantering
+
+- **Profilhantering**: Användare kan uppdatera e-post, telefonnummer och lösenord.
+- **Kontoradering**: Två metoder för att radera konton:
+  - **Snabbradering**: Direkt radering från profilsidan med bekräftelsedialog.
+  - **Avancerad radering**: Dedikerad sida med ytterligare bekräftelsessteg och transaktionshantering.
+
+## Implementationsdetaljer
+
+### Loggmeddelandehantering
+
+Meddelandehanteringen inkluderar:
+
+- Visuell indentering för svar med blå vänsterkant
+- Visning av tråddata för varje meddelande
+- Direktredigering i gränssnittet
+- Bekräftelsedialoger för radering
+- Visuell återkoppling under bearbetning
+- Felhantering med användarvänliga meddelanden
+
+### Kontoradering
+
+Kontoraderingsfunktionaliteten tillämpar:
+
+- Databasrelationer hanteras korrekt
+- Transaktioner används för att säkerställa dataintegritet
+- Beroende data (meddelanden, trådar) raderas i rätt ordning
+- Visuell feedback under raderingsprocessen
+- Omfattande felhantering
+
+## Säkerhetsöverväganden
+
+- Användarroller respekteras i alla vyer
+- Lösenordsverifiering används för känsliga operationer
+- Transaktionshantering förhindrar delvis raderad data
+- Bekräftelsedialog förhindrar oavsiktliga raderingar
+
 **How to use Main Admin role:** Navigera till Models/RoleInitializer.cs, på rad 30 finner du användarnamn med lösenord 
 på rad 43. Använd dom när du loggar in på Applikationen i syfte av full funktionalitetstest.
+
+## Teknisk plattform
+
+- ASP.NET Core 8
+- Entity Framework Core
+- Blazor Server
+- SQLite (för utveckling)
+- Bootstrap 5 (UI-ramverk)
 
 1.---
 
@@ -67,7 +125,7 @@ på rad 43. Använd dom när du loggar in på Applikationen i syfte av full funk
 
 \-Kommentaren visas direkt under tråden tillsammans med användarens namn och datum.
 
-\-Användare kan svara på andra kommentarer (nested comments).
+\-Användare kan svara på andra kommentarer.
 
 **Åtgärdsförslag:**
 
