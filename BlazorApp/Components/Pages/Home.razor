@@ -8,10 +8,10 @@
     <div class="text-center">
         <AuthorizeView>
             <Authorized>
-                <h1 class="display-4">Welcome, @context.User.Identity.Name, to BlazorApp!</h1>
+                <h1 class="display-4">Welcome, @context.User.Identity.Name, to Reddit 2!</h1>
             </Authorized>
             <NotAuthorized>
-                <h1 class="display-4">Welcome to BlazorApp!</h1>
+                <h1 class="display-4">Welcome to Reddit 2!</h1>
             </NotAuthorized>
         </AuthorizeView>
         <p class="lead">Your one-stop platform for engaging discussions and easy navigation.</p>
@@ -22,23 +22,16 @@
     <section class="mt-5">
         <h2 class="text-center mb-4">How to Use This Site</h2>
         <div class="row text-center">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card p-3 shadow-sm">
                     <h3>1. Create an Account</h3>
                     <p>Register to access exclusive features like discussions and admin panels.</p>
                     <a href="/Account/Register" class="btn btn-outline-primary">Register Now</a>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card p-3 shadow-sm">
-                    <h3>2. Explore Threads</h3>
-                    <p>Join discussions by exploring threads and topics available on the platform.</p>
-                    <a href="/threads" class="btn btn-outline-primary">Explore Threads</a>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card p-3 shadow-sm">
-                    <h3>3. Browse Categories</h3>
+                    <h3>2. Browse Categories</h3>
                     <p>Navigate different categories to find discussions that interest you.</p>
                     <a href="/categories" class="btn btn-outline-primary">Browse Categories</a>
                 </div>
@@ -52,7 +45,6 @@
         <p>Navigate to key features instantly.</p>
         <div class="d-flex justify-content-center gap-3 flex-wrap">
             <a href="/Account/Login" class="btn btn-secondary">Login</a>
-            <a href="/threads" class="btn btn-success">Threads</a>
             <a href="/categories" class="btn btn-info">Categories</a>
             <a href="/log" class="btn btn-dark">View Logs</a>
         </div>
