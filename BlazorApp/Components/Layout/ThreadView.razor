@@ -10,6 +10,53 @@
 @inject ApplicationDbContext dbContext
 @inject UserManager<ApplicationUser> UserManager
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+<style>
+    .message {
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .message-reply {
+        border-left: 4px solid #0d6efd;
+        margin-left: 15px;
+        background-color: rgba(13, 110, 253, 0.04);
+    }
+
+    .reply-indicator {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        color: #6c757d;
+        padding: 4px 8px;
+        background-color: rgba(13, 110, 253, 0.08);
+        border-radius: 4px;
+    }
+
+    .reply-indicator span {
+        margin-right: 6px;
+        font-size: 1.2em;
+    }
+
+    .message-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .edit-input {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+
+    .messages-box {
+        padding: 16px;
+    }
+</style>
 
 <div class="container mt-5">
     @if (thread != null)
@@ -62,30 +109,47 @@
                         </div>
                     }
 
-                    <div class="messages-box border rounded p-3" style="max-height: 500px; overflow-y: auto; background-color: #f8f9fa;">
+                    <div class="messages-box border rounded" style="max-height: 500px; overflow-y: auto; background-color: #f8f9fa;">
                         @if (messages.Any())
                         {
                             @foreach (var message in messages)
                             {
-                                <div class="border-bottom pb-2 mb-2">
+                                <div class="message @(string.IsNullOrEmpty(message.ReplyTo) ? "" : "message-reply")">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <strong>@message.UserName</strong>
                                         <small class="text-muted">@message.Timestamp.ToLocalTime().ToString("g")</small>
                                     </div>
                                     
-                                    <div class="mt-1 mb-2">@message.Text</div>
-
                                     @if (!string.IsNullOrEmpty(message.ReplyTo))
                                     {
-                                        <div class="text-muted mb-2" style="margin-left: 20px; font-style: italic; font-size: 0.9rem;">
-                                            ↪️ Replying to: @message.ReplyTo
+                                        <div class="reply-indicator">
+                                            <span>↪</span>
+                                            <small>Replying to: @message.ReplyTo</small>
                                         </div>
                                     }
 
-                                    <div class="d-flex gap-2">
-                                        <button class="btn btn-sm btn-outline-primary" @onclick="() => SetReplyContext(message.Text)">Reply</button>
+                                    @if (editingMessageId == message.Id)
+                                    {
+                                        <div class="edit-input">
+                                            <div class="input-group">
+                                                <textarea class="form-control" @bind="editMessageText" rows="3"></textarea>
+                                            </div>
+                                            <div class="d-flex justify-content-end mt-2 gap-2">
+                                                <button class="btn btn-sm btn-secondary" @onclick="CancelEdit">Cancel</button>
+                                                <button class="btn btn-sm btn-success" @onclick="() => SaveEdit(message)">Save</button>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="mt-2 mb-2">@message.Text</div>
+                                    }
+
+                                    <div class="message-actions">
+                                        <button class="btn btn-sm btn-outline-primary" @onclick="() => SetReplyContext(message)">Reply</button>
                                         @if (message.ApplicationUserId == currentUserId || isAdmin)
                                         {
+                                            <button class="btn btn-sm btn-outline-info" @onclick="() => StartEdit(message)">Edit</button>
                                             <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteMessage(message.Id)">Delete</button>
                                         }
                                     </div>
@@ -94,7 +158,7 @@
                         }
                         else
                         {
-                            <div class="text-center text-muted">No messages in this thread yet. Start the conversation!</div>
+                            <div class="text-center text-muted p-4">No messages in this thread yet. Start the conversation!</div>
                         }
                     </div>
                 </div>
@@ -124,6 +188,10 @@
     private string newMessageText = string.Empty;
     private string replyingToMessage = string.Empty;
     private bool isAdmin = false;
+    
+    // For editing messages
+    private int editingMessageId = -1;
+    private string editMessageText = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -205,6 +273,10 @@
 
     private async Task DeleteMessage(int messageId)
     {
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this message?");
+        if (!confirmed)
+            return;
+            
         var message = await dbContext.Messages.FindAsync(messageId);
         if (message != null && (message.ApplicationUserId == currentUserId || isAdmin))
         {
@@ -212,12 +284,17 @@
             await dbContext.SaveChangesAsync();
             
             messages.Remove(message);
+            await JSRuntime.InvokeVoidAsync("alert", "Message deleted successfully");
             StateHasChanged();
         }
     }
 
     private async Task DeleteThread()
     {
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this thread? This will permanently remove all messages and cannot be undone.");
+        if (!confirmed)
+            return;
+            
         if (thread != null && (thread.ApplicationUserId == currentUserId || isAdmin))
         {
             // First, delete all messages in the thread
@@ -231,18 +308,67 @@
             dbContext.Threads.Remove(thread);
             await dbContext.SaveChangesAsync();
             
+            await JSRuntime.InvokeVoidAsync("alert", "Thread deleted successfully");
+            
             // Navigate back to the category page
             NavigationManager.NavigateTo($"/category/{thread.Category}");
         }
     }
 
-    private void SetReplyContext(string originalMessage)
+    private void SetReplyContext(Message message)
     {
-        replyingToMessage = originalMessage;
+        // Set reply context to include both username and message text (truncated if too long)
+        string messagePreview = message.Text.Length > 50 ? message.Text.Substring(0, 47) + "..." : message.Text;
+        replyingToMessage = $"{message.UserName}: {messagePreview}";
     }
 
     private void CancelReply()
     {
         replyingToMessage = string.Empty;
+    }
+    
+    // Message editing functionality
+    private void StartEdit(Message message)
+    {
+        editingMessageId = message.Id;
+        editMessageText = message.Text;
+    }
+    
+    private void CancelEdit()
+    {
+        editingMessageId = -1;
+        editMessageText = string.Empty;
+    }
+    
+    private async Task SaveEdit(Message message)
+    {
+        if (string.IsNullOrWhiteSpace(editMessageText))
+            return;
+            
+        try
+        {
+            var messageToUpdate = await dbContext.Messages.FindAsync(message.Id);
+            if (messageToUpdate != null && (messageToUpdate.ApplicationUserId == currentUserId || isAdmin))
+            {
+                messageToUpdate.Text = editMessageText;
+                await dbContext.SaveChangesAsync();
+                
+                // Update the message in our local collection
+                var index = messages.FindIndex(m => m.Id == message.Id);
+                if (index >= 0)
+                {
+                    messages[index].Text = editMessageText;
+                }
+                
+                await JSRuntime.InvokeVoidAsync("alert", "Message updated successfully");
+            }
+        }
+        catch (Exception ex)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", $"Error updating message: {ex.Message}");
+        }
+        
+        editingMessageId = -1;
+        StateHasChanged();
     }
 }
