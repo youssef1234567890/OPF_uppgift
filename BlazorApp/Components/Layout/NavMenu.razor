@@ -17,12 +17,6 @@
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="auth">
-                <span class="bi bi-lock" aria-hidden="true"></span> Auth Required
-            </NavLink>
-        </div>
-
         <AuthorizeView>
             <Authorized>
                 <div class="nav-item px-3">
@@ -30,16 +24,22 @@
                         <span class="bi bi-person-fill" aria-hidden="true"></span> Manage Account
                     </NavLink>
                 </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/mainadmin">
-                        <span class="bi bi-person-fill" aria-hidden="true"></span> Main Admin
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/admin">
-                        <span class="bi bi-person-fill" aria-hidden="true"></span> Admin
-                    </NavLink>
-                </div>
+                @if (isMainAdmin)
+                {
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/mainadmin">
+                            <span class="bi bi-person-fill" aria-hidden="true"></span> Main Admin
+                        </NavLink>
+                    </div>
+                }
+                @if (isAdmin)
+                {
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/admin">
+                            <span class="bi bi-person-fill" aria-hidden="true"></span> Admin
+                        </NavLink>
+                    </div>
+                }
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="/log">
                         <span class="bi bi-file-earmark-text" aria-hidden="true"></span> Log Messages
@@ -74,10 +74,21 @@
 
 @code {
     private string? currentUrl;
+    private bool isAdmin;
+    private bool isMainAdmin;
+
+    [Inject]
+    private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
 
     // Initializes the component and sets up navigation event handling
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        isAdmin = user.IsInRole("Admin"); // Replace "Admin" with your admin role name
+        isMainAdmin = user.IsInRole("MainAdmin"); // Replace "MainAdmin" with your main admin role name
+
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
     }

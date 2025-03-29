@@ -44,8 +44,15 @@
         <h2>Quick Access</h2>
         <p>Navigate to key features instantly.</p>
         <div class="d-flex justify-content-center gap-3 flex-wrap">
-            <a href="/Account/Login" class="btn btn-secondary">Login</a>
-            <a href="/categories" class="btn btn-info">Categories</a>
+            <AuthorizeView>
+                <NotAuthorized>
+                    <a href="/Account/Login" class="btn btn-secondary">Login</a>
+                    <a href="/Account/Login" class="btn btn-info">Categories</a>
+                </NotAuthorized>
+                <Authorized>
+                    <a href="/categories" class="btn btn-info">Categories</a>
+                </Authorized>
+            </AuthorizeView>
             <a href="/log" class="btn btn-dark">View Logs</a>
         </div>
     </section>
