@@ -33,7 +33,14 @@
                 <div class="card p-3 shadow-sm">
                     <h3>2. Browse Categories</h3>
                     <p>Navigate different categories to find discussions that interest you.</p>
-                    <a href="/categories" class="btn btn-outline-primary">Browse Categories</a>
+                    <AuthorizeView>
+                        <NotAuthorized>
+                            <a href="/Account/Login" class="btn btn-outline-primary">Browse Categories</a>
+                        </NotAuthorized>
+                        <Authorized>
+                            <a href="/categories" class="btn btn-outline-primary">Browse Categories</a>
+                        </Authorized>
+                    </AuthorizeView>
                 </div>
             </div>
         </div>
@@ -47,10 +54,11 @@
             <AuthorizeView>
                 <NotAuthorized>
                     <a href="/Account/Login" class="btn btn-secondary">Login</a>
-                    <a href="/Account/Login" class="btn btn-info">Categories</a>
+                    <a href="/Account/Login" class="btn btn-info">Manage Account</a>
                 </NotAuthorized>
                 <Authorized>
                     <a href="/categories" class="btn btn-info">Categories</a>
+                    <a href="/Account/Manage" class="btn btn-info">Manage Account</a>
                 </Authorized>
             </AuthorizeView>
             <a href="/log" class="btn btn-dark">View Logs</a>

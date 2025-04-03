@@ -40,16 +40,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXENvbmZpcm1FbWFpbENoYW5nZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/ExternalLogin.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXEV4dGVybmFsTG9naW4ucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/ForgotPassword.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXEZvcmdvdFBhc3N3b3JkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/ForgotPasswordConfirmation.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXEZvcmdvdFBhc3N3b3JkQ29uZmlybWF0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXEluZGV4LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/InvalidPasswordReset.razor]
@@ -74,58 +74,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/LoginWithRecoveryCode.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXExvZ2luV2l0aFJlY292ZXJ5Q29kZS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/ChangePassword.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxDaGFuZ2VQYXNzd29yZC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/DeletePersonalData.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxEZWxldGVQZXJzb25hbERhdGEucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/Disable2fa.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxEaXNhYmxlMmZhLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/Email.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxFbWFpbC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/EnableAuthenticator.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxFbmFibGVBdXRoZW50aWNhdG9yLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/ExternalLogins.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxFeHRlcm5hbExvZ2lucy5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/GenerateRecoveryCodes.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxHZW5lcmF0ZVJlY292ZXJ5Q29kZXMucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxJbmRleC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/PersonalData.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxQZXJzb25hbERhdGEucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/ResetAuthenticator.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxSZXNldEF1dGhlbnRpY2F0b3IucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/SetPassword.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxTZXRQYXNzd29yZC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/TwoFactorAuthentication.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxUd29GYWN0b3JBdXRoZW50aWNhdGlvbi5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Manage/_Imports.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFBhZ2VzXE1hbmFnZVxfSW1wb3J0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Pages/Register.razor]
@@ -184,28 +132,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Layout/Admin.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcQWRtaW4ucmF6b3I=
+[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Pages/Admin.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Layout/Category.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcQ2F0ZWdvcnkucmF6b3I=
+[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Pages/Category.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDYXRlZ29yeS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Layout/CategoryList.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcQ2F0ZWdvcnlMaXN0LnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Layout/Log.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTG9nLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Layout/Mainadmin.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbmFkbWluLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Layout/ThreadView.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcVGhyZWFkVmlldy5yYXpvcg==
+[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Pages/CategoryList.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDYXRlZ29yeUxpc3QucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Pages/Error.razor]
@@ -214,6 +150,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Pages/Log.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xMb2cucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Pages/Mainadmin.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xNYWluYWRtaW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Pages/ThreadView.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xUaHJlYWRWaWV3LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Routes.razor]

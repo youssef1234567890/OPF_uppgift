@@ -1,20 +1,29 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using BlazorApp.Data;
+using System.Threading.Tasks;
 
-namespace BlazorApp.Components.Account;
-
-// Remove the "else if (EmailSender is IdentityNoOpEmailSender)" block from RegisterConfirmation.razor after updating with a real implementation.
-internal sealed class IdentityNoOpEmailSender : IEmailSender<ApplicationUser>
+namespace BlazorApp.Components.Account
 {
-    private readonly IEmailSender emailSender = new NoOpEmailSender();
+    // Now implementing both interfaces
+    internal sealed class IdentityNoOpEmailSender : IEmailSender, IEmailSender<ApplicationUser>
+    {
+        private readonly IEmailSender _innerEmailSender = new NoOpEmailSender();
 
-    public Task SendConfirmationLinkAsync(ApplicationUser user, string email, string confirmationLink) =>
-        emailSender.SendEmailAsync(email, "Confirm your email", $"Please confirm your account by <a href='{confirmationLink}'>clicking here</a>.");
- 
-    public Task SendPasswordResetLinkAsync(ApplicationUser user, string email, string resetLink) =>
-        emailSender.SendEmailAsync(email, "Reset your password", $"Please reset your password by <a href='{resetLink}'>clicking here</a>.");
- 
-    public Task SendPasswordResetCodeAsync(ApplicationUser user, string email, string resetCode) =>
-        emailSender.SendEmailAsync(email, "Reset your password", $"Please reset your password using the following code: {resetCode}");
+        // Implementation for non-generic interface
+        public Task SendEmailAsync(string email, string subject, string htmlMessage)
+        {
+            return _innerEmailSender.SendEmailAsync(email, subject, htmlMessage);
+        }
+
+        // Implementation for generic interface helper methods:
+        public Task SendConfirmationLinkAsync(ApplicationUser user, string email, string confirmationLink) =>
+            SendEmailAsync(email, "Confirm your email", $"Please confirm your account by <a href='{confirmationLink}'>clicking here</a>.");
+
+        public Task SendPasswordResetLinkAsync(ApplicationUser user, string email, string resetLink) =>
+            SendEmailAsync(email, "Reset your password", $"Please reset your password by <a href='{resetLink}'>clicking here</a>.");
+
+        public Task SendPasswordResetCodeAsync(ApplicationUser user, string email, string resetCode) =>
+            SendEmailAsync(email, "Reset your password", $"Please reset your password using the following code: {resetCode}");
+    }
 }

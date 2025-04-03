@@ -80,20 +80,18 @@
     [Inject]
     private AuthenticationStateProvider AuthenticationStateProvider { get; set; } = default!;
 
-    // Initializes the component and sets up navigation event handling
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
 
-        isAdmin = user.IsInRole("Admin"); // Replace "Admin" with your admin role name
-        isMainAdmin = user.IsInRole("MainAdmin"); // Replace "MainAdmin" with your main admin role name
+        isAdmin = user.IsInRole("admin"); // Replace "Admin" with your admin role name
+        isMainAdmin = user.IsInRole("mainadmin"); // Replace "MainAdmin" with your main admin role name
 
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
     }
 
-    // Handles location changes to update the current URL
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
     {
         try
@@ -107,13 +105,11 @@
         }
     }
 
-    // Logs out the user by navigating to the logout page
     private void Logout()
     {
         NavigationManager.NavigateTo("Account/Logout", forceLoad: true);
     }
 
-    // Disposes of the component and removes the navigation event handler
     public void Dispose()
     {
         NavigationManager.LocationChanged -= OnLocationChanged;

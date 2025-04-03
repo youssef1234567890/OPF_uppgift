@@ -35,15 +35,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 
-// If needed, you can configure IdentityCore with additional options as well:
-// builder.Services.AddIdentityCore<ApplicationUser>(options =>
-// {
-//     options.SignIn.RequireConfirmedAccount = false; // For testing
-// })
-// .AddRoles<IdentityRole>()
-// .AddEntityFrameworkStores<ApplicationDbContext>()
-// .AddSignInManager()
-// .AddDefaultTokenProviders();
+builder.Services.AddTransient<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, IdentityNoOpEmailSender>();
+builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
 
 // Configure a no-op email sender (for development/testing purposes).
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
