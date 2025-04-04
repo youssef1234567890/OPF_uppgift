@@ -273,20 +273,47 @@
 
     private async Task DeleteMessage(int messageId)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this message?");
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this message and all its replies?");
         if (!confirmed)
             return;
-            
+
+        // Find the message to delete
         var message = await dbContext.Messages.FindAsync(messageId);
         if (message != null && (message.ApplicationUserId == currentUserId || isAdmin))
         {
+            // Recursively delete all replies to this message
+            await DeleteReplies(messageId);
+
+            // Remove the message itself
             dbContext.Messages.Remove(message);
             await dbContext.SaveChangesAsync();
-            
-            messages.Remove(message);
-            await JSRuntime.InvokeVoidAsync("alert", "Message deleted successfully");
+
+            // Remove the message from the local collection
+            messages.RemoveAll(m => m.Id == messageId || m.ReplyTo == messageId.ToString());
+
+            await JSRuntime.InvokeVoidAsync("alert", "Message and its replies deleted successfully");
             StateHasChanged();
         }
+    }
+
+    private async Task DeleteReplies(int parentMessageId)
+    {
+        // Find all replies to the parent message
+        var replies = await dbContext.Messages
+            .Where(m => m.ReplyTo == parentMessageId.ToString())
+            .ToListAsync();
+
+        foreach (var reply in replies)
+        {
+            // Recursively delete replies to this reply
+            await DeleteReplies(reply.Id);
+
+            // Remove the reply from the database
+            dbContext.Messages.Remove(reply);
+        }
+
+        // Save changes after all replies are removed
+        await dbContext.SaveChangesAsync();
     }
 
     private async Task DeleteThread()

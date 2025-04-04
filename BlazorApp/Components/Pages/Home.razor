@@ -15,7 +15,14 @@
             </NotAuthorized>
         </AuthorizeView>
         <p class="lead">Your one-stop platform for engaging discussions and easy navigation.</p>
-        <a href="/Account/Register" class="btn btn-primary btn-lg">Get Started</a>
+        <AuthorizeView>
+            <Authorized>
+                <a href="/categories" class="btn btn-primary btn-lg">Get Started</a>
+            </Authorized>
+            <NotAuthorized>
+                <a href="/Account/Register" class="btn btn-primary btn-lg">Get Started</a>
+            </NotAuthorized>
+        </AuthorizeView>
     </div>
 
     <!-- How It Works Section -->
