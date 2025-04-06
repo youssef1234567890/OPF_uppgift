@@ -1,0 +1,57 @@
+@using BlazorApp.Components
+@using BlazorApp.Data
+@using BlazorApp.Components
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Web
+@attribute [Authorize]
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ApplicationDbContext dbContext
+@inject UserManager<ApplicationUser> UserManager
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+<div class="mb-3">
+    <div class="input-group">
+        <input type="text" class="form-control" @bind="MessageText" @onkeypress="HandleKeyPress" placeholder="Write a message..." />
+        <button class="btn btn-primary" @onclick="SendMessage" disabled="@string.IsNullOrWhiteSpace(MessageText)">Send</button>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(ReplyingTo))
+{
+    <div class="alert alert-info d-flex justify-content-between align-items-center mb-3">
+        <span><strong>Replying to:</strong> @ReplyingTo</span>
+        <button class="btn btn-sm btn-outline-danger" @onclick="CancelReply">Cancel</button>
+    </div>
+}
+
+@code {
+    [Parameter] public string MessageText { get; set; } = string.Empty;
+    [Parameter] public string ReplyingTo { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> OnSend { get; set; }
+    [Parameter] public EventCallback OnCancelReply { get; set; }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SendMessage();
+        }
+    }
+
+    private async Task SendMessage()
+    {
+        if (!string.IsNullOrWhiteSpace(MessageText))
+        {
+            await OnSend.InvokeAsync(MessageText); // Notify parent component
+            MessageText = string.Empty; // Clear input field
+        }
+    }
+
+    private void CancelReply()
+    {
+        OnCancelReply.InvokeAsync(); // Notify parent to cancel reply
+    }
+}

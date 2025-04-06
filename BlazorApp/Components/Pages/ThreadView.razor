@@ -1,5 +1,6 @@
 @page "/thread/{ThreadId:int}"
 @using BlazorApp.Data
+@using BlazorApp.Components
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.EntityFrameworkCore
@@ -18,103 +19,34 @@
         <div class="mb-3">
             <a href="/category/@thread.Category" class="btn btn-sm btn-outline-secondary">&laquo; Back to @thread.Category</a>
         </div>
-        
-        <div class="card p-4 shadow-sm mb-4">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3>@thread.Title</h3>
-                <small class="text-muted">Created @thread.CreatedAt.ToLocalTime().ToString("g")</small>
-            </div>
-            
-            @if (!string.IsNullOrEmpty(thread.Description))
-            {
-                <p class="lead mb-3">@thread.Description</p>
-            }
-            
-            <div class="mb-2">
-                <span class="badge bg-info">@thread.Category</span>
-                <small class="ms-2">Posted by @thread.ApplicationUser?.UserName</small>
-            </div>
-            
-            @if (thread.ApplicationUserId == currentUserId || isAdmin)
-            {
-                <div class="mt-2 mb-3">
-                    <button class="btn btn-sm btn-outline-danger" @onclick="DeleteThread">Delete Thread</button>
-                </div>
-            }
-        </div>
+
+        <ThreadHeader 
+            Title="@thread.Title" 
+            Description="@thread.Description" 
+            Category="@thread.Category" 
+            PostedBy="@thread.ApplicationUser?.UserName" 
+            CreatedAt="@thread.CreatedAt" 
+            CanDelete="@(thread.ApplicationUserId == currentUserId || isAdmin)" 
+            OnDelete="DeleteThread" />
 
         <AuthorizeView>
             <Authorized>
                 <div class="card p-4 shadow-sm">
                     <h4 class="mb-4">Messages</h4>
-                    
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" @bind="newMessageText" @onkeypress="HandleKeyPress" placeholder="Write a message..." />
-                            <button class="btn btn-primary" @onclick="SendMessage" disabled="@string.IsNullOrWhiteSpace(newMessageText)">Send</button>
-                        </div>
-                    </div>
 
-                    @if (!string.IsNullOrEmpty(replyingToMessage))
-                    {
-                        <div class="alert alert-info d-flex justify-content-between align-items-center mb-3">
-                            <span><strong>Replying to:</strong> @replyingToMessage</span>
-                            <button class="btn btn-sm btn-outline-danger" @onclick="CancelReply">Cancel</button>
-                        </div>
-                    }
+                    <MessageInput 
+                        MessageText="@newMessageText" 
+                        ReplyingTo="@replyingToMessage" 
+                        OnSend="HandleSendMessage" 
+                        OnCancelReply="CancelReply" />
 
-                    <div class="messages-box border rounded" style="max-height: 500px; overflow-y: auto; background-color: #f8f9fa;">
-                        @if (messages.Any())
-                        {
-                            @foreach (var message in messages)
-                            {
-                                <div class="message @(string.IsNullOrEmpty(message.ReplyTo) ? "" : "message-reply")">
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <strong>@message.UserName</strong>
-                                        <small class="text-muted">@message.Timestamp.ToLocalTime().ToString("g")</small>
-                                    </div>
-                                    
-                                    @if (!string.IsNullOrEmpty(message.ReplyTo))
-                                    {
-                                        <div class="reply-indicator">
-                                            <span>↪</span>
-                                            <small>Replying to: @message.ReplyTo</small>
-                                        </div>
-                                    }
-
-                                    @if (editingMessageId == message.Id)
-                                    {
-                                        <div class="edit-input">
-                                            <div class="input-group">
-                                                <textarea class="form-control" @bind="editMessageText" rows="3"></textarea>
-                                            </div>
-                                            <div class="d-flex justify-content-end mt-2 gap-2">
-                                                <button class="btn btn-sm btn-secondary" @onclick="CancelEdit">Cancel</button>
-                                                <button class="btn btn-sm btn-success" @onclick="() => SaveEdit(message)">Save</button>
-                                            </div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="mt-2 mb-2">@message.Text</div>
-                                    }
-
-                                    <div class="message-actions">
-                                        <button class="btn btn-sm btn-outline-primary" @onclick="() => SetReplyContext(message)">Reply</button>
-                                        @if (message.ApplicationUserId == currentUserId || isAdmin)
-                                        {
-                                            <button class="btn btn-sm btn-outline-info" @onclick="() => StartEdit(message)">Edit</button>
-                                            <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteMessage(message.Id)">Delete</button>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            <div class="text-center text-muted p-4">No messages in this thread yet. Start the conversation!</div>
-                        }
-                    </div>
+                    <MessageList 
+                        Messages="@messages" 
+                        CurrentUserId="@currentUserId" 
+                        IsAdmin="@isAdmin" 
+                        OnReply="SetReplyContext" 
+                        OnEdit="SaveEdit" 
+                        OnDelete="DeleteMessage" />
                 </div>
             </Authorized>
             <NotAuthorized>
@@ -190,15 +122,15 @@
         }
     }
 
-    private async Task SendMessage()
+    private async Task HandleSendMessage(string messageText)
     {
-        if (!string.IsNullOrWhiteSpace(newMessageText) && thread != null)
+        if (!string.IsNullOrWhiteSpace(messageText) && thread != null)
         {
             var message = new Message
             {
                 ApplicationUserId = currentUserId,
                 ApplicationUser = currentUserEntity,
-                Text = newMessageText,
+                Text = messageText,
                 Timestamp = DateTime.UtcNow,
                 ThreadId = ThreadId,
                 Thread = thread,
@@ -208,12 +140,12 @@
 
             dbContext.Messages.Add(message);
             await dbContext.SaveChangesAsync();
-            
-            messages.Add(message);
-            newMessageText = string.Empty;
-            replyingToMessage = string.Empty;
-            
-            StateHasChanged();
+
+            messages.Add(message); // Add the new message to the list
+            newMessageText = string.Empty; // Clear the input field
+            replyingToMessage = string.Empty; // Clear the reply context
+
+            StateHasChanged(); // Trigger UI update
         }
     }
 
@@ -221,31 +153,19 @@
     {
         if (e.Key == "Enter")
         {
-            await SendMessage();
+            await HandleSendMessage(newMessageText); // Call HandleSendMessage with the current message text
         }
     }
 
     private async Task DeleteMessage(int messageId)
     {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this message and all its replies?");
-        if (!confirmed)
-            return;
-
-        // Find the message to delete
         var message = await dbContext.Messages.FindAsync(messageId);
         if (message != null && (message.ApplicationUserId == currentUserId || isAdmin))
         {
-            // Recursively delete all replies to this message
-            await DeleteReplies(messageId);
-
-            // Remove the message itself
             dbContext.Messages.Remove(message);
             await dbContext.SaveChangesAsync();
 
-            // Remove the message from the local collection
             messages.RemoveAll(m => m.Id == messageId || m.ReplyTo == messageId.ToString());
-
-            await JSRuntime.InvokeVoidAsync("alert", "Message and its replies deleted successfully");
             StateHasChanged();
         }
     }
@@ -298,7 +218,6 @@
 
     private void SetReplyContext(Message message)
     {
-        // Set reply context to include both username and message text (truncated if too long)
         string messagePreview = message.Text.Length > 50 ? message.Text.Substring(0, 47) + "..." : message.Text;
         replyingToMessage = $"{message.UserName}: {messagePreview}";
     }
@@ -323,33 +242,20 @@
     
     private async Task SaveEdit(Message message)
     {
-        if (string.IsNullOrWhiteSpace(editMessageText))
-            return;
+        var messageToUpdate = await dbContext.Messages.FindAsync(message.Id);
+        if (messageToUpdate != null && (messageToUpdate.ApplicationUserId == currentUserId || isAdmin))
+        {
+            messageToUpdate.Text = message.Text;
+            await dbContext.SaveChangesAsync();
             
-        try
-        {
-            var messageToUpdate = await dbContext.Messages.FindAsync(message.Id);
-            if (messageToUpdate != null && (messageToUpdate.ApplicationUserId == currentUserId || isAdmin))
+            // Update the message in our local collection
+            var index = messages.FindIndex(m => m.Id == message.Id);
+            if (index >= 0)
             {
-                messageToUpdate.Text = editMessageText;
-                await dbContext.SaveChangesAsync();
-                
-                // Update the message in our local collection
-                var index = messages.FindIndex(m => m.Id == message.Id);
-                if (index >= 0)
-                {
-                    messages[index].Text = editMessageText;
-                }
-                
-                await JSRuntime.InvokeVoidAsync("alert", "Message updated successfully");
+                messages[index].Text = message.Text;
             }
+            
+            StateHasChanged();
         }
-        catch (Exception ex)
-        {
-            await JSRuntime.InvokeVoidAsync("alert", $"Error updating message: {ex.Message}");
-        }
-        
-        editingMessageId = -1;
-        StateHasChanged();
     }
 }

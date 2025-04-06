@@ -1,0 +1,55 @@
+@using BlazorApp.Components
+@using BlazorApp.Data
+@using BlazorApp.Components
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Web
+@attribute [Authorize]
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ApplicationDbContext dbContext
+@inject UserManager<ApplicationUser> UserManager
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+<div class="card p-4 shadow-sm mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>@Title</h3>
+        <small class="text-muted">Created @CreatedAt.ToLocalTime().ToString("g")</small>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Description))
+    {
+        <p class="lead mb-3">@Description</p>
+    }
+
+    <div class="mb-2">
+        <span class="badge bg-info">@Category</span>
+        <small class="ms-2">Posted by @PostedBy</small>
+    </div>
+
+    @if (CanDelete)
+    {
+        <div class="mt-2 mb-3">
+            <button class="btn btn-sm btn-outline-danger" @onclick="HandleDelete">Delete Thread</button>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public string Description { get; set; } = string.Empty;
+    [Parameter] public string Category { get; set; } = string.Empty;
+    [Parameter] public string PostedBy { get; set; } = string.Empty;
+    [Parameter] public DateTime CreatedAt { get; set; }
+    [Parameter] public bool CanDelete { get; set; }
+    [Parameter] public EventCallback OnDelete { get; set; }
+
+    private async Task HandleDelete()
+    {
+        if (await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this thread?"))
+        {
+            await OnDelete.InvokeAsync(); // Notify parent component to handle deletion
+        }
+    }
+}

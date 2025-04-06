@@ -1,0 +1,110 @@
+@using BlazorApp.Components
+@using BlazorApp.Data
+@using BlazorApp.Components
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Components.Web
+@attribute [Authorize]
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ApplicationDbContext dbContext
+@inject UserManager<ApplicationUser> UserManager
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+<div class="messages-box border rounded" style="max-height: 500px; overflow-y: auto; background-color: #f8f9fa;">
+    @if (Messages.Any())
+    {
+        @foreach (var message in Messages)
+        {
+            <div class="message @(string.IsNullOrEmpty(message.ReplyTo) ? "" : "message-reply")">
+                <div class="d-flex justify-content-between align-items-start">
+                    <strong>@message.UserName</strong>
+                    <small class="text-muted">@message.Timestamp.ToLocalTime().ToString("g")</small>
+                </div>
+
+                @if (!string.IsNullOrEmpty(message.ReplyTo))
+                {
+                    <div class="reply-indicator">
+                        <span>↪</span>
+                        <small>Replying to: @message.ReplyTo</small>
+                    </div>
+                }
+
+                @if (EditingMessageId == message.Id)
+                {
+                    <div class="edit-input">
+                        <div class="input-group">
+                            <textarea class="form-control" @bind="EditMessageText" rows="3"></textarea>
+                        </div>
+                        <div class="d-flex justify-content-end mt-2 gap-2">
+                            <button class="btn btn-sm btn-secondary" @onclick="CancelEdit">Cancel</button>
+                            <button class="btn btn-sm btn-success" @onclick="() => SaveEdit(message)">Save</button>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="mt-2 mb-2">@message.Text</div>
+                }
+
+                <div class="message-actions">
+                    <button class="btn btn-sm btn-outline-primary" @onclick="() => SetReplyContext(message)">Reply</button>
+                    @if (message.ApplicationUserId == CurrentUserId || IsAdmin)
+                    {
+                        <button class="btn btn-sm btn-outline-info" @onclick="() => StartEdit(message)">Edit</button>
+                        <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteMessage(message.Id)">Delete</button>
+                    }
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="text-center text-muted p-4">No messages in this thread yet. Start the conversation!</div>
+    }
+</div>
+
+@code {
+    [Parameter] public List<Message> Messages { get; set; } = new();
+    [Parameter] public string CurrentUserId { get; set; } = string.Empty;
+    [Parameter] public bool IsAdmin { get; set; }
+    [Parameter] public EventCallback<Message> OnReply { get; set; }
+    [Parameter] public EventCallback<Message> OnEdit { get; set; }
+    [Parameter] public EventCallback<int> OnDelete { get; set; }
+
+    private int EditingMessageId = -1;
+    private string EditMessageText = string.Empty;
+
+    private void StartEdit(Message message)
+    {
+        EditingMessageId = message.Id;
+        EditMessageText = message.Text;
+    }
+
+    private void CancelEdit()
+    {
+        EditingMessageId = -1;
+        EditMessageText = string.Empty;
+    }
+
+    private async Task SaveEdit(Message message)
+    {
+        if (!string.IsNullOrWhiteSpace(EditMessageText))
+        {
+            message.Text = EditMessageText;
+            await OnEdit.InvokeAsync(message); // Notify parent to save the edit
+            EditingMessageId = -1;
+        }
+    }
+
+    private void SetReplyContext(Message message)
+    {
+        OnReply.InvokeAsync(message); // Notify parent to set reply context
+    }
+
+    private void DeleteMessage(int messageId)
+    {
+        OnDelete.InvokeAsync(messageId); // Notify parent to delete the message
+    }
+}
