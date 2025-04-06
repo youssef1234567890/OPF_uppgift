@@ -1,0 +1,31 @@
+@using BlazorApp.Data
+@code {
+    [Parameter] public List<Thread> Threads { get; set; } = new();
+}
+
+@if (Threads.Any())
+{
+    <div class="list-group">
+        @foreach (var thread in Threads.OrderByDescending(t => t.CreatedAt))
+        {
+            <a href="/thread/@thread.Id" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@thread.Title</h5>
+                    <small>@thread.CreatedAt.ToLocalTime().ToString("g")</small>
+                </div>
+                @if (!string.IsNullOrEmpty(thread.Description))
+                {
+                    <p class="mb-1">@thread.Description</p>
+                }
+                <small>Created by @thread.ApplicationUser?.UserName</small>
+                <span class="badge bg-primary rounded-pill ms-2">@thread.Messages.Count messages</span>
+            </a>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        No threads have been created yet in this category. Be the first to start a discussion!
+    </div>
+}
