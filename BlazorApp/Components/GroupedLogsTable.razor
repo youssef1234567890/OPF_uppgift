@@ -1,0 +1,48 @@
+@using BlazorApp.Data
+@code {
+    [Parameter] public List<IGrouping<string, Message>> GroupedLogs { get; set; } = new();
+    [Parameter] public Func<Message, bool> CanEditMessage { get; set; } = _ => false;
+    [Parameter] public Func<Message, bool> CanDeleteMessage { get; set; } = _ => false;
+    [Parameter] public EventCallback<Message> OnEdit { get; set; }
+    [Parameter] public EventCallback<Message> OnDelete { get; set; }
+}
+
+@foreach (var group in GroupedLogs)
+{
+    <div class="mb-4">
+        <h4 class="mb-2">@group.Key</h4>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>User Name</th>
+                        <th>Thread</th>
+                        <th>Message</th>
+                        <th>Timestamp</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var log in group)
+                    {
+                        <tr class="@(string.IsNullOrEmpty(log.ReplyTo) ? "" : "reply-row")">
+                            <td>@log.ApplicationUser.UserName</td>
+                            <td>@log.ChatRoom</td>
+                            <td>
+                                @if (CanEditMessage(log))
+                                {
+                                    <button @onclick="() => OnEdit.InvokeAsync(log)" class="btn btn-sm btn-primary me-1">Edit</button>
+                                }
+                                @if (CanDeleteMessage(log))
+                                {
+                                    <button @onclick="() => OnDelete.InvokeAsync(log)" class="btn btn-sm btn-danger">Delete</button>
+                                }
+                            </td>
+                            <td>@log.Timestamp.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

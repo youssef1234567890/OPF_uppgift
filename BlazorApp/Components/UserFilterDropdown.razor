@@ -1,0 +1,22 @@
+@using BlazorApp.Data
+
+@code {
+    [Parameter] public List<string> Users { get; set; } = new();
+    [Parameter] public string SelectedUser { get; set; } = "All";
+    [Parameter] public EventCallback<string> OnUserChanged { get; set; }
+}
+
+<select class="form-select w-auto" @onchange="HandleChange">
+    <option value="All" selected="@("All" == SelectedUser)">All Users</option>
+    @foreach (var user in Users)
+    {
+        <option value="@user" selected="@(user == SelectedUser)">@user</option>
+    }
+</select>
+
+@code {
+    private void HandleChange(ChangeEventArgs e)
+    {
+        OnUserChanged.InvokeAsync(e.Value?.ToString() ?? "All");
+    }
+}

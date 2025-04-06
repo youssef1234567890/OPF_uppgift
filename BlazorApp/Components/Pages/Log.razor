@@ -1,4 +1,4 @@
-@page "/log"
+@page "/log" 
 @using BlazorApp.Data
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Identity
@@ -8,7 +8,7 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IJSRuntime JSRuntime
-
+@inject LogService LogService
 
 <div class="container mt-5">
     <div class="card p-4 shadow-sm">
@@ -16,21 +16,13 @@
         <p class="text-center">Overview of all chats within threads.</p>
 
         <div class="mb-3 d-flex justify-content-between align-items-center">
-            <!-- Toggle button for sorting by date (newest or oldest first) -->
             <button class="btn btn-secondary" @onclick="ToggleSortOrder">
                 Sort by Date: @(sortDescending ? "Newest First" : "Oldest First")
             </button>
 
-            <!-- User filter (only visible to admins) -->
             @if (isAdmin)
             {
-                <select class="form-select w-auto" @onchange="OnUserFilterChanged">
-                    <option value="All" selected="@("All" == selectedUser)">All Users</option>
-                    @foreach (var user in distinctUsers)
-                    {
-                        <option value="@user" selected="@(user == selectedUser)">@user</option>
-                    }
-                </select>
+                <UserFilterDropdown Users="distinctUsers" SelectedUser="selectedUser" OnUserChanged="OnUserFilterChanged" />
             }
             else
             {
@@ -44,68 +36,7 @@
         }
         else if (groupedLogs.Any())
         {
-            @foreach (var group in groupedLogs)
-            {
-                <div class="mb-4">
-                    <h4 class="mb-2">@group.Key</h4>
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>User Name</th>
-                                    <th>Thread</th>
-                                    <th>Message</th>
-                                    <th>Timestamp</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var log in group)
-                                {
-                                    <tr class="@(string.IsNullOrEmpty(log.ReplyTo) ? "" : "reply-row")">
-                                        <td>@log.ApplicationUser.UserName</td>
-                                        <td>@log.ChatRoom</td>
-                                        <td>
-                                            @if (editingMessageId == log.Id)
-                                            {
-                                                <div class="input-group">
-                                                    <input @bind="editMessageText" class="form-control" />
-                                                    <button @onclick="() => SaveEdit(log)" class="btn btn-success">Save</button>
-                                                    <button @onclick="CancelEdit" class="btn btn-secondary">Cancel</button>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                @if (!string.IsNullOrEmpty(log.ReplyTo))
-                                                {
-                                                    <div class="reply-indicator">
-                                                        <span>↪</span>
-                                                        <small class="text-muted">Reply to: @log.ReplyTo</small>
-                                                    </div>
-                                                }
-                                                <div class="@(string.IsNullOrEmpty(log.ReplyTo) ? "" : "ms-3 ps-2 border-start border-info")">
-                                                    @log.Text
-                                                </div>
-                                            }
-                                        </td>
-                                        <td>@log.Timestamp.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss")</td>
-                                        <td>
-                                            @if (CanEditMessage(log))
-                                            {
-                                                <button @onclick="() => StartEdit(log)" class="btn btn-sm btn-primary me-1">Edit</button>
-                                            }
-                                            @if (CanDeleteMessage(log))
-                                            {
-                                                <button @onclick="() => DeleteMessage(log)" class="btn btn-sm btn-danger">Delete</button>
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            }
+            <GroupedLogsTable GroupedLogs="groupedLogs" CanEditMessage="CanEditMessage" CanDeleteMessage="CanDeleteMessage" OnEdit="StartEdit" OnDelete="DeleteMessage" />
         }
         else
         {
@@ -115,7 +46,6 @@
 </div>
 
 @code {
-    // Grouped logs by thread (ChatRoom)
     private List<IGrouping<string, Message>> groupedLogs = new();
     private List<string> distinctUsers = new();
     private bool loading = true;
@@ -123,168 +53,54 @@
     private string selectedUser = "All";
     private string currentUserId = "";
     private bool isAdmin = false;
-    
-    // For editing messages
-    private int editingMessageId = -1;
-    private string editMessageText = string.Empty;
-    private string editReplyTo = string.Empty;
-    private int? editThreadId = null;
 
     protected override async Task OnInitializedAsync()
     {
-        // Get current user information
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
         currentUserId = UserManager.GetUserId(user);
-        
-        // Check if user is in admin role
         isAdmin = user.IsInRole("admin") || user.IsInRole("mainadmin");
-        
-        await LoadDistinctUsersAsync();
+
+        distinctUsers = await LogService.GetDistinctUsersAsync();
         await LoadGroupedLogsAsync();
     }
 
-    // Load a list of distinct users for the dropdown filter.
-    private async Task LoadDistinctUsersAsync()
-    {
-        try
-        {
-            distinctUsers = await dbContext.Messages
-                .Include(m => m.ApplicationUser)
-                .Where(m => m.ChatRoom != null)
-                .Select(m => m.ApplicationUser.UserName!)
-                .Distinct()
-                .OrderBy(u => u)
-                .ToListAsync();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading distinct users: {ex.Message}");
-        }
-    }
-
-    // Load logs based on filter and sort order, then group them by ChatRoom.
     private async Task LoadGroupedLogsAsync()
     {
         loading = true;
-        try
-        {
-            IQueryable<Message> query = dbContext.Messages
-                .Include(m => m.ApplicationUser)
-                .Include(m => m.Thread)
-                .Where(m => m.ChatRoom != null);
-
-            // If not admin, only show user's own messages
-            if (!isAdmin)
-            {
-                query = query.Where(m => m.ApplicationUserId == currentUserId);
-            }
-            else if (selectedUser != "All")
-            {
-                query = query.Where(m => m.ApplicationUser.UserName == selectedUser);
-            }
-
-            query = sortDescending ? query.OrderByDescending(m => m.Timestamp) : query.OrderBy(m => m.Timestamp);
-            var logs = await query.ToListAsync();
-
-            groupedLogs = logs.GroupBy(m => m.ChatRoom).ToList();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error loading logs: {ex.Message}");
-        }
+        groupedLogs = await LogService.GetGroupedLogsAsync(isAdmin, currentUserId, selectedUser, sortDescending);
         loading = false;
     }
 
-    // Toggle sort order (newest-first vs oldest-first) and reload logs.
     private async Task ToggleSortOrder()
     {
         sortDescending = !sortDescending;
         await LoadGroupedLogsAsync();
     }
 
-    // Update the user filter and reload logs when selection changes.
-    private async Task OnUserFilterChanged(ChangeEventArgs e)
+    private async Task OnUserFilterChanged(string user)
     {
-        selectedUser = e.Value?.ToString() ?? "All";
+        selectedUser = user;
         await LoadGroupedLogsAsync();
     }
-    
-    // Edit message functions
-    private void StartEdit(Message message)
-    {
-        editingMessageId = message.Id;
-        editMessageText = message.Text;
-        editReplyTo = message.ReplyTo;
-        editThreadId = message.ThreadId;
-    }
-    
-    private void CancelEdit()
-    {
-        editingMessageId = -1;
-        editMessageText = string.Empty;
-        editReplyTo = string.Empty;
-        editThreadId = null;
-    }
-    
-    private async Task SaveEdit(Message message)
-    {
-        try
-        {
-            var messageToUpdate = await dbContext.Messages.FindAsync(message.Id);
-            if (messageToUpdate != null)
-            {
-                messageToUpdate.Text = editMessageText;
-                // Ensure we preserve the ReplyTo and ThreadId values
-                messageToUpdate.ReplyTo = editReplyTo;
-                messageToUpdate.ThreadId = editThreadId;
-                await dbContext.SaveChangesAsync();
-                await JSRuntime.InvokeVoidAsync("alert", "Message updated successfully");
-            }
-        }
-        catch (Exception ex)
-        {
-            await JSRuntime.InvokeVoidAsync("alert", $"Error updating message: {ex.Message}");
-        }
-        
-        editingMessageId = -1;
-        await LoadGroupedLogsAsync();
-    }
-    
-    // Delete message
-    private async Task DeleteMessage(Message message)
-    {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this message?");
-        if (!confirmed)
-            return;
-            
-        try
-        {
-            var messageToDelete = await dbContext.Messages.FindAsync(message.Id);
-            if (messageToDelete != null)
-            {
-                dbContext.Messages.Remove(messageToDelete);
-                await dbContext.SaveChangesAsync();
-                await JSRuntime.InvokeVoidAsync("alert", "Message deleted successfully");
-            }
-        }
-        catch (Exception ex)
-        {
-            await JSRuntime.InvokeVoidAsync("alert", $"Error deleting message: {ex.Message}");
-        }
-        
-        await LoadGroupedLogsAsync();
-    }
-    
-    // Helper method to check if current user can edit a message
+
     private bool CanEditMessage(Message message)
     {
         return isAdmin || message.ApplicationUserId == currentUserId;
     }
-    
-    // Helper method to check if current user can delete a message
+
     private bool CanDeleteMessage(Message message)
     {
         return isAdmin || message.ApplicationUserId == currentUserId;
+    }
+
+    private async Task StartEdit(Message message)
+    {
+        await JSRuntime.InvokeVoidAsync("alert", $"Editing message: {message.Id}");
+    }
+
+    private async Task DeleteMessage(Message message)
+    {
+        await JSRuntime.InvokeVoidAsync("alert", $"Deleting message: {message.Id}");
     }
 }
