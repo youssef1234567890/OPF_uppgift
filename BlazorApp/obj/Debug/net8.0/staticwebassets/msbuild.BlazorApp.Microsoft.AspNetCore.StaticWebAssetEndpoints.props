@@ -108,17 +108,17 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"zuhbdg5ner"},{"Name":"integrity","Value":"sha256-K6wc4eiK\u002B7Ae2B6Igxcnp3jlme84qpeQRtnXdN5wZ38="},{"Name":"label","Value":"_content/BlazorApp/css/home.css"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2079"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022K6wc4eiK\u002B7Ae2B6Igxcnp3jlme84qpeQRtnXdN5wZ38=\u0022"},{"Name":"Last-Modified","Value":"Mon, 07 Apr 2025 13:37:19 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/BlazorApp/css/log.4g8pd6i0f9.css">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\log.css'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"4g8pd6i0f9"},{"Name":"integrity","Value":"sha256-BBwhIDhUrAQ\u002BnxOBgyq\u002B4iVi\u002BCeY2vjHb9d6iqDEtm8="},{"Name":"label","Value":"_content/BlazorApp/css/log.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2973"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022BBwhIDhUrAQ\u002BnxOBgyq\u002B4iVi\u002BCeY2vjHb9d6iqDEtm8=\u0022"},{"Name":"Last-Modified","Value":"Mon, 07 Apr 2025 14:18:38 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BlazorApp/css/log.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\log.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-BBwhIDhUrAQ\u002BnxOBgyq\u002B4iVi\u002BCeY2vjHb9d6iqDEtm8="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2973"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022BBwhIDhUrAQ\u002BnxOBgyq\u002B4iVi\u002BCeY2vjHb9d6iqDEtm8=\u0022"},{"Name":"Last-Modified","Value":"Mon, 07 Apr 2025 14:18:38 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Uyo5/3ocPT8VXdsga4NkSw2JKKWZjdOf/M0e8MupLMk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"4224"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Uyo5/3ocPT8VXdsga4NkSw2JKKWZjdOf/M0e8MupLMk=\u0022"},{"Name":"Last-Modified","Value":"Mon, 07 Apr 2025 18:31:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/BlazorApp/css/log.ftflr3sxyi.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\log.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"ftflr3sxyi"},{"Name":"integrity","Value":"sha256-Uyo5/3ocPT8VXdsga4NkSw2JKKWZjdOf/M0e8MupLMk="},{"Name":"label","Value":"_content/BlazorApp/css/log.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"4224"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Uyo5/3ocPT8VXdsga4NkSw2JKKWZjdOf/M0e8MupLMk=\u0022"},{"Name":"Last-Modified","Value":"Mon, 07 Apr 2025 18:31:43 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BlazorApp/css/login.1n32o29l21.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\login.css'))</AssetFile>
