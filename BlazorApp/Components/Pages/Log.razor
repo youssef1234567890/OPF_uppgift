@@ -10,40 +10,102 @@
 @inject IJSRuntime JSRuntime
 @inject LogService LogService
 
-<div class="container mt-5">
-    <div class="card p-4 shadow-sm">
-        <h3 class="text-center mb-4">Messages Overview</h3>
-        <p class="text-center">Overview of all chats within threads.</p>
+<link href="css/log.css" rel="stylesheet" />
 
-        <div class="mb-3 d-flex justify-content-between align-items-center">
-            <button class="btn btn-secondary" @onclick="ToggleSortOrder">
-                Sort by Date: @(sortDescending ? "Newest First" : "Oldest First")
-            </button>
+<div class="log-container">
+    <div class="log-header">
+        <h1>Messages Overview</h1>
+        <p class="log-subtitle">Overview of all chats within threads</p>
+    </div>
 
-            @if (isAdmin)
-            {
+    <div class="log-controls">
+        <button class="sort-button" @onclick="ToggleSortOrder">
+            <i class="bi @(sortDescending ? "bi-sort-down" : "bi-sort-up")"></i>
+            Sort by Date: @(sortDescending ? "Newest First" : "Oldest First")
+        </button>
+
+        @if (isAdmin)
+        {
+            <div class="user-filter">
                 <UserFilterDropdown Users="distinctUsers" SelectedUser="selectedUser" OnUserChanged="OnUserFilterChanged" />
-            }
-            else
-            {
-                <div class="text-info">Viewing your messages only</div>
-            }
-        </div>
-
-        @if (loading)
-        {
-            <p class="text-center">Loading logs...</p>
-        }
-        else if (groupedLogs.Any())
-        {
-            <GroupedLogsTable GroupedLogs="groupedLogs" CanEditMessage="CanEditMessage" CanDeleteMessage="CanDeleteMessage" OnEdit="StartEdit" OnDelete="DeleteMessage" />
+            </div>
         }
         else
         {
-            <p class="text-center text-muted">No logs found.</p>
+            <div class="text-info">Viewing your messages only</div>
         }
     </div>
+
+    @if (loading)
+    {
+        <div class="loading-state">
+            <i class="bi bi-arrow-repeat spin"></i>
+            <p>Loading logs...</p>
+        </div>
+    }
+    else if (groupedLogs.Any())
+    {
+        <table class="log-table">
+            <thead>
+                <tr>
+                    <th>Thread</th>
+                    <th>User</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in groupedLogs)
+                {
+                    @foreach (var message in group)
+                    {
+                        <tr>
+                            <td>@message.Thread?.Title</td>
+                            <td>@message.ApplicationUser?.UserName</td>
+                            <td>@message.Text</td>
+                            <td>@message.Timestamp.ToString("MMM dd, yyyy HH:mm")</td>
+                            <td>
+                                <div class="log-actions">
+                                    @if (CanEditMessage(message))
+                                    {
+                                        <button class="log-action-button edit" @onclick="() => StartEdit(message)">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                    }
+                                    @if (CanDeleteMessage(message))
+                                    {
+                                        <button class="log-action-button delete" @onclick="() => DeleteMessage(message)">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="empty-state">
+            <i class="bi bi-chat-square-text"></i>
+            <p>No logs found.</p>
+        </div>
+    }
 </div>
+
+<style>
+    .spin {
+        animation: spin 1s linear infinite;
+    }
+
+    @@keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+</style>
 
 @code {
     private List<IGrouping<string, Message>> groupedLogs = new();

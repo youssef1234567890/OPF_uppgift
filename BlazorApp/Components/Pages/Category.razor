@@ -10,28 +10,75 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject NavigationManager NavigationManager
 
-<div class="container mt-5">
-    <div class="card p-4 shadow-sm">
-        <h3 class="text-center mb-4">@CategoryName Discussions</h3>
+<link href="css/category.css" rel="stylesheet" />
 
-        <AuthorizeView>
-            <Authorized>
-                <div class="mb-4">
-                    <button class="btn btn-primary" @onclick="() => showCreateThread = true">Create New Thread</button>
-                </div>
+<div class="category-container">
+    <div class="category-header">
+        <h1>@CategoryName Discussions</h1>
+        <p class="category-subtitle">Join the conversation in @CategoryName</p>
+    </div>
 
-                @if (showCreateThread)
-                {
+    <AuthorizeView>
+        <Authorized>
+            <div class="create-thread-button">
+                <button class="btn btn-primary" @onclick="() => showCreateThread = true">
+                    <i class="bi bi-plus-circle"></i> Create New Thread
+                </button>
+            </div>
+
+            @if (showCreateThread)
+            {
+                <div class="create-thread-form">
                     <CreateThreadForm OnCancel="CancelCreateThread" OnCreate="HandleCreateThread" />
+                </div>
+            }
+
+            <div class="thread-list">
+                @foreach (var thread in threads)
+                {
+                    <div class="thread-card">
+                        <div class="thread-header">
+                            <h2 class="thread-title">@thread.Title</h2>
+                            <div class="thread-meta">
+                                <span><i class="bi bi-person"></i> @thread.ApplicationUser?.UserName</span>
+                                <span><i class="bi bi-clock"></i> @thread.CreatedAt.ToString("MMM dd, yyyy")</span>
+                                <span><i class="bi bi-chat-dots"></i> @thread.Messages?.Count messages</span>
+                            </div>
+                        </div>
+                        <div class="thread-content">
+                            <p class="thread-description">@thread.Description</p>
+                        </div>
+                        <div class="thread-footer">
+                            <div class="thread-actions">
+                                <button class="thread-action-button">
+                                    <i class="bi bi-chat"></i> Reply
+                                </button>
+                                <button class="thread-action-button">
+                                    <i class="bi bi-share"></i> Share
+                                </button>
+                            </div>
+                            <a href="/thread/@thread.Id" class="btn btn-outline-primary">View Thread</a>
+                        </div>
+                    </div>
                 }
 
-                <ThreadList Threads="threads" />
-            </Authorized>
-            <NotAuthorized>
-                <p class="text-center text-danger">You must be logged in to access forums.</p>
-            </NotAuthorized>
-        </AuthorizeView>
-    </div>
+                @if (!threads.Any())
+                {
+                    <div class="empty-state">
+                        <i class="bi bi-chat-square-text"></i>
+                        <p>No threads found in this category. Be the first to start a discussion!</p>
+                    </div>
+                }
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <div class="empty-state">
+                <i class="bi bi-lock"></i>
+                <p>You must be logged in to access forums.</p>
+                <a href="/Account/Login" class="btn btn-primary mt-3">Login</a>
+            </div>
+        </NotAuthorized>
+    </AuthorizeView>
 </div>
 
 @code {

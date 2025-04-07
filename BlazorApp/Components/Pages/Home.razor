@@ -3,18 +3,20 @@
 
 <PageTitle>Welcome</PageTitle>
 
-<div class="container mt-5">
+<link href="css/home.css" rel="stylesheet" />
+
+<div class="home-container">
     <!-- Hero Section -->
-    <div class="text-center">
+    <div class="hero-section">
         <AuthorizeView>
             <Authorized>
-                <h1 class="display-4">Welcome, @context.User.Identity.Name, to Reddit 2!</h1>
+                <h1 class="hero-title">Welcome, @context.User.Identity.Name, to Reddit 2!</h1>
             </Authorized>
             <NotAuthorized>
-                <h1 class="display-4">Welcome to Reddit 2!</h1>
+                <h1 class="hero-title">Welcome to Reddit 2!</h1>
             </NotAuthorized>
         </AuthorizeView>
-        <p class="lead">Your one-stop platform for engaging discussions and easy navigation.</p>
+        <p class="hero-subtitle">Your one-stop platform for engaging discussions and easy navigation.</p>
         <AuthorizeView>
             <Authorized>
                 <a href="/categories" class="btn btn-primary btn-lg">Get Started</a>
@@ -26,49 +28,62 @@
     </div>
 
     <!-- How It Works Section -->
-    <section class="mt-5">
-        <h2 class="text-center mb-4">How to Use This Site</h2>
-        <div class="row text-center">
-            <div class="col-md-6">
-                <div class="card p-3 shadow-sm">
-                    <h3>1. Create an Account</h3>
-                    <p>Register to access exclusive features like discussions and admin panels.</p>
-                    <a href="/Account/Register" class="btn btn-outline-primary">Register Now</a>
-                </div>
+    <section class="features-section">
+        <h2 class="section-title">How to Use This Site</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">👤</div>
+                <h3>1. Create an Account</h3>
+                <p>Register to access exclusive features like discussions and admin panels.</p>
+                <a href="/Account/Register" class="btn btn-outline-primary">Register Now</a>
             </div>
-            <div class="col-md-6">
-                <div class="card p-3 shadow-sm">
-                    <h3>2. Browse Categories</h3>
-                    <p>Navigate different categories to find discussions that interest you.</p>
-                    <AuthorizeView>
-                        <NotAuthorized>
-                            <a href="/Account/Login" class="btn btn-outline-primary">Browse Categories</a>
-                        </NotAuthorized>
-                        <Authorized>
-                            <a href="/categories" class="btn btn-outline-primary">Browse Categories</a>
-                        </Authorized>
-                    </AuthorizeView>
-                </div>
+            <div class="feature-card">
+                <div class="feature-icon">📑</div>
+                <h3>2. Browse Categories</h3>
+                <p>Navigate different categories to find discussions that interest you.</p>
+                <AuthorizeView>
+                    <NotAuthorized>
+                        <a href="/Account/Login" class="btn btn-outline-primary">Browse Categories</a>
+                    </NotAuthorized>
+                    <Authorized>
+                        <a href="/categories" class="btn btn-outline-primary">Browse Categories</a>
+                    </Authorized>
+                </AuthorizeView>
             </div>
         </div>
     </section>
 
     <!-- Quick Links Section -->
-    <section class="mt-5 text-center">
-        <h2>Quick Access</h2>
-        <p>Navigate to key features instantly.</p>
-        <div class="d-flex justify-content-center gap-3 flex-wrap">
+    <section class="quick-links-section">
+        <h2 class="section-title">Quick Access</h2>
+        <p class="section-subtitle">Navigate to key features instantly.</p>
+        <div class="quick-links-grid">
             <AuthorizeView>
                 <NotAuthorized>
-                    <a href="/Account/Login" class="btn btn-secondary">Login</a>
-                    <a href="/Account/Login" class="btn btn-info">Manage Account</a>
+                    <a href="/Account/Login" class="quick-link-card">
+                        <span class="quick-link-icon">🔑</span>
+                        <span>Login</span>
+                    </a>
+                    <a href="/Account/Login" class="quick-link-card">
+                        <span class="quick-link-icon">⚙️</span>
+                        <span>Manage Account</span>
+                    </a>
                 </NotAuthorized>
                 <Authorized>
-                    <a href="/categories" class="btn btn-info">Categories</a>
-                    <a href="/Account/Manage" class="btn btn-info">Manage Account</a>
+                    <a href="/categories" class="quick-link-card">
+                        <span class="quick-link-icon">📑</span>
+                        <span>Categories</span>
+                    </a>
+                    <a href="/Account/Manage" class="quick-link-card">
+                        <span class="quick-link-icon">⚙️</span>
+                        <span>Manage Account</span>
+                    </a>
                 </Authorized>
             </AuthorizeView>
-            <a href="/log" class="btn btn-dark">View Logs</a>
+            <a href="/log" class="quick-link-card">
+                <span class="quick-link-icon">📝</span>
+                <span>View Logs</span>
+            </a>
         </div>
     </section>
 </div>

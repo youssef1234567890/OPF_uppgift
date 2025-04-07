@@ -4,35 +4,46 @@
 @using Microsoft.EntityFrameworkCore
 @inject ApplicationDbContext dbContext
 
-<div class="container mt-5">
-    <div class="card p-4 shadow-sm">
-        <h3 class="text-center mb-4">Forum Categories</h3>
-        
-        <div class="row">
-            @foreach (var category in categories)
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">@category</h5>
-                            <p class="card-text">
-                                <span class="badge bg-primary">@GetThreadCount(category) threads</span>
-                                <span class="badge bg-secondary ms-2">@GetMessageCount(category) messages</span>
-                            </p>
-                            <a href="/category/@category" class="btn btn-outline-primary">View Discussions</a>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-        
-        @if (!categories.Any())
+<link href="css/category-list.css" rel="stylesheet" />
+
+<div class="categories-container">
+    <div class="categories-header">
+        <h1>Forum Categories</h1>
+        <p class="subtitle">Browse and join discussions in your favorite topics</p>
+    </div>
+    
+    <div class="categories-grid">
+        @foreach (var category in categories)
         {
-            <div class="alert alert-info">
-                No categories found.
+            <div class="category-card">
+                <div class="category-icon">
+                    @GetCategoryIcon(category)
+                </div>
+                <div class="category-content">
+                    <h2 class="category-title">@category</h2>
+                    <div class="category-stats">
+                        <span class="stat">
+                            <i class="bi bi-chat-square-text"></i>
+                            @GetThreadCount(category) threads
+                        </span>
+                        <span class="stat">
+                            <i class="bi bi-chat-dots"></i>
+                            @GetMessageCount(category) messages
+                        </span>
+                    </div>
+                    <a href="/category/@category" class="category-link">View Discussions</a>
+                </div>
             </div>
         }
     </div>
+    
+    @if (!categories.Any())
+    {
+        <div class="empty-state">
+            <i class="bi bi-emoji-frown"></i>
+            <p>No categories found.</p>
+        </div>
+    }
 </div>
 
 @code {
@@ -48,14 +59,12 @@
     
     protected override async Task OnInitializedAsync()
     {
-        // Get thread counts for each category
         var threads = await dbContext.Threads.ToListAsync();
         foreach (var category in categories)
         {
             threadCounts[category] = threads.Count(t => t.Category == category);
         }
         
-        // Get message counts for each category
         var messages = await dbContext.Messages
             .Include(m => m.Thread)
             .ToListAsync();
@@ -74,5 +83,16 @@
     private int GetMessageCount(string category)
     {
         return messageCounts.TryGetValue(category, out var count) ? count : 0;
+    }
+
+    private string GetCategoryIcon(string category)
+    {
+        return category switch
+        {
+            "Film" => "🎬",
+            "Games" => "🎮",
+            "Series" => "📺",
+            _ => "📑"
+        };
     }
 }

@@ -1,0 +1,134 @@
+/* Log Page Styles */
+.log-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.log-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.log-header h1 {
+    font-size: 2.5rem;
+    color: #1a1a1b;
+    margin-bottom: 0.5rem;
+}
+
+.log-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.log-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.sort-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f6f7f8;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    color: #1a1a1b;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.sort-button:hover {
+    background: #e5e5e5;
+}
+
+.user-filter {
+    min-width: 200px;
+}
+
+.log-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.log-table th {
+    background: #f6f7f8;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #1a1a1b;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.log-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.log-table tr:last-child td {
+    border-bottom: none;
+}
+
+.log-table tr:hover {
+    background: #f6f7f8;
+}
+
+.log-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.log-action-button {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.log-action-button:hover {
+    color: #FF4500;
+    background: rgba(255, 69, 0, 0.1);
+}
+
+.log-action-button.edit:hover {
+    color: #0079d3;
+    background: rgba(0, 121, 211, 0.1);
+}
+
+.log-action-button.delete:hover {
+    color: #ff4500;
+    background: rgba(255, 69, 0, 0.1);
+}
+
+.loading-state {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #FF4500;
+} 
