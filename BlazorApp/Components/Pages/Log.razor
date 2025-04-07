@@ -62,20 +62,35 @@
                             <tr>
                                 <td>@message.Thread?.Title</td>
                                 <td>@message.ApplicationUser?.UserName</td>
-                                <td>@message.Text</td>
+                                <td>
+                                    @if (editingMessageId == message.Id)
+                                    {
+                                        <div class="edit-form">
+                                            <textarea class="form-control" @bind="editMessageText" rows="3"></textarea>
+                                            <div class="edit-actions">
+                                                <button class="btn btn-sm btn-success" @onclick="() => SaveEdit(message)">Save</button>
+                                                <button class="btn btn-sm btn-secondary" @onclick="CancelEdit">Cancel</button>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @message.Text
+                                    }
+                                </td>
                                 <td>@message.Timestamp.ToString("MMM dd, yyyy HH:mm")</td>
                                 <td>
                                     <div class="log-actions">
                                         @if (CanEditMessage(message))
                                         {
                                             <button class="log-action-button edit" @onclick="() => StartEdit(message)" title="Edit message">
-                                                <i class="bi bi-pencil"></i>
+                                                <i class="bi bi-pencil-fill"></i> Edit
                                             </button>
                                         }
                                         @if (CanDeleteMessage(message))
                                         {
                                             <button class="log-action-button delete" @onclick="() => DeleteMessage(message)" title="Delete message">
-                                                <i class="bi bi-trash"></i>
+                                                <i class="bi bi-trash-fill"></i> Delete
                                             </button>
                                         }
                                     </div>
@@ -261,6 +276,16 @@
         animation: spin 1s linear infinite;
     }
 
+    .edit-form {
+        margin-bottom: 0.5rem;
+    }
+
+    .edit-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
     @@keyframes spin {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
@@ -298,6 +323,10 @@
     private bool isAdmin = false;
     private int totalMessages = 0;
     private int messagesWithChatRoom = 0;
+    
+    // For editing messages
+    private int editingMessageId = -1;
+    private string editMessageText = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -343,13 +372,53 @@
         return isAdmin || message.ApplicationUserId == currentUserId;
     }
 
-    private async Task StartEdit(Message message)
+    private void StartEdit(Message message)
     {
-        await JSRuntime.InvokeVoidAsync("alert", $"Editing message: {message.Id}");
+        editingMessageId = message.Id;
+        editMessageText = message.Text;
+    }
+
+    private void CancelEdit()
+    {
+        editingMessageId = -1;
+        editMessageText = string.Empty;
+    }
+
+    private async Task SaveEdit(Message message)
+    {
+        if (!string.IsNullOrWhiteSpace(editMessageText))
+        {
+            var messageToUpdate = await dbContext.Messages.FindAsync(message.Id);
+            if (messageToUpdate != null && (messageToUpdate.ApplicationUserId == currentUserId || isAdmin))
+            {
+                messageToUpdate.Text = editMessageText;
+                await dbContext.SaveChangesAsync();
+                
+                // Reload the logs to reflect the changes
+                await LoadGroupedLogsAsync();
+                
+                // Reset editing state
+                editingMessageId = -1;
+                editMessageText = string.Empty;
+            }
+        }
     }
 
     private async Task DeleteMessage(Message message)
     {
-        await JSRuntime.InvokeVoidAsync("alert", $"Deleting message: {message.Id}");
+        var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this message?");
+        
+        if (confirmed)
+        {
+            var messageToDelete = await dbContext.Messages.FindAsync(message.Id);
+            if (messageToDelete != null && (messageToDelete.ApplicationUserId == currentUserId || isAdmin))
+            {
+                dbContext.Messages.Remove(messageToDelete);
+                await dbContext.SaveChangesAsync();
+                
+                // Reload the logs to reflect the changes
+                await LoadGroupedLogsAsync();
+            }
+        }
     }
 }

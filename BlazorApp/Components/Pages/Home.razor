@@ -1,5 +1,9 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+@using BlazorApp.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject NavigationManager NavigationManager
 
 <PageTitle>Welcome</PageTitle>
 
@@ -35,7 +39,14 @@
                 <div class="feature-icon">👤</div>
                 <h3>1. Create an Account</h3>
                 <p>Register to access exclusive features like discussions and admin panels.</p>
-                <a href="/Account/Register" class="btn btn-outline-primary">Register Now</a>
+                <AuthorizeView>
+                    <Authorized>
+                        <LogoutButton ButtonClass="btn btn-outline-primary" />
+                    </Authorized>
+                    <NotAuthorized>
+                        <a href="/Account/Register" class="btn btn-outline-primary">Register Now</a>
+                    </NotAuthorized>
+                </AuthorizeView>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📑</div>
@@ -87,3 +98,11 @@
         </div>
     </section>
 </div>
+
+@code {
+    private async Task LogoutAsync()
+    {
+        await SignInManager.SignOutAsync();
+        NavigationManager.NavigateTo("/", true);
+    }
+}

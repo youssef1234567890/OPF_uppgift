@@ -174,8 +174,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>4g8pd6i0f9</Fingerprint>
-      <Integrity>BBwhIDhUrAQ+nxOBgyq+4iVi+CeY2vjHb9d6iqDEtm8=</Integrity>
+      <Fingerprint>ftflr3sxyi</Fingerprint>
+      <Integrity>Uyo5/3ocPT8VXdsga4NkSw2JKKWZjdOf/M0e8MupLMk=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\log.css'))</OriginalItemSpec>
