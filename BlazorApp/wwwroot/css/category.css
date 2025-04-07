@@ -1,0 +1,112 @@
+/* Category Page Styles */
+.category-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.category-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.category-header h1 {
+    font-size: 2.5rem;
+    color: #1a1a1b;
+    margin-bottom: 0.5rem;
+}
+
+.category-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.create-thread-button {
+    margin-bottom: 2rem;
+}
+
+.thread-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.thread-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.thread-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.thread-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.thread-title {
+    font-size: 1.5rem;
+    color: #1a1a1b;
+    margin-bottom: 0.5rem;
+}
+
+.thread-meta {
+    display: flex;
+    gap: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.thread-content {
+    padding: 1.5rem;
+}
+
+.thread-description {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.thread-footer {
+    padding: 1rem 1.5rem;
+    background: #f6f7f8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.thread-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.thread-action-button {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s;
+}
+
+.thread-action-button:hover {
+    color: #FF4500;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #FF4500;
+} 

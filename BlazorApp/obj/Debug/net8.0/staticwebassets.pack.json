@@ -1,23 +1,39 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
-      "PackagePath": "staticwebassets\\BlazorApp.tndg6gwn0h.bundle.scp.css"
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
+      "PackagePath": "staticwebassets\\BlazorApp.fq001ufqgs.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\app.css",
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
     {
-      "Id": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\favicon.png",
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category-list.css",
+      "PackagePath": "staticwebassets\\css\\category-list.css"
+    },
+    {
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category.css",
+      "PackagePath": "staticwebassets\\css\\category.css"
+    },
+    {
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\home.css",
+      "PackagePath": "staticwebassets\\css\\home.css"
+    },
+    {
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\log.css",
+      "PackagePath": "staticwebassets\\css\\log.css"
+    },
+    {
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {
