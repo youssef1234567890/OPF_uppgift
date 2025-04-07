@@ -22,87 +22,92 @@
 @inject IEmailSender<ApplicationUser> EmailSender
 @inject IdentityUserAccessor UserAccessor
 @inject NavigationManager NavigationManager
+
+<link href="css/account-manage.css" rel="stylesheet" />
+
 <CascadingAuthenticationState>
-    <div class="container mt-4">
-        <h1 class="text-center mb-4">Manage Your Profile</h1>
+    <div class="account-container">
+        <div class="account-header">
+            <h1>Manage Your Profile</h1>
+        </div>
 
         <!-- Change Email Section -->
-        <div class="card p-4 shadow-sm mb-4">
-            <h3 class="text-center mb-3">Change Email</h3>
+        <div class="account-card">
+            <h3>Change Email</h3>
             <StatusMessage Message="@message" />
             <div class="row">
                 <div class="col-md-6">
                     <EditForm Model="Input" FormName="change-email" OnValidSubmit="OnValidSubmitAsync" method="post">
                         <DataAnnotationsValidator />
-                        <ValidationSummary class="text-danger" role="alert" />
+                        <ValidationSummary class="validation-summary" role="alert" />
                         @if (isEmailConfirmed)
                         {
-                            <div class="form-floating mb-3 input-group">
+                            <div class="form-floating input-group">
                                 <input type="text" value="@email" class="form-control" placeholder="Please enter your email." disabled />
                                 <div class="input-group-append">
-                                    <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
+                                    <span class="input-group-text">✓</span>
                                 </div>
                                 <label for="email" class="form-label">Email</label>
                             </div>
                         }
                         else
                         {
-                            <div class="form-floating mb-3">
+                            <div class="form-floating">
                                 <input type="text" value="@email" class="form-control" placeholder="Please enter your email." disabled />
                                 <label for="email" class="form-label">Email</label>
                             </div>
                         }
-                        <div class="form-floating mb-3">
+                        <div class="form-floating">
                             <InputText @bind-Value="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="Please enter new email." />
                             <label for="new-email" class="form-label">New email</label>
-                            <ValidationMessage For="() => Input.NewEmail" class="text-danger" />
+                            <ValidationMessage For="() => Input.NewEmail" class="validation-message" />
                         </div>
-                        <button type="submit" class="w-100 btn btn-lg btn-primary">Change email</button>
+                        <button type="submit" class="submit-button">Change email</button>
                     </EditForm>
                 </div>
             </div>
         </div>
 
         <!-- Change Password Section -->
-        <div class="card p-4 shadow-sm mb-4">
-            <h3 class="text-center mb-3">Change Password</h3>
+        <div class="account-card">
+            <h3>Change Password</h3>
             <StatusMessage Message="@message" />
             <div class="row">
                 <div class="col-md-6">
                     <EditForm Model="Input" FormName="change-password" OnValidSubmit="OnValidSubmitAsync" method="post">
                         <DataAnnotationsValidator />
-                        <ValidationSummary class="text-danger" role="alert" />
-                        <div class="form-floating mb-3">
+                        <ValidationSummary class="validation-summary" role="alert" />
+                        <div class="form-floating">
                             <InputText type="password" @bind-Value="Input.OldPassword" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Please enter your old password." />
                             <label for="old-password" class="form-label">Old password</label>
-                            <ValidationMessage For="() => Input.OldPassword" class="text-danger" />
+                            <ValidationMessage For="() => Input.OldPassword" class="validation-message" />
                         </div>
-                        <div class="form-floating mb-3">
+                        <div class="form-floating">
                             <InputText type="password" @bind-Value="Input.NewPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Please enter your new password." />
                             <label for="new-password" class="form-label">New password</label>
-                            <ValidationMessage For="() => Input.NewPassword" class="text-danger" />
+                            <ValidationMessage For="() => Input.NewPassword" class="validation-message" />
                         </div>
-                        <div class="form-floating mb-3">
+                        <div class="form-floating">
                             <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Please confirm your new password." />
                             <label for="confirm-password" class="form-label">Confirm password</label>
-                            <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+                            <ValidationMessage For="() => Input.ConfirmPassword" class="validation-message" />
                         </div>
-                        <button type="submit" class="w-100 btn btn-lg btn-primary">Update password</button>
+                        <button type="submit" class="submit-button">Update password</button>
                     </EditForm>
                 </div>
             </div>
         </div>
 
         <!-- Delete Account Section -->
-        <div class="card p-4 shadow-sm">
-            <h3 class="text-center mb-3 text-danger">Delete Account</h3>
-            <p class="text-center text-danger">
+        <div class="account-card danger">
+            <h3>Delete Account</h3>
+            <p class="warning-text">
                 Warning: Deleting your account is permanent and cannot be undone.
             </p>
             <EditForm Model="DeleteInput" OnValidSubmit="OnSubmitDeleteAsync" FormName="deleteAccountForm">
                 <DataAnnotationsValidator />
-                <ValidationSummary class="text-danger" />
-                <button type="submit" class="btn btn-danger w-100">Delete Account</button>
+                <ValidationSummary class="validation-summary" />
+                <button type="submit" class="submit-button danger">Delete Account</button>
             </EditForm>
         </div>
     </div>

@@ -17,6 +17,14 @@
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\account-manage.css",
+      "PackagePath": "staticwebassets\\css\\account-manage.css"
+    },
+    {
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\admin.css",
+      "PackagePath": "staticwebassets\\css\\admin.css"
+    },
+    {
       "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category-list.css",
       "PackagePath": "staticwebassets\\css\\category-list.css"
     },
@@ -31,6 +39,18 @@
     {
       "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\log.css",
       "PackagePath": "staticwebassets\\css\\log.css"
+    },
+    {
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\login.css",
+      "PackagePath": "staticwebassets\\css\\login.css"
+    },
+    {
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\mainadmin.css",
+      "PackagePath": "staticwebassets\\css\\mainadmin.css"
+    },
+    {
+      "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\register.css",
+      "PackagePath": "staticwebassets\\css\\register.css"
     },
     {
       "Id": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\favicon.png",
