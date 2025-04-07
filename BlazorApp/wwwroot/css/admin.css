@@ -1,0 +1,101 @@
+/* Admin Dashboard Styles */
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.admin-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.admin-header h3 {
+    font-size: 2rem;
+    color: #1a1a1b;
+    margin-bottom: 0.5rem;
+}
+
+.admin-header p {
+    font-size: 1.1rem;
+    color: #7c7c7c;
+}
+
+.admin-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+.admin-table th {
+    background-color: #f6f7f8;
+    color: #1a1a1b;
+    font-weight: 600;
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.admin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.admin-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.delete-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.loading-state {
+    text-align: center;
+    padding: 2rem;
+    color: #7c7c7c;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #7c7c7c;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .admin-container {
+        padding: 1rem;
+    }
+    
+    .admin-card {
+        padding: 1.5rem;
+    }
+    
+    .admin-table {
+        display: block;
+        overflow-x: auto;
+    }
+} 

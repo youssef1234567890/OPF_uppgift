@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "RBHgk17osxCDG3BDgv+jRWpgokmR1J5Ie2HymTvsXDc=",
+  "Hash": "SZLh5oTpiQuyqrhq1mMxUh7c72QT8vUsBUB6D1uVEjE=",
   "Source": "BlazorApp",
   "BasePath": "_content/BlazorApp",
   "Mode": "Default",
@@ -122,6 +122,48 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\account-manage.css",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "css/account-manage#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "fvq5pcaatx",
+      "Integrity": "tV/FVVo63e/RwQu3u82zNisGmrv0TeF/+PP0CZfdl24=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\account-manage.css"
+    },
+    {
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\admin.css",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "css/admin#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "nz5hebbb6l",
+      "Integrity": "k4JESVV0r9pMYg02Z6+MgjNcF33ykx3+ERC2YKQ3nBQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\admin.css"
+    },
+    {
       "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category-list.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
@@ -199,11 +241,74 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "gdbqcl3uy8",
-      "Integrity": "7JNfAEiXMbXR7ey7XRnENRsr3A5IVjn1ZZkFLeZecEk=",
+      "Fingerprint": "4g8pd6i0f9",
+      "Integrity": "BBwhIDhUrAQ+nxOBgyq+4iVi+CeY2vjHb9d6iqDEtm8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\log.css"
+    },
+    {
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\login.css",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "css/login#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "1n32o29l21",
+      "Integrity": "E1HJ+cHfX9G8LKVpgu1RS9YhU4vrurCCT94lkLedg10=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\login.css"
+    },
+    {
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\mainadmin.css",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "css/mainadmin#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "0iio8dwum6",
+      "Integrity": "WLDrnJlFu36AYRI71F8q9DdXZ2EQ3kUk+eVSt5c3c8Q=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\mainadmin.css"
+    },
+    {
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\register.css",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "css/register#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "mwovdqvjga",
+      "Integrity": "1hQyk0tHxpdxINpxoNdAaltI+7kG1wqRXMP3NmDWfTk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\register.css"
     },
     {
       "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\favicon.png",
@@ -639,6 +744,170 @@
       ]
     },
     {
+      "Route": "css/account-manage.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\account-manage.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2243"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tV/FVVo63e/RwQu3u82zNisGmrv0TeF/+PP0CZfdl24=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 14:05:17 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-tV/FVVo63e/RwQu3u82zNisGmrv0TeF/+PP0CZfdl24="
+        }
+      ]
+    },
+    {
+      "Route": "css/account-manage.fvq5pcaatx.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\account-manage.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2243"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tV/FVVo63e/RwQu3u82zNisGmrv0TeF/+PP0CZfdl24=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 14:05:17 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "fvq5pcaatx"
+        },
+        {
+          "Name": "label",
+          "Value": "css/account-manage.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-tV/FVVo63e/RwQu3u82zNisGmrv0TeF/+PP0CZfdl24="
+        }
+      ]
+    },
+    {
+      "Route": "css/admin.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\admin.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1744"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"k4JESVV0r9pMYg02Z6+MgjNcF33ykx3+ERC2YKQ3nBQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 14:02:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-k4JESVV0r9pMYg02Z6+MgjNcF33ykx3+ERC2YKQ3nBQ="
+        }
+      ]
+    },
+    {
+      "Route": "css/admin.nz5hebbb6l.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\admin.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1744"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"k4JESVV0r9pMYg02Z6+MgjNcF33ykx3+ERC2YKQ3nBQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 14:02:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nz5hebbb6l"
+        },
+        {
+          "Name": "label",
+          "Value": "css/admin.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-k4JESVV0r9pMYg02Z6+MgjNcF33ykx3+ERC2YKQ3nBQ="
+        }
+      ]
+    },
+    {
       "Route": "css/category-list.1s481e3mkw.css",
       "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category-list.css",
       "Selectors": [],
@@ -885,6 +1154,51 @@
       ]
     },
     {
+      "Route": "css/log.4g8pd6i0f9.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\log.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2973"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"BBwhIDhUrAQ+nxOBgyq+4iVi+CeY2vjHb9d6iqDEtm8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 14:18:38 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4g8pd6i0f9"
+        },
+        {
+          "Name": "label",
+          "Value": "css/log.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-BBwhIDhUrAQ+nxOBgyq+4iVi+CeY2vjHb9d6iqDEtm8="
+        }
+      ]
+    },
+    {
       "Route": "css/log.css",
       "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\log.css",
       "Selectors": [],
@@ -895,7 +1209,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2295"
+          "Value": "2973"
         },
         {
           "Name": "Content-Type",
@@ -903,11 +1217,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"7JNfAEiXMbXR7ey7XRnENRsr3A5IVjn1ZZkFLeZecEk=\""
+          "Value": "\"BBwhIDhUrAQ+nxOBgyq+4iVi+CeY2vjHb9d6iqDEtm8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 13:38:57 GMT"
+          "Value": "Mon, 07 Apr 2025 14:18:38 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -917,13 +1231,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-7JNfAEiXMbXR7ey7XRnENRsr3A5IVjn1ZZkFLeZecEk="
+          "Value": "sha256-BBwhIDhUrAQ+nxOBgyq+4iVi+CeY2vjHb9d6iqDEtm8="
         }
       ]
     },
     {
-      "Route": "css/log.gdbqcl3uy8.css",
-      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\log.css",
+      "Route": "css/login.1n32o29l21.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\login.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -932,7 +1246,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2295"
+          "Value": "2537"
         },
         {
           "Name": "Content-Type",
@@ -940,11 +1254,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"7JNfAEiXMbXR7ey7XRnENRsr3A5IVjn1ZZkFLeZecEk=\""
+          "Value": "\"E1HJ+cHfX9G8LKVpgu1RS9YhU4vrurCCT94lkLedg10=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 07 Apr 2025 13:38:57 GMT"
+          "Value": "Mon, 07 Apr 2025 14:29:03 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -954,15 +1268,216 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "gdbqcl3uy8"
+          "Value": "1n32o29l21"
         },
         {
           "Name": "label",
-          "Value": "css/log.css"
+          "Value": "css/login.css"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-7JNfAEiXMbXR7ey7XRnENRsr3A5IVjn1ZZkFLeZecEk="
+          "Value": "sha256-E1HJ+cHfX9G8LKVpgu1RS9YhU4vrurCCT94lkLedg10="
+        }
+      ]
+    },
+    {
+      "Route": "css/login.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\login.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2537"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"E1HJ+cHfX9G8LKVpgu1RS9YhU4vrurCCT94lkLedg10=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 14:29:03 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-E1HJ+cHfX9G8LKVpgu1RS9YhU4vrurCCT94lkLedg10="
+        }
+      ]
+    },
+    {
+      "Route": "css/mainadmin.0iio8dwum6.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\mainadmin.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3190"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WLDrnJlFu36AYRI71F8q9DdXZ2EQ3kUk+eVSt5c3c8Q=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 14:16:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0iio8dwum6"
+        },
+        {
+          "Name": "label",
+          "Value": "css/mainadmin.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WLDrnJlFu36AYRI71F8q9DdXZ2EQ3kUk+eVSt5c3c8Q="
+        }
+      ]
+    },
+    {
+      "Route": "css/mainadmin.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\mainadmin.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3190"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WLDrnJlFu36AYRI71F8q9DdXZ2EQ3kUk+eVSt5c3c8Q=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 14:16:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WLDrnJlFu36AYRI71F8q9DdXZ2EQ3kUk+eVSt5c3c8Q="
+        }
+      ]
+    },
+    {
+      "Route": "css/register.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\register.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2175"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1hQyk0tHxpdxINpxoNdAaltI+7kG1wqRXMP3NmDWfTk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 14:00:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1hQyk0tHxpdxINpxoNdAaltI+7kG1wqRXMP3NmDWfTk="
+        }
+      ]
+    },
+    {
+      "Route": "css/register.mwovdqvjga.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\register.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2175"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1hQyk0tHxpdxINpxoNdAaltI+7kG1wqRXMP3NmDWfTk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 07 Apr 2025 14:00:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "mwovdqvjga"
+        },
+        {
+          "Name": "label",
+          "Value": "css/register.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-1hQyk0tHxpdxINpxoNdAaltI+7kG1wqRXMP3NmDWfTk="
         }
       ]
     },

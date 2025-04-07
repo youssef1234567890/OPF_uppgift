@@ -4,23 +4,27 @@
 @using Microsoft.AspNetCore.Identity
 @attribute [Authorize(Roles = "mainadmin")]
 
+<link href="css/mainadmin.css" rel="stylesheet" />
 
-<div class="container mt-5">
-    <div class="card p-4 shadow-sm">
-        
-        <h3 class="text-center mb-4">Main Admin Dashboard</h3>
-        <p class="text-center">Welcome, Main Admin!</p>
+<div class="mainadmin-container">
+    <div class="mainadmin-header">
+        <h1>Main Admin Dashboard</h1>
+        <p>Manage user roles and permissions</p>
+    </div>
 
-        
+    <div class="mainadmin-card">
         @if (loading)
         {
-            <p class="text-center">Loading users...</p>
+            <div class="mainadmin-loading">
+                <i class="bi bi-arrow-repeat spin"></i>
+                <p>Loading users...</p>
+            </div>
         }
         else if (users.Any())
         {
             <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <thead class="table-dark">
+                <table class="mainadmin-table">
+                    <thead>
                         <tr>
                             <th>Email</th>
                             <th>Role</th>
@@ -28,43 +32,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
                         @foreach (var user in users)
                         {
                             <tr>
                                 <td>@user.Email</td>
                                 <td>
-                                    
                                     @if (user.IsMainAdmin)
                                     {
-                                        <span>Main Admin</span>
+                                        <span class="role-badge mainadmin">Main Admin</span>
                                     }
                                     else if (user.IsAdmin)
                                     {
-                                        <span>Admin</span>
+                                        <span class="role-badge admin">Admin</span>
                                     }
                                     else
                                     {
-                                        <span>User</span>
+                                        <span class="role-badge user">User</span>
                                     }
                                 </td>
                                 <td>
-                                    
                                     @if (!user.IsMainAdmin)
                                     {
-                                        @if (user.IsAdmin)
-                                        {
-                                            <button class="btn btn-warning btn-sm" @onclick="() => DemoteToUser(user.Id)">Demote to User</button>
-                                        }
-                                        else
-                                        {
-                                            <button class="btn btn-primary btn-sm" @onclick="() => PromoteToAdmin(user.Id)">Promote to Admin</button>
-                                        }
-                                        <button class="btn btn-danger btn-sm ms-2" @onclick="() => DeleteUser(user.Id)">Delete User</button>
+                                        <div class="mainadmin-actions">
+                                            @if (user.IsAdmin)
+                                            {
+                                                <button class="mainadmin-button warning" @onclick="() => DemoteToUser(user.Id)">Demote to User</button>
+                                            }
+                                            else
+                                            {
+                                                <button class="mainadmin-button primary" @onclick="() => PromoteToAdmin(user.Id)">Promote to Admin</button>
+                                            }
+                                            <button class="mainadmin-button danger" @onclick="() => DeleteUser(user.Id)">Delete User</button>
+                                        </div>
                                     }
                                     else
                                     {
-                                        <span class="text-muted">No actions</span>
+                                        <span class="text-muted">No actions available</span>
                                     }
                                 </td>
                             </tr>
@@ -75,11 +78,24 @@
         }
         else
         {
-            <p class="text-center text-muted">No users found.</p>
+            <div class="mainadmin-empty">
+                <i class="bi bi-people"></i>
+                <p>No users found.</p>
+            </div>
         }
     </div>
 </div>
 
+<style>
+    .spin {
+        animation: spin 1s linear infinite;
+    }
+
+    @@keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+</style>
 
 @code {
     // List to hold user view models and loading flag

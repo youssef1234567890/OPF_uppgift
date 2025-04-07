@@ -7,18 +7,19 @@
 
 .log-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .log-header h1 {
     font-size: 2.5rem;
-    color: #1a1a1b;
+    font-weight: 700;
+    color: #1a1a1a;
     margin-bottom: 0.5rem;
 }
 
 .log-subtitle {
-    color: #666;
     font-size: 1.1rem;
+    color: #666;
 }
 
 .log-controls {
@@ -34,52 +35,61 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: #f6f7f8;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    color: #1a1a1b;
+    padding: 0.5rem 1rem;
+    background-color: #f6f7f8;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    color: #1a1a1a;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
 }
 
 .sort-button:hover {
-    background: #e5e5e5;
+    background-color: #e9ecef;
+}
+
+.sort-button i {
+    font-size: 1.1rem;
 }
 
 .user-filter {
     min-width: 200px;
 }
 
+.text-info {
+    color: #666;
+    font-style: italic;
+}
+
 .log-table {
     width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 12px;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1rem;
+    background-color: #ffffff;
+    border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .log-table th {
-    background: #f6f7f8;
+    background-color: #f6f7f8;
+    color: #1a1a1a;
+    font-weight: 600;
     padding: 1rem;
     text-align: left;
-    font-weight: 600;
-    color: #1a1a1b;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 2px solid #e5e5e5;
 }
 
 .log-table td {
     padding: 1rem;
     border-bottom: 1px solid #e5e5e5;
-}
-
-.log-table tr:last-child td {
-    border-bottom: none;
+    vertical-align: middle;
 }
 
 .log-table tr:hover {
-    background: #f6f7f8;
+    background-color: #f9f9f9;
 }
 
 .log-actions {
@@ -88,47 +98,76 @@
 }
 
 .log-action-button {
-    background: none;
-    border: none;
-    color: #666;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    transition: color 0.2s;
-    padding: 0.5rem;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
     border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.log-action-button:hover {
-    color: #FF4500;
-    background: rgba(255, 69, 0, 0.1);
+.log-action-button.edit {
+    background-color: #e6f7ff;
+    color: #0066cc;
 }
 
 .log-action-button.edit:hover {
-    color: #0079d3;
-    background: rgba(0, 121, 211, 0.1);
+    background-color: #cce6ff;
+}
+
+.log-action-button.delete {
+    background-color: #ffe6e6;
+    color: #ff4500;
 }
 
 .log-action-button.delete:hover {
-    color: #ff4500;
-    background: rgba(255, 69, 0, 0.1);
+    background-color: #ffcccc;
 }
 
 .loading-state {
     text-align: center;
-    padding: 3rem;
+    padding: 3rem 1rem;
     color: #666;
+}
+
+.loading-state i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #0066cc;
 }
 
 .empty-state {
     text-align: center;
-    padding: 3rem;
+    padding: 3rem 1rem;
     color: #666;
 }
 
 .empty-state i {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: #FF4500;
+    color: #ccc;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .log-container {
+        padding: 1rem;
+    }
+    
+    .log-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .log-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .log-actions {
+        flex-direction: column;
+    }
 } 

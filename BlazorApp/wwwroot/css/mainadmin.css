@@ -1,0 +1,178 @@
+/* Mainadmin page styles */
+.mainadmin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.mainadmin-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.mainadmin-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+}
+
+.mainadmin-header p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.mainadmin-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.mainadmin-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.mainadmin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1rem;
+}
+
+.mainadmin-table th {
+    background-color: #f6f7f8;
+    color: #1a1a1a;
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.mainadmin-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e5e5;
+    vertical-align: middle;
+}
+
+.mainadmin-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.mainadmin-table .role-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.mainadmin-table .role-badge.admin {
+    background-color: #e6f7ff;
+    color: #0066cc;
+}
+
+.mainadmin-table .role-badge.mainadmin {
+    background-color: #fff0e6;
+    color: #ff4500;
+}
+
+.mainadmin-table .role-badge.user {
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+.mainadmin-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.mainadmin-button {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.mainadmin-button.primary {
+    background-color: #0066cc;
+    color: white;
+}
+
+.mainadmin-button.primary:hover {
+    background-color: #0055aa;
+}
+
+.mainadmin-button.warning {
+    background-color: #ffcc00;
+    color: #1a1a1a;
+}
+
+.mainadmin-button.warning:hover {
+    background-color: #e6b800;
+}
+
+.mainadmin-button.danger {
+    background-color: #ff4500;
+    color: white;
+}
+
+.mainadmin-button.danger:hover {
+    background-color: #e63e00;
+}
+
+.mainadmin-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.mainadmin-loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.mainadmin-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #666;
+}
+
+.mainadmin-empty i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #ccc;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .mainadmin-container {
+        padding: 1rem;
+    }
+    
+    .mainadmin-card {
+        padding: 1.5rem;
+    }
+    
+    .mainadmin-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .mainadmin-actions {
+        flex-direction: column;
+    }
+    
+    .mainadmin-button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+} 
