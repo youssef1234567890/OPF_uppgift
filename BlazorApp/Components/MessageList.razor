@@ -23,17 +23,27 @@
                     <small class="text-muted">@message.Timestamp.ToLocalTime().ToString("g")</small>
                 </div>
 
+                <div class="mt-2 mb-2">@message.Text</div>
+
                 @if (!string.IsNullOrEmpty(message.ReplyTo))
                 {
-                    <div class="reply-indicator">
-                        <span>↪</span>
-                        <small>Replying to: @message.ReplyTo</small>
+                    <div class="reply-indicator mt-1">
+                        <span class="text-muted">↪ Replying to: <strong>@message.ReplyTo</strong></span>
                     </div>
                 }
 
+                <div class="message-actions mt-2">
+                    <button class="btn btn-sm btn-outline-primary" @onclick="() => SetReplyContext(message)">Reply</button>
+                    @if (message.ApplicationUserId == CurrentUserId || IsAdmin)
+                    {
+                        <button class="btn btn-sm btn-outline-info" @onclick="() => StartEdit(message)">Edit</button>
+                        <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteMessage(message.Id)">Delete</button>
+                    }
+                </div>
+
                 @if (EditingMessageId == message.Id)
                 {
-                    <div class="edit-input">
+                    <div class="edit-input mt-3">
                         <div class="input-group">
                             <textarea class="form-control" @bind="EditMessageText" rows="3"></textarea>
                         </div>
@@ -43,19 +53,6 @@
                         </div>
                     </div>
                 }
-                else
-                {
-                    <div class="mt-2 mb-2">@message.Text</div>
-                }
-
-                <div class="message-actions">
-                    <button class="btn btn-sm btn-outline-primary" @onclick="() => SetReplyContext(message)">Reply</button>
-                    @if (message.ApplicationUserId == CurrentUserId || IsAdmin)
-                    {
-                        <button class="btn btn-sm btn-outline-info" @onclick="() => StartEdit(message)">Edit</button>
-                        <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteMessage(message.Id)">Delete</button>
-                    }
-                </div>
             </div>
         }
     }
