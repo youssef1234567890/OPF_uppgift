@@ -1,4 +1,4 @@
-/* Mainadmin page styles */
+/* Main admin page styling */
 .mainadmin-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -22,12 +22,19 @@
     color: #666;
 }
 
+/* Main admin card styling */
 .mainadmin-card {
     background-color: #ffffff;
-    border-radius: 8px;
+    border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 2rem;
     margin-bottom: 2rem;
+    transition: transform 0.2s;
+}
+
+.mainadmin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .mainadmin-card h3 {
@@ -38,6 +45,61 @@
     text-align: center;
 }
 
+/* Horizontal Stats Card */
+.stats-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    transition: transform 0.2s;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.stats-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    color: #FF4500;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #1a1a1b;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #666;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 50px;
+    background-color: #e5e5e5;
+}
+
+/* Table styling */
 .mainadmin-table {
     width: 100%;
     border-collapse: separate;
@@ -87,6 +149,7 @@
     color: #666;
 }
 
+/* Keeping the original button styles */
 .mainadmin-actions {
     display: flex;
     gap: 0.5rem;
@@ -134,22 +197,28 @@
     cursor: not-allowed;
 }
 
-.mainadmin-loading {
+/* Loading and Empty States */
+.mainadmin-loading, 
+.mainadmin-empty {
     text-align: center;
     padding: 2rem;
     color: #666;
 }
 
-.mainadmin-empty {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: #666;
-}
-
+.mainadmin-loading i, 
 .mainadmin-empty i {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: #ccc;
+    color: #FF4500;
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 /* Responsive adjustments */
@@ -175,4 +244,20 @@
         width: 100%;
         margin-bottom: 0.5rem;
     }
-} 
+    
+    .stats-items {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .stat-divider {
+        width: 80%;
+        height: 1px;
+        margin: 0.5rem 0;
+    }
+    
+    .stat-item {
+        width: 100%;
+        justify-content: center;
+    }
+}
