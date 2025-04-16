@@ -1,40 +1,26 @@
 /* _content/BlazorApp/Components/Layout/MainLayout.razor.rz.scp.css */
-/* Card Style for Posts/Threads */
-.message[b-qgsvw684bo] {
-    background-color: #ffffff;
-    padding: 16px;
-    margin-bottom: 16px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
-}
-.message-reply[b-qgsvw684bo] {
-    border-left: 4px solid #FF4500; /* Use accent color for replies */
-    margin-left: 20px;
-    background-color: #F8F8F8; /* A very light gray background */
-}
-
-/* Layout Structure */
 .page[b-qgsvw684bo] {
     display: flex;
     min-height: 100vh;
     position: relative;
+    background-color: #f8f9fa;
 }
 
-/* Sidebar Adjustments */
+/* Sidebar Styling */
 .sidebar[b-qgsvw684bo] {
-    width: 250px;
-    background-color: #f6f7f8; /* Lighter background instead of a heavy gradient */
-    border-right: 1px solid #e5e5e5;
-    padding: 1rem;
+    width: 280px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     position: fixed;
     height: 100vh;
     overflow-y: auto;
+    z-index: 100;
 }
 
 /* Main Content Area */
 main[b-qgsvw684bo] {
     flex: 1;
-    margin-left: 250px; /* Match sidebar width */
+    margin-left: 280px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -48,91 +34,206 @@ main[b-qgsvw684bo] {
     width: 100%;
 }
 
+/* Top Navigation Bar */
 .top-row[b-qgsvw684bo] {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e5e5e5;
+    background: linear-gradient(to right, #FF4500, #FF8C00);
+    border-bottom: none;
     padding: 1rem 2rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.top-row a[b-qgsvw684bo] {
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    margin-left: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.top-row a:hover[b-qgsvw684bo] {
+    text-decoration: underline;
+    transform: translateY(-2px);
+}
+
+.top-row a i[b-qgsvw684bo] {
+    font-size: 1.2rem;
+}
+
+/* Card styling for posts/threads */
+.message[b-qgsvw684bo] {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.message:hover[b-qgsvw684bo] {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.message-reply[b-qgsvw684bo] {
+    border-left: 4px solid #FF4500;
+    margin-left: 2rem;
+    background-color: #F8F8F8;
+}
+
+/* Error UI */
+#blazor-error-ui[b-qgsvw684bo] {
+    background-color: #f8d7da;
+    color: #721c24;
+    bottom: 0;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+    display: none;
+    left: 0;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss[b-qgsvw684bo] {
+    cursor: pointer;
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    font-size: 1.5rem;
+}
+
+/* Button styles consistent with home page */
+.btn[b-qgsvw684bo] {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-primary[b-qgsvw684bo] {
+    background-color: #FF4500;
+    border-color: #FF4500;
+    color: white;
+}
+
+.btn-primary:hover[b-qgsvw684bo] {
+    background-color: #e03e00;
+    border-color: #e03e00;
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary[b-qgsvw684bo] {
+    border: 2px solid #FF4500;
+    color: #FF4500;
+    background: transparent;
+}
+
+.btn-outline-primary:hover[b-qgsvw684bo] {
+    background: #FF4500;
+    color: white;
+    transform: translateY(-2px);
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .sidebar[b-qgsvw684bo] {
-        width: 200px;
+        width: 220px;
     }
+    
     main[b-qgsvw684bo] {
-        margin-left: 200px;
+        margin-left: 220px;
+    }
+    
+    .content[b-qgsvw684bo] {
+        padding: 1.5rem;
     }
 }
 
-
-/* _content/BlazorApp/Components/Layout/NavMenu.razor.rz.scp.css */
-.navbar[b-g8o6n169oq] {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: #ffffff; /* or your desired background */
-    padding: 1rem;
-    border-bottom: 1px solid #e5e5e5;
+@media (max-width: 640px) {
+    .sidebar[b-qgsvw684bo] {
+        width: 100%;
+        position: static;
+        height: auto;
+    }
+    
+    main[b-qgsvw684bo] {
+        margin-left: 0;
+    }
+    
+    .page[b-qgsvw684bo] {
+        flex-direction: column;
+    }
 }
-
-/* Ensure your content isn't hidden behind the fixed navbar */
-.main-content[b-g8o6n169oq] {
-    margin-top: 3.5rem; /* Adjust to match the navbar height */
+/* _content/BlazorApp/Components/Layout/NavMenu.razor.rz.scp.css */
+/* NavMenu.razor.css */
+.navbar[b-g8o6n169oq] {
+    background: linear-gradient(to right, #FF4500, #FF8C00);
+    padding: 1rem;
+    border-bottom: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .navbar-brand[b-g8o6n169oq] {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     font-weight: bold;
-    color: #FF4500; /* Reddit red for the logo */
+    color: rgb(0, 0, 0);
     display: flex;
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
 }
+
 .navbar-toggler[b-g8o6n169oq] {
     border: none;
     background: none;
     font-size: 1.5rem;
-    color: #555; /* Darker text for toggler */
+    color: white;
     cursor: pointer;
 }
+
 .nav-scrollable[b-g8o6n169oq] {
     height: calc(100vh - 60px);
     overflow-y: auto;
     padding-top: 1rem;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .nav-item[b-g8o6n169oq] {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .nav-link[b-g8o6n169oq] {
     text-decoration: none;
-    color: #555;
+    color: #1a1a1b;
     font-size: 1rem;
     font-weight: 500;
     padding: 0.75rem 1rem;
-    border-radius: 6px;
-    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+    border-radius: 12px;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
 }
 
 .nav-link:hover[b-g8o6n169oq],
 .nav-link:focus[b-g8o6n169oq] {
     color: #FF4500;
     background: rgba(255, 69, 0, 0.1);
+    transform: translateY(-2px);
 }
 
 .nav-link.active[b-g8o6n169oq] {
     background: rgba(255, 69, 0, 0.2);
     color: #FF4500;
+    font-weight: 600;
 }
 
 .nav-link button[b-g8o6n169oq] {
@@ -147,9 +248,27 @@ main[b-qgsvw684bo] {
 
 /* Icons in nav links */
 .nav-link .bi[b-g8o6n169oq] {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     width: 1.5rem;
     text-align: center;
+    color: #FF4500;
+}
+
+/* Add card-like styling to nav items */
+.nav-section[b-g8o6n169oq] {
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.nav-section-title[b-g8o6n169oq] {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1b;
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
 }
 
 /* Scrollbar styling */
@@ -162,10 +281,10 @@ main[b-qgsvw684bo] {
 }
 
 .nav-scrollable[b-g8o6n169oq]::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #FF4500;
     border-radius: 3px;
 }
 
 .nav-scrollable[b-g8o6n169oq]::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    background: #e03e00;
 }

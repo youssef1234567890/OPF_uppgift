@@ -1,101 +1,263 @@
-/* Admin Dashboard Styles */
-.admin-container {
+/* Admin List Page Styles */
+.mainadmin-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
 }
 
-.admin-header {
+.mainadmin-header {
     text-align: center;
     margin-bottom: 2rem;
 }
 
-.admin-header h3 {
-    font-size: 2rem;
-    color: #1a1a1b;
+.mainadmin-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
     margin-bottom: 0.5rem;
 }
 
-.admin-header p {
+.mainadmin-header p {
     font-size: 1.1rem;
-    color: #7c7c7c;
+    color: #666;
 }
 
-.admin-card {
+/* Main admin card styling */
+.mainadmin-card {
     background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 2rem;
     margin-bottom: 2rem;
+    transition: transform 0.2s;
 }
 
-.admin-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1.5rem;
+.mainadmin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.admin-table th {
-    background-color: #f6f7f8;
-    color: #1a1a1b;
+.mainadmin-card h3 {
+    font-size: 1.5rem;
     font-weight: 600;
-    text-align: left;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Horizontal Stats Card */
+.stats-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    transition: transform 0.2s;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.stats-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    color: #FF4500;
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #1a1a1b;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #666;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 50px;
+    background-color: #e5e5e5;
+}
+
+/* Table styling */
+.mainadmin-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1rem;
+}
+
+.mainadmin-table th {
+    background-color: #f6f7f8;
+    color: #1a1a1a;
+    font-weight: 600;
     padding: 1rem;
+    text-align: left;
     border-bottom: 2px solid #e5e5e5;
 }
 
-.admin-table td {
+.mainadmin-table td {
     padding: 1rem;
     border-bottom: 1px solid #e5e5e5;
+    vertical-align: middle;
 }
 
-.admin-table tr:hover {
+.mainadmin-table tr:hover {
     background-color: #f9f9f9;
 }
 
-.admin-table tr:last-child td {
-    border-bottom: none;
+.mainadmin-table .role-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
 }
 
-.delete-button {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 4px;
+.mainadmin-table .role-badge.admin {
+    background-color: #e6f7ff;
+    color: #0066cc;
+}
+
+.mainadmin-table .role-badge.mainadmin {
+    background-color: #fff0e6;
+    color: #ff4500;
+}
+
+.mainadmin-table .role-badge.user {
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+/* Keeping the original button styles */
+.mainadmin-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.mainadmin-button {
     padding: 0.5rem 1rem;
-    font-size: 0.875rem;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 0.9rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s ease;
+    border: none;
 }
 
-.delete-button:hover {
-    background-color: #c82333;
+.mainadmin-button.primary {
+    background-color: #0066cc;
+    color: white;
 }
 
-.loading-state {
+.mainadmin-button.primary:hover {
+    background-color: #0055aa;
+}
+
+.mainadmin-button.warning {
+    background-color: #ffcc00;
+    color: #1a1a1a;
+}
+
+.mainadmin-button.warning:hover {
+    background-color: #e6b800;
+}
+
+.mainadmin-button.danger {
+    background-color: #ff4500;
+    color: white;
+}
+
+.mainadmin-button.danger:hover {
+    background-color: #e63e00;
+}
+
+.mainadmin-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Loading and Empty States */
+.mainadmin-loading, 
+.mainadmin-empty {
     text-align: center;
     padding: 2rem;
-    color: #7c7c7c;
+    color: #666;
 }
 
-.empty-state {
-    text-align: center;
-    padding: 2rem;
-    color: #7c7c7c;
+.mainadmin-loading i, 
+.mainadmin-empty i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #FF4500;
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .admin-container {
+    .mainadmin-container {
         padding: 1rem;
     }
     
-    .admin-card {
+    .mainadmin-card {
         padding: 1.5rem;
     }
     
-    .admin-table {
+    .mainadmin-table {
         display: block;
         overflow-x: auto;
     }
-} 
+    
+    .mainadmin-actions {
+        flex-direction: column;
+    }
+    
+    .mainadmin-button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stats-items {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .stat-divider {
+        width: 80%;
+        height: 1px;
+        margin: 0.5rem 0;
+    }
+    
+    .stat-item {
+        width: 100%;
+        justify-content: center;
+    }
+}

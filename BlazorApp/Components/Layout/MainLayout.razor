@@ -1,26 +1,37 @@
 ﻿@inherits LayoutComponentBase
 
-
 <div class="page">
-    
     <div class="sidebar">
         <NavMenu />
     </div>
 
-    
     <main>
-        
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+        <div class="top-row">
+            <a href="https://github.com/yourusername/reddit2" target="_blank">
+                <i class="bi bi-github"></i> Source
+            </a>
+            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">
+                <i class="bi bi-book"></i> Documentation
+            </a>
+            <AuthorizeView>
+                <Authorized>
+                    <a href="/Account/Manage">
+                        <i class="bi bi-person-circle"></i> @context.User.Identity?.Name
+                    </a>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="/Account/Login">
+                        <i class="bi bi-box-arrow-in-right"></i> Sign In
+                    </a>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
 
-        
-        <article class="content px-4">
+        <article class="content">
             @Body
         </article>
     </main>
 </div>
-
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
@@ -30,6 +41,6 @@
 
 <HeadContent>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
-    <link href="css/log.css" rel="stylesheet" />
 </HeadContent>

@@ -10,7 +10,8 @@
 </div>
 
 <div class="nav-scrollable">
-    <nav class="d-flex flex-column">
+    <div class="nav-section">
+        <div class="nav-section-title">Main</div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="bi bi-house-door-fill" aria-hidden="true"></span> Home
@@ -20,56 +21,74 @@
         <AuthorizeView>
             <Authorized>
                 <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/categories">
+                        <span class="bi bi-layout-text-window" aria-hidden="true"></span> Categories
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="/log">
+                        <span class="bi bi-chat-square-text" aria-hidden="true"></span> Message Log
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+
+    <AuthorizeView>
+        <Authorized>
+            <div class="nav-section">
+                <div class="nav-section-title">Account</div>
+                <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Manage">
                         <span class="bi bi-person-fill" aria-hidden="true"></span> Manage Account
                     </NavLink>
                 </div>
-                @if (isMainAdmin)
-                {
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="/mainadmin">
-                            <span class="bi bi-person-fill" aria-hidden="true"></span> Main Admin
-                        </NavLink>
-                    </div>
-                }
-                @if (isAdmin)
-                {
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href="/admin">
-                            <span class="bi bi-person-fill" aria-hidden="true"></span> Admin
-                        </NavLink>
-                    </div>
-                }
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/log">
-                        <span class="bi bi-file-earmark-text" aria-hidden="true"></span> Log Messages
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="/categories">
-                        <span class="bi bi-layout-text-window" aria-hidden="true"></span> Forum Categorie
-                    </NavLink>
-                </div>
                 <div class="nav-item px-3">
                     <button @onclick="Logout" class="nav-link">
-                        <span class="bi bi-arrow-bar-left" aria-hidden="true"></span> Logout
+                        <span class="bi bi-box-arrow-right" aria-hidden="true"></span> Logout
                     </button>
                 </div>
-            </Authorized>
-            <NotAuthorized>
+            </div>
+
+            @if (isAdmin || isMainAdmin)
+            {
+                <div class="nav-section">
+                    <div class="nav-section-title">Administration</div>
+                    @if (isMainAdmin)
+                    {
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="/mainadmin">
+                                <span class="bi bi-shield-fill" aria-hidden="true"></span> Main Admin
+                            </NavLink>
+                        </div>
+                    }
+                    @if (isAdmin)
+                    {
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="/admin">
+                                <span class="bi bi-gear-fill" aria-hidden="true"></span> Admin Panel
+                            </NavLink>
+                        </div>
+                    }
+                </div>
+            }
+        </Authorized>
+        <NotAuthorized>
+            <div class="nav-section">
+                <div class="nav-section-title">Account</div>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Register">
-                        <span class="bi bi-person" aria-hidden="true"></span> Register
+                        <span class="bi bi-person-plus" aria-hidden="true"></span> Register
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Account/Login">
-                        <span class="bi bi-person-badge" aria-hidden="true"></span> Login
+                        <span class="bi bi-key" aria-hidden="true"></span> Login
                     </NavLink>
                 </div>
-            </NotAuthorized>
-        </AuthorizeView>
-    </nav>
+            </div>
+        </NotAuthorized>
+    </AuthorizeView>
 </div>
 
 @code {

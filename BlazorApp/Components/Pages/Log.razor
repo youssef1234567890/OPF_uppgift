@@ -10,308 +10,123 @@
 @inject IJSRuntime JSRuntime
 @inject LogService LogService
 
+<PageTitle>Message Logs</PageTitle>
+
+<link href="css/log.css" rel="stylesheet" />
+
 <div class="log-container">
     <div class="log-header">
-        <h1>Messages Overview</h1>
-        <p class="log-subtitle">Overview of all chats within threads</p>
+        <h1>Message Activity</h1>
+        <p class="log-subtitle">View all conversations across different threads</p>
     </div>
 
     <div class="log-controls">
-        <button class="sort-button" @onclick="ToggleSortOrder">
-            <i class="bi @(sortDescending ? "bi-sort-down" : "bi-sort-up")"></i>
-            Sort by Date: @(sortDescending ? "Newest First" : "Oldest First")
-        </button>
-
-        @if (isAdmin)
-        {
-            <div class="user-filter">
-                <UserFilterDropdown Users="distinctUsers" SelectedUser="selectedUser" OnUserChanged="OnUserFilterChanged" />
-            </div>
-        }
-        else
-        {
-            <div class="text-info">Viewing your messages only</div>
-        }
+        <div class="control-group">
+            <button class="sort-button @(sortDescending ? "active" : "")" @onclick="() => SetSortOrder(true)">
+                <i class="bi bi-sort-down"></i>
+                Newest First
+            </button>
+            <button class="sort-button @(!sortDescending ? "active" : "")" @onclick="() => SetSortOrder(false)">
+                <i class="bi bi-sort-up"></i>
+                Oldest First
+            </button>
+            
+            @if (isAdmin)
+            {
+                <div class="user-filter">
+                    <UserFilterDropdown Users="distinctUsers" SelectedUser="selectedUser" OnUserChanged="OnUserFilterChanged" />
+                </div>
+            }
+        </div>
+        
+        <div class="text-info">
+            <i class="bi bi-info-circle"></i>
+            <span>Showing @(groupedLogs.Sum(g => g.Count())) messages</span>
+        </div>
     </div>
 
     @if (loading)
     {
         <div class="loading-state">
-            <i class="bi bi-arrow-repeat spin"></i>
-            <p>Loading logs...</p>
+            <i class="bi bi-hourglass-split spin"></i>
+            <p>Loading messages...</p>
         </div>
     }
-    else if (groupedLogs.Any())
+    else if (!groupedLogs.Any())
     {
-        <div class="table-responsive">
-            <table class="log-table">
-                <thead>
-                    <tr>
-                        <th>Thread</th>
-                        <th>User</th>
-                        <th>Message</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var group in groupedLogs)
-                    {
-                        @foreach (var message in group)
-                        {
-                            <tr>
-                                <td>@message.Thread?.Title</td>
-                                <td>@message.ApplicationUser?.UserName</td>
-                                <td>
-                                    @if (editingMessageId == message.Id)
-                                    {
-                                        <div class="edit-form">
-                                            <textarea class="form-control" @bind="editMessageText" rows="3"></textarea>
-                                            <div class="edit-actions">
-                                                <button class="btn btn-sm btn-success" @onclick="() => SaveEdit(message)">Save</button>
-                                                <button class="btn btn-sm btn-secondary" @onclick="CancelEdit">Cancel</button>
-                                            </div>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        @message.Text
-                                    }
-                                </td>
-                                <td>@message.Timestamp.ToString("MMM dd, yyyy HH:mm")</td>
-                                <td>
-                                    <div class="log-actions">
-                                        @if (CanEditMessage(message))
-                                        {
-                                            <button class="log-action-button edit" @onclick="() => StartEdit(message)" title="Edit message">
-                                                <i class="bi bi-pencil-fill"></i> Edit
-                                            </button>
-                                        }
-                                        @if (CanDeleteMessage(message))
-                                        {
-                                            <button class="log-action-button delete" @onclick="() => DeleteMessage(message)" title="Delete message">
-                                                <i class="bi bi-trash-fill"></i> Delete
-                                            </button>
-                                        }
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
+        <div class="empty-state">
+            <i class="bi bi-chat-square-text"></i>
+            <p>No messages found</p>
+            @if (isAdmin && selectedUser != "All")
+            {
+                <p>Try selecting a different user filter</p>
+            }
         </div>
     }
     else
     {
-        <div class="empty-state">
-            <i class="bi bi-chat-square-text"></i>
-            <p>No logs found.</p>
-            <p class="text-muted">Debug Info:</p>
-            <ul class="text-muted">
-                <li>Is Admin: @isAdmin</li>
-                <li>Current User ID: @currentUserId</li>
-                <li>Selected User: @selectedUser</li>
-                <li>Total Messages: @totalMessages</li>
-                <li>Messages with ChatRoom: @messagesWithChatRoom</li>
-            </ul>
+        <div class="message-list">
+            @foreach (var group in groupedLogs)
+            {
+                <div class="feature-card message-card" style="margin-bottom: 1.5rem;">
+                    <div class="message-header">
+                        <h3>@group.Key</h3>
+                    </div>
+                    
+                    @foreach (var message in group)
+                    {
+                        <div class="message-content" style="border-top: 1px solid #e5e5e5; @(message != group.First() ? "padding-top: 1.5rem;" : "")">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="author">
+                                    <i class="bi bi-person-circle"></i>
+                                    @message.ApplicationUser?.UserName
+                                </span>
+                                <span class="timestamp">
+                                    <i class="bi bi-clock"></i>
+                                    @message.Timestamp.ToString("MMM dd, yyyy HH:mm")
+                                </span>
+                            </div>
+                            
+                            @if (editingMessageId == message.Id)
+                            {
+                                <div class="edit-form">
+                                    <textarea @bind="editMessageText" placeholder="Edit your message..."></textarea>
+                                    <div class="edit-actions">
+                                        <button class="btn-secondary" @onclick="CancelEdit">Cancel</button>
+                                        <button class="btn-success" @onclick="() => SaveEdit(message)">Save</button>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="message-text">@message.Text</div>
+                                
+                                <div class="d-flex justify-content-end mt-3">
+                                    <div class="log-actions">
+                                        @if (CanEditMessage(message))
+                                        {
+                                            <button class="log-action-button edit" @onclick="() => StartEdit(message)">
+                                                <i class="bi bi-pencil-fill"></i>
+                                                Edit
+                                            </button>
+                                        }
+                                        @if (CanDeleteMessage(message))
+                                        {
+                                            <button class="log-action-button delete" @onclick="() => DeleteMessage(message)">
+                                                <i class="bi bi-trash-fill"></i>
+                                                Delete
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
         </div>
     }
 </div>
-
-<style>
-    .log-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 2rem;
-    }
-
-    .log-header {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    .log-header h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #1a1a1a;
-        margin-bottom: 0.5rem;
-    }
-
-    .log-subtitle {
-        font-size: 1.1rem;
-        color: #666;
-    }
-
-    .log-controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-
-    .sort-button {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        background-color: #f6f7f8;
-        border: 1px solid #e5e5e5;
-        border-radius: 4px;
-        color: #1a1a1a;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .sort-button:hover {
-        background-color: #e9ecef;
-    }
-
-    .sort-button i {
-        font-size: 1.1rem;
-    }
-
-    .user-filter {
-        min-width: 200px;
-    }
-
-    .text-info {
-        color: #666;
-        font-style: italic;
-    }
-
-    .log-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        margin-top: 1rem;
-        background-color: #ffffff;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .log-table th {
-        background-color: #f6f7f8;
-        color: #1a1a1a;
-        font-weight: 600;
-        padding: 1rem;
-        text-align: left;
-        border-bottom: 2px solid #e5e5e5;
-    }
-
-    .log-table td {
-        padding: 1rem;
-        border-bottom: 1px solid #e5e5e5;
-        vertical-align: middle;
-    }
-
-    .log-table tr:hover {
-        background-color: #f9f9f9;
-    }
-
-    .log-actions {
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .log-action-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 32px;
-        height: 32px;
-        border-radius: 4px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-    .log-action-button.edit {
-        background-color: #e6f7ff;
-        color: #0066cc;
-    }
-
-    .log-action-button.edit:hover {
-        background-color: #cce6ff;
-    }
-
-    .log-action-button.delete {
-        background-color: #ffe6e6;
-        color: #ff4500;
-    }
-
-    .log-action-button.delete:hover {
-        background-color: #ffcccc;
-    }
-
-    .loading-state {
-        text-align: center;
-        padding: 3rem 1rem;
-        color: #666;
-    }
-
-    .loading-state i {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        color: #0066cc;
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 3rem 1rem;
-        color: #666;
-    }
-
-    .empty-state i {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        color: #ccc;
-    }
-
-    .spin {
-        animation: spin 1s linear infinite;
-    }
-
-    .edit-form {
-        margin-bottom: 0.5rem;
-    }
-
-    .edit-actions {
-        display: flex;
-        gap: 0.5rem;
-        margin-top: 0.5rem;
-    }
-
-    @@keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-
-    /* Responsive adjustments */
-    @@media (max-width: 768px) {
-        .log-container {
-            padding: 1rem;
-        }
-        
-        .log-controls {
-            flex-direction: column;
-            align-items: stretch;
-        }
-        
-        .log-table {
-            display: block;
-            overflow-x: auto;
-        }
-        
-        .log-actions {
-            flex-direction: column;
-        }
-    }
-</style>
 
 @code {
     private List<IGrouping<string, Message>> groupedLogs = new();
@@ -321,8 +136,6 @@
     private string selectedUser = "All";
     private string currentUserId = "";
     private bool isAdmin = false;
-    private int totalMessages = 0;
-    private int messagesWithChatRoom = 0;
     
     // For editing messages
     private int editingMessageId = -1;
@@ -335,10 +148,6 @@
         currentUserId = UserManager.GetUserId(user);
         isAdmin = user.IsInRole("admin") || user.IsInRole("mainadmin");
 
-        // Get debug information
-        totalMessages = await dbContext.Messages.CountAsync();
-        messagesWithChatRoom = await dbContext.Messages.Where(m => m.ChatRoom != null).CountAsync();
-
         distinctUsers = await LogService.GetDistinctUsersAsync();
         await LoadGroupedLogsAsync();
     }
@@ -350,9 +159,9 @@
         loading = false;
     }
 
-    private async Task ToggleSortOrder()
+    private async Task SetSortOrder(bool descending)
     {
-        sortDescending = !sortDescending;
+        sortDescending = descending;
         await LoadGroupedLogsAsync();
     }
 
