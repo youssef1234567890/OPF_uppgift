@@ -6,11 +6,9 @@
 
 <link href="css/category-list.css" rel="stylesheet" />
 
-// This component displays a list of forum categories. 
-// Users can browse categories, view statistics like thread and message counts, 
-// and navigate to discussions within each category.
 
 <div class="categories-container">
+    
     <div class="categories-header">
         <h1>Forum Categories</h1>
         <p class="subtitle">Browse and join discussions in your favorite topics</p>
@@ -19,6 +17,11 @@
     <div class="categories-grid">
         @foreach (var category in categories)
         {
+            
+// This component displays a list of forum categories. 
+// Users can browse categories, view statistics like thread and message counts, 
+// and navigate to discussions within each category.
+
             <div class="category-card">
                 <div class="category-icon">
                     @GetCategoryIcon(category)

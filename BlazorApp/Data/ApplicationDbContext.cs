@@ -11,12 +11,13 @@ namespace BlazorApp.Data
         }
 
         public DbSet<Message> Messages { get; set; }
-        public DbSet<Thread> Threads { get; set; }
+        public DbSet<Thread> Threads  { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // Configure relationships as needed
+
+            // Existing relationships
             builder.Entity<Message>()
                 .HasOne(m => m.ApplicationUser)
                 .WithMany(u => u.Messages)
@@ -25,9 +26,16 @@ namespace BlazorApp.Data
 
             builder.Entity<Message>()
                 .HasOne(m => m.Thread)
-                .WithMany(static t => t.Messages)
+                .WithMany(t => t.Messages)
                 .HasForeignKey(m => m.ThreadId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            // ─── Self-referencing parent/child for replies ───
+            builder.Entity<Message>()
+                .HasOne(m => m.ParentMessage)
+                .WithMany(m => m.Replies)
+                .HasForeignKey(m => m.ParentMessageId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

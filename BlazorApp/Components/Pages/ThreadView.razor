@@ -1,3 +1,9 @@
+ <!-- // This page displays a detailed view of a discussion thread, including its title, description, and messages.
+// Users can view, reply to, edit, or delete messages within the thread.
+// It supports nested replies and inline editing of messages.
+// Admins and thread owners can delete the entire thread along with all its messages.
+// The page also handles user authentication and authorization for message and thread actions.
+ -->
 @page "/thread/{ThreadId:int}"
 @using BlazorApp.Data
 @using BlazorApp.Components
@@ -17,16 +23,18 @@
     @if (thread != null)
     {
         <div class="mb-3">
-            <a href="/category/@thread.Category" class="btn btn-sm btn-outline-secondary">&laquo; Back to @thread.Category</a>
+            <a href="/category/@thread.Category" class="btn btn-sm btn-outline-secondary">
+                &laquo; Back to @thread.Category
+            </a>
         </div>
 
         <ThreadHeader 
-            Title="@thread.Title" 
-            Description="@thread.Description" 
-            Category="@thread.Category" 
-            PostedBy="@thread.ApplicationUser?.UserName" 
-            CreatedAt="@thread.CreatedAt" 
-            CanDelete="@(thread.ApplicationUserId == currentUserId || isAdmin)" 
+            Title="@thread.Title"
+            Description="@thread.Description"
+            Category="@thread.Category"
+            PostedBy="@thread.ApplicationUser?.UserName"
+            CreatedAt="@thread.CreatedAt"
+            CanDelete="@(thread.ApplicationUserId == currentUserId || isAdmin)"
             OnDelete="DeleteThread" />
 
         <AuthorizeView>
@@ -35,17 +43,17 @@
                     <h4 class="mb-4">Messages</h4>
 
                     <MessageInput 
-                        MessageText="@newMessageText" 
-                        ReplyingTo="@replyingToMessage" 
-                        OnSend="HandleSendMessage" 
+                        MessageText="@newMessageText"
+                        ReplyingTo="@replyPreview"
+                        OnSend="HandleSendMessage"
                         OnCancelReply="CancelReply" />
 
                     <MessageList 
-                        Messages="@messages" 
-                        CurrentUserId="@currentUserId" 
-                        IsAdmin="@isAdmin" 
-                        OnReply="SetReplyContext" 
-                        OnEdit="SaveEdit" 
+                        Messages="@messages"
+                        CurrentUserId="@currentUserId"
+                        IsAdmin="@isAdmin"
+                        OnReply="SetReplyContext"
+                        OnEdit="SaveEdit"
                         OnDelete="DeleteMessage" />
                 </div>
             </Authorized>
@@ -63,48 +71,42 @@
 </div>
 
 @code {
-    [Parameter]
-    public int ThreadId { get; set; }
+    [Parameter] public int ThreadId { get; set; }
 
-    private Thread? thread;
-    private List<Message> messages = new();
-    private string currentUser = string.Empty;
-    private string currentUserId = string.Empty;
-    private ApplicationUser currentUserEntity = null!;
-    private string newMessageText = string.Empty;
-    private string replyingToMessage = string.Empty;
-    private bool isAdmin = false;
-    
-    // For editing messages
-    private int editingMessageId = -1;
-    private string editMessageText = string.Empty;
+    private Thread?                thread;
+    private List<Message>          messages         = new();
+    private string                 currentUser      = string.Empty;
+    private string                 currentUserId    = string.Empty;
+    private ApplicationUser        currentUserEntity = null!;
+    private bool                   isAdmin          = false;
+
+    // Compose state
+    private string                 newMessageText   = string.Empty;
+    private int?                   replyToMessageId = null;
+    private string                 replyPreview     = string.Empty;
+
+    // Edit state
+    private int                    editingMessageId = -1;
+    private string                 editMessageText  = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
-
-        if (user.Identity is { IsAuthenticated: true })
+        if (user.Identity?.IsAuthenticated == true)
         {
-            currentUser = user.Identity.Name ?? "Unknown";
-
-            var identityUser = await UserManager.FindByNameAsync(currentUser);
-            if (identityUser != null)
-            {
-                currentUserId = identityUser.Id;
-                currentUserEntity = identityUser;
-                var roles = await UserManager.GetRolesAsync(identityUser);
-                isAdmin = roles.Contains("mainadmin") || roles.Contains("admin");
-            }
+            currentUser = user.Identity.Name!;
+            var u = await UserManager.FindByNameAsync(currentUser)!;
+            currentUserId     = u.Id;
+            currentUserEntity = u;
+            var roles = await UserManager.GetRolesAsync(u);
+            isAdmin = roles.Contains("admin") || roles.Contains("mainadmin");
         }
-
         await LoadThreadData();
     }
 
     protected override async Task OnParametersSetAsync()
-    {
-        await LoadThreadData();
-    }
+        => await LoadThreadData();
 
     private async Task LoadThreadData()
     {
@@ -118,144 +120,111 @@
                 .Where(m => m.ThreadId == ThreadId)
                 .OrderBy(m => m.Timestamp)
                 .Include(m => m.ApplicationUser)
+                .Include(m => m.ParentMessage)
                 .ToListAsync();
         }
     }
 
-    private async Task HandleSendMessage(string messageText)
+    private async Task HandleSendMessage(string text)
     {
-        if (!string.IsNullOrWhiteSpace(messageText) && thread != null)
+        if (string.IsNullOrWhiteSpace(text) || thread == null)
+            return;
+
+        var msg = new Message
         {
-            var message = new Message
-            {
-                ApplicationUserId = currentUserId,
-                ApplicationUser = currentUserEntity,
-                Text = messageText,
-                Timestamp = DateTime.UtcNow,
-                ThreadId = ThreadId,
-                Thread = thread,
-                ReplyTo = replyingToMessage,
-                ChatRoom = thread.Title
-            };
+            ApplicationUserId = currentUserId,
+            ApplicationUser   = currentUserEntity,
+            Text              = text,
+            Timestamp         = DateTime.UtcNow,
+            ThreadId          = ThreadId,
+            ParentMessageId   = replyToMessageId,
+            ReplyTo           = replyPreview
+        };
 
-            dbContext.Messages.Add(message);
-            await dbContext.SaveChangesAsync();
+        dbContext.Messages.Add(msg);
+        await dbContext.SaveChangesAsync();
 
-            messages.Add(message); // Add the new message to the list
-            newMessageText = string.Empty; // Clear the input field
-            replyingToMessage = string.Empty; // Clear the reply context
+        // reload to get cascade replies if needed
+        await LoadThreadData();
 
-            StateHasChanged(); // Trigger UI update
-        }
+        newMessageText    = string.Empty;
+        replyToMessageId  = null;
+        replyPreview      = string.Empty;
     }
 
     private async Task HandleKeyPress(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
-        {
-            await HandleSendMessage(newMessageText); // Call HandleSendMessage with the current message text
-        }
+            await HandleSendMessage(newMessageText);
     }
 
-    private async Task DeleteMessage(int messageId)
+    private void SetReplyContext(Message m)
     {
-        var message = await dbContext.Messages.FindAsync(messageId);
-        if (message != null && (message.ApplicationUserId == currentUserId || isAdmin))
-        {
-            dbContext.Messages.Remove(message);
-            await dbContext.SaveChangesAsync();
-
-            messages.RemoveAll(m => m.Id == messageId || m.ReplyTo == messageId.ToString());
-            StateHasChanged();
-        }
-    }
-
-    private async Task DeleteReplies(int parentMessageId)
-    {
-        // Find all replies to the parent message
-        var replies = await dbContext.Messages
-            .Where(m => m.ReplyTo == parentMessageId.ToString())
-            .ToListAsync();
-
-        foreach (var reply in replies)
-        {
-            // Recursively delete replies to this reply
-            await DeleteReplies(reply.Id);
-
-            // Remove the reply from the database
-            dbContext.Messages.Remove(reply);
-        }
-
-        // Save changes after all replies are removed
-        await dbContext.SaveChangesAsync();
-    }
-
-    private async Task DeleteThread()
-    {
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this thread? This will permanently remove all messages and cannot be undone.");
-        if (!confirmed)
-            return;
-            
-        if (thread != null && (thread.ApplicationUserId == currentUserId || isAdmin))
-        {
-            // First, delete all messages in the thread
-            var threadMessages = await dbContext.Messages
-                .Where(m => m.ThreadId == ThreadId)
-                .ToListAsync();
-                
-            dbContext.Messages.RemoveRange(threadMessages);
-            
-            // Then delete the thread itself
-            dbContext.Threads.Remove(thread);
-            await dbContext.SaveChangesAsync();
-            
-            await JSRuntime.InvokeVoidAsync("alert", "Thread deleted successfully");
-            
-            // Navigate back to the category page
-            NavigationManager.NavigateTo($"/category/{thread.Category}");
-        }
-    }
-
-    private void SetReplyContext(Message message)
-    {
-        string messagePreview = message.Text.Length > 50 ? message.Text.Substring(0, 47) + "..." : message.Text;
-        replyingToMessage = $"{message.UserName}: {messagePreview}";
+        replyToMessageId = m.Id;
+        var snippet = m.Text.Length > 50
+            ? m.Text.Substring(0, 47) + "..."
+            : m.Text;
+        replyPreview = $"{m.UserName}: {snippet}";
     }
 
     private void CancelReply()
     {
-        replyingToMessage = string.Empty;
+        replyToMessageId = null;
+        replyPreview     = string.Empty;
     }
-    
-    // Message editing functionality
-    private void StartEdit(Message message)
+
+    private void StartEdit(Message m)
     {
-        editingMessageId = message.Id;
-        editMessageText = message.Text;
+        editingMessageId = m.Id;
+        editMessageText  = m.Text;
     }
-    
+
     private void CancelEdit()
     {
         editingMessageId = -1;
-        editMessageText = string.Empty;
+        editMessageText  = string.Empty;
     }
-    
-    private async Task SaveEdit(Message message)
+
+    private async Task SaveEdit(Message m)
     {
-        var messageToUpdate = await dbContext.Messages.FindAsync(message.Id);
-        if (messageToUpdate != null && (messageToUpdate.ApplicationUserId == currentUserId || isAdmin))
+        var toUpdate = await dbContext.Messages.FindAsync(m.Id);
+        if (toUpdate == null) return;
+        if (toUpdate.ApplicationUserId != currentUserId && !isAdmin)
+            return;
+
+        toUpdate.Text = m.Text;
+        await dbContext.SaveChangesAsync();
+        await LoadThreadData();
+
+        editingMessageId = -1;
+    }
+
+    private async Task DeleteMessage(int messageId)
+    {
+        var msg = await dbContext.Messages.FindAsync(messageId);
+        if (msg == null) return;
+        if (msg.ApplicationUserId != currentUserId && !isAdmin)
+            return;
+
+        dbContext.Messages.Remove(msg);
+        await dbContext.SaveChangesAsync();
+        await LoadThreadData();
+    }
+
+    private async Task DeleteThread()
+    {
+        if (thread == null) return;
+        var confirmed = await JSRuntime.InvokeAsync<bool>("confirm",
+            "Are you sure you want to delete this thread and ALL its messages?");
+        if (!confirmed) return;
+
+        if (thread.ApplicationUserId == currentUserId || isAdmin)
         {
-            messageToUpdate.Text = message.Text;
+            dbContext.Threads.Remove(thread);
             await dbContext.SaveChangesAsync();
-            
-            // Update the message in our local collection
-            var index = messages.FindIndex(m => m.Id == message.Id);
-            if (index >= 0)
-            {
-                messages[index].Text = message.Text;
-            }
-            
-            StateHasChanged();
+
+            await JSRuntime.InvokeVoidAsync("alert", "Thread deleted successfully.");
+            NavigationManager.NavigateTo($"/category/{thread.Category}");
         }
     }
 }

@@ -25,9 +25,6 @@
 
 <link href="css/account-manage.css" rel="stylesheet" />
 
-// This component allows users to manage their account settings. 
-// It provides functionality to update email, change password, and delete the account, 
-// with appropriate validation and feedback messages.
 
 <CascadingAuthenticationState>
     <div class="account-container">
@@ -41,11 +38,15 @@
             <StatusMessage Message="@message" />
             <div class="row">
                 <div class="col-md-6">
+                    
                     <EditForm Model="Input" FormName="change-email" OnValidSubmit="OnValidSubmitAsync" method="post">
                         <DataAnnotationsValidator />
                         <ValidationSummary class="validation-summary" role="alert" />
                         @if (isEmailConfirmed)
-                        {
+                        { // This component allows users to manage their account settings. 
+// It provides functionality to update email, change password, and delete the account, 
+// with appropriate validation and feedback messages.
+
                             <div class="form-floating input-group">
                                 <input type="text" value="@email" class="form-control" placeholder="Please enter your email." disabled />
                                 <div class="input-group-append">

@@ -15,9 +15,6 @@
 
 <StatusMessage Message="@message" />
 
-// This component handles the confirmation of an email change request. 
-// It validates the confirmation link, updates the user's email and username, 
-// and provides feedback on the success or failure of the operation.
 
 @code {
     private string? message;
@@ -37,7 +34,10 @@
     protected override async Task OnInitializedAsync()
     {
         if (UserId is null || Email is null || Code is null)
-        {
+        {// This component handles the confirmation of an email change request. 
+// It validates the confirmation link, updates the user's email and username, 
+// and provides feedback on the success or failure of the operation.
+
             RedirectManager.RedirectToWithStatus(
                 "Account/Login", "Error: Invalid email change confirmation link.", HttpContext);
         }

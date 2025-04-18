@@ -19,10 +19,6 @@
 
 <link href="css/register.css" rel="stylesheet" />
 
-// This component handles user registration. 
-// It provides a form for creating a new account with email and password, 
-// validates user input, and sends a confirmation email upon successful registration.
-
 <div class="register-container">
     <div class="register-header">
         <h1>Join RedditClone</h1>
@@ -33,6 +29,7 @@
         <div class="col-md-6">
             <div class="register-form">
                 <StatusMessage Message="@Message" />
+                
                 <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
                     <DataAnnotationsValidator />
                     <ValidationSummary class="validation-summary" role="alert" />
@@ -71,6 +68,11 @@
 </div>
 
 @code {
+    
+// This component handles user registration. 
+// It provides a form for creating a new account with email and password, 
+// validates user input, and sends a confirmation email upon successful registration.
+
     private IEnumerable<IdentityError>? identityErrors;
 
     [SupplyParameterFromForm]

@@ -19,4 +19,9 @@ public class Message
 
     public string ApplicationUserId { get; set; } = string.Empty;
     public ApplicationUser ApplicationUser { get; set; } = null!;
+
+    // ─── Added for cascade delete of replies ───
+    public int? ParentMessageId { get; set; }
+    public Message? ParentMessage { get; set; }
+    public ICollection<Message> Replies { get; set; } = new List<Message>();
 }

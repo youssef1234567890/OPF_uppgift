@@ -1,10 +1,11 @@
 @using BlazorApp.Data
 
-// This component renders a dropdown menu for filtering users. 
+
+@code {
+    // This component renders a dropdown menu for filtering users. 
 // It allows selecting a user from a provided list or choosing "All Users" as a default option. 
 // When the selection changes, it triggers a callback to notify the parent component.
 
-@code {
     [Parameter] public List<string> Users { get; set; } = new();
     [Parameter] public string SelectedUser { get; set; } = "All";
     [Parameter] public EventCallback<string> OnUserChanged { get; set; }

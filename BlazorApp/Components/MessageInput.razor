@@ -12,6 +12,10 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+     <!-- // This component provides a text input for users to write and send messages.
+// It supports replying to a specific message by displaying a "Replying to" indicator.
+// Users can cancel the reply context, and the component notifies the parent component
+// when a message is sent or the reply is canceled.-->
 <div class="mb-3">
     <div class="input-group">
         <input type="text" class="form-control" @bind="MessageText" @onkeypress="HandleKeyPress" placeholder="Write a message..." />

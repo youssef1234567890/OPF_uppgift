@@ -10,9 +10,6 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject NavigationManager NavigationManager
 
-// This component displays discussions within a specific category. 
-// It allows authorized users to view threads, create new threads, and navigate to individual thread pages. 
-// Unauthorized users are prompted to log in to access the content.
 
 <link href="css/category.css" rel="stylesheet" />
 
@@ -32,6 +29,10 @@
 
             @if (showCreateThread)
             {
+                // This component displays discussions within a specific category. 
+// It allows authorized users to view threads, create new threads, and navigate to individual thread pages. 
+// Unauthorized users are prompted to log in to access the content.
+
                 <div class="create-thread-form">
                     <CreateThreadForm OnCancel="CancelCreateThread" OnCreate="HandleCreateThread" />
                 </div>

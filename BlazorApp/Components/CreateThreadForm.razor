@@ -1,5 +1,8 @@
 @using BlazorApp.Data
-
+ <!--// This component provides a form for creating a new discussion thread. 
+// Users can input a title and an optional description. 
+// It includes options to cancel or submit the form, triggering appropriate callbacks.
+-->
 @code {
     [Parameter] public EventCallback OnCancel { get; set; }
     [Parameter] public EventCallback<(string Title, string Description)> OnCreate { get; set; }
@@ -25,9 +28,6 @@
     }
 }
 
-// This component provides a form for creating a new discussion thread. 
-// Users can input a title and an optional description. 
-// It includes options to cancel or submit the form, triggering appropriate callbacks.
 
 <div class="mb-4 border p-3 rounded">
     <h5>Create New Thread</h5>

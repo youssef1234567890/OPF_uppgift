@@ -1,10 +1,11 @@
-// This component displays a list of discussion threads. 
+
+@using BlazorApp.Data
+@code {
+    // This component displays a list of discussion threads. 
 // It orders threads by their creation date (newest first) and shows details such as title, description, 
 // creator, creation time, and the number of messages. 
 // If no threads are available, it displays an informational message.
 
-@using BlazorApp.Data
-@code {
     [Parameter] public List<Thread> Threads { get; set; } = new();
 }
 

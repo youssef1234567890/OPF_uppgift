@@ -1,10 +1,11 @@
 ﻿@inject NavigationManager NavigationManager
 
-// This component redirects unauthorized users to the login page. 
-// It appends the current URL as a return URL to enable navigation back after successful login.
 @code {
     protected override void OnInitialized()
     {
+        
+// This component redirects unauthorized users to the login page. 
+// It appends the current URL as a return URL to enable navigation back after successful login.
         NavigationManager.NavigateTo($"Account/Login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}", forceLoad: true);
     }
 }

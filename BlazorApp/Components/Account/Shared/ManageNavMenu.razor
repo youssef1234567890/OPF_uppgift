@@ -3,11 +3,10 @@
 
 @inject SignInManager<ApplicationUser> SignInManager
 
-// This component renders a navigation menu for the account management section. 
-// It provides links to various account-related pages, such as profile, email, password, 
-// external logins, two-factor authentication, and personal data.
+
 
 <ul class="nav nav-pills flex-column">
+    
     <li class="nav-item">
         <NavLink class="nav-link" href="Account/Manage" Match="NavLinkMatch.All">Profile</NavLink>
     </li>
@@ -18,7 +17,9 @@
         <NavLink class="nav-link" href="Account/Manage/ChangePassword">Password</NavLink>
     </li>
     @if (hasExternalLogins)
-    {
+    {// This component renders a navigation menu for the account management section. 
+// It provides links to various account-related pages, such as profile, email, password, 
+// external logins, two-factor authentication, and personal data.
         <li class="nav-item">
             <NavLink class="nav-link" href="Account/Manage/ExternalLogins">External logins</NavLink>
         </li>

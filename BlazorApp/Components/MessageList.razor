@@ -12,6 +12,12 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+
+        <!-- // This component displays a list of messages in a scrollable container.
+// Each message shows the sender's name, timestamp, and text, with an indicator if it's a reply.
+// Users can reply, edit, or delete messages, and inline editing is supported.
+// Actions like replying, editing, and deleting notify the parent component via event callbacks.
+-->
 <div class="messages-box border rounded" style="max-height: 500px; overflow-y: auto; background-color: #f8f9fa;">
     @if (Messages.Any())
     {

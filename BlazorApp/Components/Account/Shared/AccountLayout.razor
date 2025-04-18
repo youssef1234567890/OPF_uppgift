@@ -2,10 +2,6 @@
 @layout BlazorApp.Components.Layout.MainLayout
 @inject NavigationManager NavigationManager
 
-// This component provides a layout for account-related pages. 
-// It ensures that the HttpContext is available for identity operations 
-// and transitions to server-rendered mode if necessary.
-
 @if (HttpContext is null)
 {
     <p>Loading...</p>
@@ -23,9 +19,10 @@ else
     {
         if (HttpContext is null)
         {
-            // If this code runs, we're currently rendering in interactive mode, so there is no HttpContext.
-            // The identity pages need to set cookies, so they require an HttpContext. To achieve this we
-            // must transition back from interactive mode to a server-rendered page.
+// This component provides a layout for account-related pages. 
+// It ensures that the HttpContext is available for identity operations 
+// and transitions to server-rendered mode if necessary.
+
             NavigationManager.Refresh(forceReload: true);
         }
     }
