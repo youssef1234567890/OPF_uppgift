@@ -60,10 +60,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxBY2NvdW50TGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Shared/ExternalLoginPicker.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxFeHRlcm5hbExvZ2luUGlja2VyLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Shared/ManageLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxNYW5hZ2VMYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -74,10 +70,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Shared/RedirectToLogin.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxSZWRpcmVjdFRvTG9naW4ucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Shared/ShowRecoveryCodes.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBY2NvdW50XFNoYXJlZFxTaG93UmVjb3ZlcnlDb2Rlcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Account/Shared/StatusMessage.razor]
@@ -114,10 +106,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Pages/CategoryList.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDYXRlZ29yeUxpc3QucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Pages/Error.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/kgayo/Desktop/OPF_uppgift/OPF_uppgift/BlazorApp/Components/Pages/Home.razor]

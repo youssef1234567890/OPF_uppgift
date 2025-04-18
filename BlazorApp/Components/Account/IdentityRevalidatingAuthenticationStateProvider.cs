@@ -7,8 +7,9 @@ using BlazorApp.Data;
 
 namespace BlazorApp.Components.Account;
 
-// This is a server-side AuthenticationStateProvider that revalidates the security stamp for the connected user
-// every 30 minutes an interactive circuit is connected.
+// This class is a server-side AuthenticationStateProvider that revalidates the security stamp 
+// for the connected user every 30 minutes while an interactive circuit is connected. 
+// It ensures that the user's authentication state remains valid and up-to-date.
 internal sealed class IdentityRevalidatingAuthenticationStateProvider(
         ILoggerFactory loggerFactory,
         IServiceScopeFactory scopeFactory,

@@ -1,4 +1,7 @@
 ﻿@using BlazorApp.Components.Account.Shared
+// This component defines the routing configuration for the application. 
+// It uses the Blazor Router to handle navigation and applies authorization checks for protected routes. 
+// Unauthorized users are redirected to the login page.
 <Router AppAssembly="typeof(Program).Assembly">
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">

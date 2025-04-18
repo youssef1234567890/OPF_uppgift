@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace BlazorApp.Components.Account;
 
+// This class manages redirection within the identity system. 
+// It provides methods to redirect users to specific pages, append query parameters, 
+// and include status messages using cookies for feedback during navigation.
 internal sealed class IdentityRedirectManager(NavigationManager navigationManager)
 {
     public const string StatusCookieName = "Identity.StatusMessage";

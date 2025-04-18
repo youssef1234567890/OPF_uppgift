@@ -100,6 +100,9 @@
 </div>
 
 @code {
+    // This component serves as the home page of the application. 
+    // It provides a welcoming interface, introduces the platform's features, 
+    // and offers quick navigation options for both authorized and unauthorized users.
     private async Task LogoutAsync()
     {
         await SignInManager.SignOutAsync();

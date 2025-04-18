@@ -1,3 +1,6 @@
+// This component displays a grouped table of logs, where each group represents a category of messages. 
+// It allows users to view message details, and provides options to edit or delete messages based on permissions.
+
 @using BlazorApp.Data
 @code {
     [Parameter] public List<IGrouping<string, Message>> GroupedLogs { get; set; } = new();

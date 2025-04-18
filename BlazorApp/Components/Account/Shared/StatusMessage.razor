@@ -1,4 +1,7 @@
-﻿@if (!string.IsNullOrEmpty(DisplayMessage))
+﻿// This component displays status messages to the user, such as success or error notifications. 
+// It determines the message type based on its content and applies appropriate styling.
+
+@if (!string.IsNullOrEmpty(DisplayMessage))
 {
     var statusMessageClass = DisplayMessage.StartsWith("Error") ? "danger" : "success";
     <div class="alert alert-@statusMessageClass" role="alert">

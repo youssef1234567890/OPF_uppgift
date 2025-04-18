@@ -1,4 +1,8 @@
 /* _content/BlazorApp/Components/Layout/MainLayout.razor.rz.scp.css */
+/* This file contains the CSS styles for the main layout of the application. 
+   It defines the structure and appearance of the sidebar, top navigation bar, 
+   main content area, and responsive behavior for different screen sizes. */
+
 .page[b-qgsvw684bo] {
     display: flex;
     min-height: 100vh;
@@ -172,6 +176,10 @@ main[b-qgsvw684bo] {
     }
 }
 /* _content/BlazorApp/Components/Layout/NavMenu.razor.rz.scp.css */
+/* This file contains the CSS styles for the navigation menu component. 
+   It defines the layout, colors, hover effects, and responsive behavior 
+   for the navigation bar and its items. */
+
 /* NavMenu.razor.css */
 .navbar[b-g8o6n169oq] {
     background: linear-gradient(to right, #FF4500, #FF8C00);

@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace BlazorApp.Components.Account
 {
-    // Now implementing both interfaces
+    // This class provides a no-operation email sender implementation for the identity system. 
+    // It supports sending confirmation links, password reset links, and reset codes, 
+    // primarily for testing or scenarios where email delivery is not required.
     internal sealed class IdentityNoOpEmailSender : IEmailSender, IEmailSender<ApplicationUser>
     {
         private readonly IEmailSender _innerEmailSender = new NoOpEmailSender();

@@ -1,3 +1,7 @@
+/* This file contains the CSS styles for the navigation menu component. 
+   It defines the layout, colors, hover effects, and responsive behavior 
+   for the navigation bar and its items. */
+
 /* NavMenu.razor.css */
 .navbar[b-g8o6n169oq] {
     background: linear-gradient(to right, #FF4500, #FF8C00);

@@ -13,16 +13,16 @@
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1397"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022GZvbZ9bavJw4cxFdDdMsLw34L1nxqlXxwx/a\u002BODqeBc=\u0022"},{"Name":"Last-Modified","Value":"Fri, 18 Apr 2025 08:58:07 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BlazorApp/BlazorApp.bundle.scp.css">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\BlazorApp.vpj2azzb65.bundle.scp.css'))</AssetFile>
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\BlazorApp.p76jkmkvuq.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-rYkDFoawzOj1\u002BBFJVfhZ\u002BvOh8262lp8rbSNWm7xFISk="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"6141"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022rYkDFoawzOj1\u002BBFJVfhZ\u002BvOh8262lp8rbSNWm7xFISk=\u0022"},{"Name":"Last-Modified","Value":"Fri, 18 Apr 2025 08:58:07 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-NVJlQmbno\u002BY\u002BDnZ0RjUJXXdULsYvbfKuzDXFY2lJKQI="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"6577"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022NVJlQmbno\u002BY\u002BDnZ0RjUJXXdULsYvbfKuzDXFY2lJKQI=\u0022"},{"Name":"Last-Modified","Value":"Fri, 18 Apr 2025 09:48:15 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/BlazorApp/BlazorApp.vpj2azzb65.bundle.scp.css">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\BlazorApp.vpj2azzb65.bundle.scp.css'))</AssetFile>
+    <StaticWebAssetEndpoint Include="_content/BlazorApp/BlazorApp.p76jkmkvuq.bundle.scp.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\BlazorApp.p76jkmkvuq.bundle.scp.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"vpj2azzb65"},{"Name":"integrity","Value":"sha256-rYkDFoawzOj1\u002BBFJVfhZ\u002BvOh8262lp8rbSNWm7xFISk="},{"Name":"label","Value":"_content/BlazorApp/BlazorApp.bundle.scp.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"6141"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022rYkDFoawzOj1\u002BBFJVfhZ\u002BvOh8262lp8rbSNWm7xFISk=\u0022"},{"Name":"Last-Modified","Value":"Fri, 18 Apr 2025 08:58:07 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"p76jkmkvuq"},{"Name":"integrity","Value":"sha256-NVJlQmbno\u002BY\u002BDnZ0RjUJXXdULsYvbfKuzDXFY2lJKQI="},{"Name":"label","Value":"_content/BlazorApp/BlazorApp.bundle.scp.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"6577"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022NVJlQmbno\u002BY\u002BDnZ0RjUJXXdULsYvbfKuzDXFY2lJKQI=\u0022"},{"Name":"Last-Modified","Value":"Fri, 18 Apr 2025 09:48:15 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/BlazorApp/bootstrap/bootstrap.min.6gzpyzhau4.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\bootstrap\bootstrap.min.css'))</AssetFile>

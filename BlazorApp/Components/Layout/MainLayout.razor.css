@@ -1,3 +1,7 @@
+/* This file contains the CSS styles for the main layout of the application. 
+   It defines the structure and appearance of the sidebar, top navigation bar, 
+   main content area, and responsive behavior for different screen sizes. */
+
 .page {
     display: flex;
     min-height: 100vh;

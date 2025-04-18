@@ -11,6 +11,9 @@ using BlazorApp.Data;
 
 namespace Microsoft.AspNetCore.Routing;
 
+// This class provides extension methods for configuring additional identity-related endpoints. 
+// It includes routes for logout, downloading personal data, and managing external logins, 
+// ensuring proper handling of user authentication and authorization workflows.
 internal static class IdentityComponentsEndpointRouteBuilderExtensions
 {
     // Define constants for callback actions.

@@ -16,6 +16,10 @@
 
 <StatusMessage Message="@statusMessage" />
 
+// This component handles the confirmation process after user registration. 
+// It displays a message prompting the user to check their email for a confirmation link 
+// and provides a fallback link for testing purposes if a real email sender is not configured.
+
 @if (emailConfirmationLink is not null)
 {
     <p>

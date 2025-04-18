@@ -2,6 +2,10 @@
 @layout BlazorApp.Components.Layout.MainLayout
 @inject NavigationManager NavigationManager
 
+// This component provides a layout for account-related pages. 
+// It ensures that the HttpContext is available for identity operations 
+// and transitions to server-rendered mode if necessary.
+
 @if (HttpContext is null)
 {
     <p>Loading...</p>
