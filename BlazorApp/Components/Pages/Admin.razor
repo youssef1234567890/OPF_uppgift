@@ -12,11 +12,11 @@
 
 <PageTitle>Admin Dashboard</PageTitle>
 
-<link href="css/admin.css" rel="stylesheet" />
+<link href="css/mainadmin.css" rel="stylesheet" />
 
-<div class="admin-container">
-    <div class="admin-header">
-        <h3>Admin Dashboard</h3>
+<div class="mainadmin-container">
+    <div class="mainadmin-header">
+        <h1>Admin Dashboard</h1>
         <p>Manage users and content</p>
     </div>
     
@@ -53,65 +53,65 @@
         </div>
     </div>
 
-    <div class="admin-card">
-        <div class="admin-header">
-            <h4>User Management</h4>
-        </div>
+    <div class="mainadmin-card">
+        <h3>User Management</h3>
         
         @if (loading)
         {
-            <div class="loading-state">
+            <div class="mainadmin-loading">
                 <i class="bi bi-arrow-repeat spin"></i>
                 <p>Loading accounts...</p>
             </div>
         }
-        
         else if (users.Any())
         {
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Email</th>
-                        <th>Email Confirmed</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var user in users)
-                    {
+            <div class="table-responsive">
+                <table class="mainadmin-table">
+                    <thead>
                         <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <i class="bi bi-person-circle me-2"></i>
-                                    @user.UserName
-                                </div>
-                            </td>
-                            <td>@user.Email</td>
-                            <td>
-                                @if (user.EmailConfirmed)
-                                {
-                                    <span class="badge bg-success">Confirmed</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-warning text-dark">Pending</span>
-                                }
-                            </td>
-                            <td>
-                                <button class="delete-button" @onclick="() => DeleteUser(user.Id)">
-                                    <i class="bi bi-trash"></i> Delete User
-                                </button>
-                            </td>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Email Confirmed</th>
+                            <th>Actions</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in users)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person-circle me-2"></i>
+                                        @user.UserName
+                                    </div>
+                                </td>
+                                <td>@user.Email</td>
+                                <td>
+                                    @if (user.EmailConfirmed)
+                                    {
+                                        <span class="role-badge admin">Confirmed</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="role-badge user">Pending</span>
+                                    }
+                                </td>
+                                <td>
+                                    <div class="mainadmin-actions">
+                                        <button class="mainadmin-button danger" @onclick="() => DeleteUser(user.Id)">
+                                            <i class="bi bi-trash"></i> Delete User
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
-        
         else
         {
-            <div class="empty-state">
+            <div class="mainadmin-empty">
                 <i class="bi bi-people"></i>
                 <p>No accounts found.</p>
             </div>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "kHgxJ7q3PA9+tajA5uJCnWL37/uAQrLyA4XOr0mal2c=",
+  "Hash": "9wG8l8h5u2HHW210oztkI1nhHPMFo0yAW2NfBov+QnU=",
   "Source": "BlazorApp",
   "BasePath": "_content/BlazorApp",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "BlazorApp\\wwwroot",
       "Source": "BlazorApp",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp.styles.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp.styles.css",
       "SourceId": "BlazorApp",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "BlazorApp#[.{fingerprint}]?.styles.css",
       "AssetKind": "All",
@@ -35,13 +35,13 @@
       "Integrity": "NVJlQmbno+Y+DnZ0RjUJXXdULsYvbfKuzDXFY2lJKQI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp.styles.css"
+      "OriginalItemSpec": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp.styles.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
       "SourceId": "BlazorApp",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "BlazorApp#[.{fingerprint}]!.bundle.scp.css",
       "AssetKind": "All",
@@ -56,13 +56,13 @@
       "Integrity": "NVJlQmbno+Y+DnZ0RjUJXXdULsYvbfKuzDXFY2lJKQI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\app.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\app.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "app#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -80,10 +80,10 @@
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "bootstrap/bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -101,10 +101,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
       "AssetKind": "All",
@@ -122,10 +122,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\account-manage.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\account-manage.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "css/account-manage#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -143,10 +143,10 @@
       "OriginalItemSpec": "wwwroot\\css\\account-manage.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\admin.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\admin.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "css/admin#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -164,10 +164,10 @@
       "OriginalItemSpec": "wwwroot\\css\\admin.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category-list.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category-list.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "css/category-list#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -185,10 +185,10 @@
       "OriginalItemSpec": "wwwroot\\css\\category-list.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "css/category#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -206,10 +206,10 @@
       "OriginalItemSpec": "wwwroot\\css\\category.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\home.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\home.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "css/home#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -227,10 +227,10 @@
       "OriginalItemSpec": "wwwroot\\css\\home.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\log.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\log.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "css/log#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -248,10 +248,10 @@
       "OriginalItemSpec": "wwwroot\\css\\log.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\login.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\login.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "css/login#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -269,10 +269,10 @@
       "OriginalItemSpec": "wwwroot\\css\\login.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\mainadmin.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\mainadmin.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "css/mainadmin#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -290,10 +290,10 @@
       "OriginalItemSpec": "wwwroot\\css\\mainadmin.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\register.css",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\register.css",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "css/register#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -311,10 +311,10 @@
       "OriginalItemSpec": "wwwroot\\css\\register.css"
     },
     {
-      "Identity": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\favicon.png",
+      "Identity": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\favicon.png",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\",
       "BasePath": "_content/BlazorApp",
       "RelativePath": "favicon#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -335,7 +335,7 @@
   "Endpoints": [
     {
       "Route": "app.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\app.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -356,7 +356,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -372,7 +372,7 @@
     },
     {
       "Route": "app.hexsba329w.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\app.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -393,7 +393,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -417,7 +417,7 @@
     },
     {
       "Route": "BlazorApp.bundle.scp.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -438,7 +438,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 09:48:15 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -454,7 +454,7 @@
     },
     {
       "Route": "BlazorApp.p76jkmkvuq.bundle.scp.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\BlazorApp.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -475,7 +475,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 09:48:15 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -499,7 +499,7 @@
     },
     {
       "Route": "BlazorApp.p76jkmkvuq.styles.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp.styles.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -520,7 +520,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 09:48:15 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -544,7 +544,7 @@
     },
     {
       "Route": "BlazorApp.styles.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp.styles.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\obj\\Debug\\net8.0\\scopedcss\\bundle\\BlazorApp.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -565,7 +565,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 09:48:15 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -581,7 +581,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.6gzpyzhau4.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -602,7 +602,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -626,7 +626,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -647,7 +647,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -663,7 +663,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.8inm30yfxf.map",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -684,7 +684,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -708,7 +708,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.map",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -729,7 +729,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -745,7 +745,7 @@
     },
     {
       "Route": "css/account-manage.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\account-manage.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\account-manage.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -766,7 +766,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -782,7 +782,7 @@
     },
     {
       "Route": "css/account-manage.fvq5pcaatx.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\account-manage.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\account-manage.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -803,7 +803,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -827,7 +827,7 @@
     },
     {
       "Route": "css/admin.bqe5ndr4ga.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\admin.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\admin.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -848,7 +848,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -872,7 +872,7 @@
     },
     {
       "Route": "css/admin.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\admin.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\admin.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -893,7 +893,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -909,7 +909,7 @@
     },
     {
       "Route": "css/category-list.1s481e3mkw.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category-list.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category-list.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -930,7 +930,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -954,7 +954,7 @@
     },
     {
       "Route": "css/category-list.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category-list.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category-list.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -975,7 +975,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -991,7 +991,7 @@
     },
     {
       "Route": "css/category.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1012,7 +1012,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1028,7 +1028,7 @@
     },
     {
       "Route": "css/category.hbz67ipk93.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\category.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1049,7 +1049,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1073,7 +1073,7 @@
     },
     {
       "Route": "css/home.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\home.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\home.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1094,7 +1094,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1110,7 +1110,7 @@
     },
     {
       "Route": "css/home.zuhbdg5ner.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\home.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\home.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1131,7 +1131,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1155,7 +1155,7 @@
     },
     {
       "Route": "css/log.8nnqv8inko.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\log.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\log.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1176,7 +1176,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1200,7 +1200,7 @@
     },
     {
       "Route": "css/log.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\log.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\log.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1221,7 +1221,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1237,7 +1237,7 @@
     },
     {
       "Route": "css/login.1n32o29l21.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\login.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\login.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1258,7 +1258,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1282,7 +1282,7 @@
     },
     {
       "Route": "css/login.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\login.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\login.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1303,7 +1303,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1319,7 +1319,7 @@
     },
     {
       "Route": "css/mainadmin.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\mainadmin.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\mainadmin.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1340,7 +1340,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1356,7 +1356,7 @@
     },
     {
       "Route": "css/mainadmin.nkiczoxnjd.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\mainadmin.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\mainadmin.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1377,7 +1377,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1401,7 +1401,7 @@
     },
     {
       "Route": "css/register.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\register.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\register.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1422,7 +1422,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1438,7 +1438,7 @@
     },
     {
       "Route": "css/register.mwovdqvjga.css",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\register.css",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\css\\register.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1459,7 +1459,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1483,7 +1483,7 @@
     },
     {
       "Route": "favicon.ifv42okdf2.png",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1504,7 +1504,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1528,7 +1528,7 @@
     },
     {
       "Route": "favicon.png",
-      "AssetFile": "C:\\Users\\kgayo\\Desktop\\OPF_uppgift\\OPF_uppgift\\BlazorApp\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\Users\\46706\\Desktop\\Development\\Projekt\\OOP Fortsättning\\SlutProjekt-MainRepo\\OPF_uppgift\\BlazorApp\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1549,7 +1549,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 18 Apr 2025 08:58:07 GMT"
+          "Value": "Mon, 21 Apr 2025 11:16:47 GMT"
         },
         {
           "Name": "Cache-Control",
