@@ -1,5 +1,6 @@
 using BlazorApp.Data;
 using Microsoft.EntityFrameworkCore;
+using BlazorApp.Models;
 
 public static class DbInitializer
 {

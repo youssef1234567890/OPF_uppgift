@@ -329,4 +329,23 @@
     .log-actions {
         flex-wrap: wrap;
     }
+
+    .search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--bs-body-color);
+    font-size: 14px;
+    width: 200px;
+}
 }
