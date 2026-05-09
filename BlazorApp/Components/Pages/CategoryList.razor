@@ -23,25 +23,26 @@
 // and navigate to discussions within each category.
 
             <div class="category-card">
-                <div class="category-icon">
-                    @GetCategoryIcon(category)
-                </div>
-                <div class="category-content">
-                    <h2 class="category-title">@category</h2>
-                    <div class="category-stats">
-                        <span class="stat">
-                            <i class="bi bi-chat-square-text"></i>
-                            @GetThreadCount(category) threads
-                        </span>
-                        <span class="stat">
-                            <i class="bi bi-chat-dots"></i>
-                            @GetMessageCount(category) messages
-                        </span>
-                    </div>
-                    <a href="/category/@category" class="category-link">View Discussions</a>
-                </div>
+        <div class="category-icon">
+            @category.IconEmoji
+        </div>
+        <div class="category-content">
+            <h2 class="category-title">@category.Name</h2>
+            <p class="category-description">@category.Description</p>
+            <div class="category-stats">
+                <span class="stat">
+                    <i class="bi bi-chat-square-text"></i>
+                    @GetThreadCount(category.Id) threads
+                </span>
+                <span class="stat">
+                    <i class="bi bi-chat-dots"></i>
+                    @GetMessageCount(category.Id) messages
+                </span>
             </div>
-        }
+            <a href="/category/@category.Name" class="category-link">View Discussions</a>
+        </div>
+    </div>
+}
     </div>
     
     @if (!categories.Any())
@@ -54,52 +55,39 @@
 </div>
 
 @code {
-    private List<string> categories = new List<string>
-    {
-        "Film",
-        "Games",
-        "Series",
-    };
-    
-    private Dictionary<string, int> threadCounts = new();
-    private Dictionary<string, int> messageCounts = new();
-    
+    private List<Category> categories = new();
+    private Dictionary<int, int> threadCounts = new();
+    private Dictionary<int, int> messageCounts = new();
+
     protected override async Task OnInitializedAsync()
     {
+        categories = await dbContext.Categories.ToListAsync();
+
         var threads = await dbContext.Threads.ToListAsync();
         foreach (var category in categories)
         {
-            threadCounts[category] = threads.Count(t => t.Category == category);
+            threadCounts[category.Id] = threads.Count(t => t.CategoryId == category.Id);
         }
-        
+
         var messages = await dbContext.Messages
             .Include(m => m.Thread)
             .ToListAsync();
-            
+
         foreach (var category in categories)
         {
-            messageCounts[category] = messages.Count(m => m.Thread != null && m.Thread.Category == category);
+            messageCounts[category.Id] = messages.Count(m => m.Thread != null && m.Thread.CategoryId == category.Id);
         }
     }
-    
-    private int GetThreadCount(string category)
+
+    private int GetThreadCount(int categoryId)
     {
-        return threadCounts.TryGetValue(category, out var count) ? count : 0;
-    }
-    
-    private int GetMessageCount(string category)
-    {
-        return messageCounts.TryGetValue(category, out var count) ? count : 0;
+        return threadCounts.TryGetValue(categoryId, out var count) ? count : 0;
     }
 
-    private string GetCategoryIcon(string category)
+    private int GetMessageCount(int categoryId)
     {
-        return category switch
-        {
-            "Film" => "🎬",
-            "Games" => "🎮",
-            "Series" => "📺",
-            _ => "📑"
-        };
+        return messageCounts.TryGetValue(categoryId, out var count) ? count : 0;
     }
 }
+
+    
