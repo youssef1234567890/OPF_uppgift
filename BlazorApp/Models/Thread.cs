@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using BlazorApp.Data;
+using BlazorApp.Models;
 
 public class Thread
 {
