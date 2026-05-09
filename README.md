@@ -1,167 +1,117 @@
-\# Vårt Projekt
+# OPF_uppgift — Forumprojekt
 
-## Projektöversikt
+## Projektbeskrivning
 
-Detta Blazor-projekt implementerar ett forumliknande system där användare kan skapa trådar, skicka meddelanden och interagera med varandra. Projektet använder ASP.NET Core Identity för användarhantering och Entity Framework Core för databasinteraktioner.
-
-## Huvudfunktionalitet
-
-### Meddelandehantering
-
-Projektet innehåller följande meddelandefunktioner:
-
-- **Loggöversikt**: Visar alla meddelanden grupperade efter tråd.
-- **Roller baserad åtkomst**: Administratörer kan se alla meddelanden medan vanliga användare endast kan se sina egna.
-- **Redigering av meddelanden**: Användare kan redigera sina egna meddelanden, administratörer kan redigera alla.
-- **Radering av meddelanden**: Användare kan radera sina egna meddelanden, administratörer kan radera alla.
-- **Svara på meddelanden**: Användare kan svara på befintliga meddelanden med visuell indentering för svar.
-
-### Trådhantering
-
-- **Trådöversikt**: Visar alla trådar i systemet.
-- **Trådvy**: Visar alla meddelanden i en specifik tråd med svarsfunktionalitet.
-- **Radering av trådar**: Trådägare och administratörer kan radera trådar.
-
-### Kontohantering
-
-- **Profilhantering**: Användare kan uppdatera e-post, telefonnummer och lösenord.
-- **Kontoradering**: Två metoder för att radera konton:
-  - **Snabbradering**: Direkt radering från profilsidan med bekräftelsedialog.
-  - **Avancerad radering**: Dedikerad sida med ytterligare bekräftelsessteg och transaktionshantering.
-
-## Implementationsdetaljer
-
-### Loggmeddelandehantering
-
-Meddelandehanteringen inkluderar:
-
-- Visuell indentering för svar med blå vänsterkant
-- Visning av tråddata för varje meddelande
-- Direktredigering i gränssnittet
-- Bekräftelsedialoger för radering
-- Visuell återkoppling under bearbetning
-- Felhantering med användarvänliga meddelanden
-
-### Kontoradering
-
-Kontoraderingsfunktionaliteten tillämpar:
-
-- Databasrelationer hanteras korrekt
-- Transaktioner används för att säkerställa dataintegritet
-- Beroende data (meddelanden, trådar) raderas i rätt ordning
-- Visuell feedback under raderingsprocessen
-- Omfattande felhantering
-
-## Säkerhetsöverväganden
-
-- Användarroller respekteras i alla vyer
-- Lösenordsverifiering används för känsliga operationer
-- Transaktionshantering förhindrar delvis raderad data
-- Bekräftelsedialog förhindrar oavsiktliga raderingar
-
-**How to use Main Admin role:** Navigera till Models/RoleInitializer.cs, på rad 30 finner du användarnamn med lösenord 
-på rad 43. Använd dom när du loggar in på Applikationen i syfte av full funktionalitetstest.
+Ett forumliknande system byggt med Blazor Server och ASP.NET Core 8. Användare kan registrera sig, logga in, skapa trådar i olika kategorier och skriva meddelanden. Systemet har tre rollnivåer: vanlig användare, admin och mainadmin.
 
 ## Teknisk plattform
 
 - ASP.NET Core 8
-- Entity Framework Core
 - Blazor Server
-- SQLite (för utveckling)
-- Bootstrap 5 (UI-ramverk)
+- Entity Framework Core med SQLite
+- ASP.NET Core Identity (autentisering och roller)
+- Bootstrap 5
 
-1.---
+## Arkitektur
 
-\#\# Användarscenarion  
+Projektet följer Blazor Servers komponentmodell:
 
-**Kategori:**
+- `Components/Pages/` — sidkomponenter (Home, CategoryList, Category, ThreadView, Log, Admin, Mainadmin)
+- `Components/Layout/` — NavMenu och MainLayout
+- `Components/Account/` — registrering, inloggning och kontoinställningar
+- `Data/ApplicationDbContext.cs` — databaskontext med Identity och forumtabeller
+- `Models/` — entiteter (Thread, Message) och RoleInitializer
+- `Migrations/` — Entity Framework-migrationer
+- `Services/LogService.cs` — service för meddelandelogg
 
-\-Inloggning
+## Kom igång
 
-**Scenario:**
+1. Klona repot
+2. Öppna `BlazorApp.sln` i Visual Studio
+3. Kör projektet — databasen skapas automatiskt och roller/mainadmin seedas vid uppstart
 
-\-En användare vill logga in på sitt konto för att få tillgång till forumets funktioner.
+## Roller och åtkomst
 
-**Teststeg:**
+Systemet har tre roller med olika behörigheter:
 
-\-Navigera till inloggningssidan.
+| Roll | Åtkomst |
+|------|---------|
+| Användare | Skapa trådar, skriva och svara på meddelanden, redigera/radera egna meddelanden |
+| Admin | Allt ovan + redigera/radera alla meddelanders, se alla användares meddelanden i loggen |
+| Mainadmin | Allt ovan + hantera roller, promota/demota användare, radera användare |
 
-\-Ange registrerad e-postadress och lösenord.
+## Testa administratörsrollen
 
-\-Klicka på knappen "Logga in".
+Mainadmin-kontot skapas automatiskt vid uppstart via `RoleInitializer.cs`.
 
-**Förväntat resultat:**
+**Inloggningsuppgifter:**
+- E-post: `mainadmin@example.com`
+- Lösenord: `YourSecurePassword123!`
 
-\-Om inloggningsuppgifterna är korrekta, omdirigeras användaren till sin profil eller forumets startsida.
+För att testa admin-rollen: logga in som mainadmin, navigera till `/mainadmin` och promota en annan användare till admin. Den användaren får då tillgång till `/admin`.
 
-\-Om uppgifterna är felaktiga, visas ett tydligt felmeddelande.
+## Användarscenarion
 
-**Åtgärdsförslag:**
+### 1. Inloggning
 
-\-Implementera hantering av felaktiga inloggningsförsök, inklusive tydliga felmeddelanden.
-
-\-Lägg till en "Glömt lösenord?"-funktion för att hjälpa användare att återställa sina uppgifter.
-
-\-Säkerställ att konton med för många misslyckade inloggningsförsök tillfälligt spärras av säkerhetsskäl.
-
- 2.---
-
-**Kategori:**
-
-\-Kommentarer
-
-**Scenario:**
-
-\-En användare vill kommentera på en befintlig tråd för att delta i diskussionen.
-
-**Teststeg:**
-
-1. Logga in på forumet.  
-2. Navigera till en kategori och välj en tråd att kommentera.  
-3. Skriv din kommentar i textfältet.  
-4. Klicka på "Send".
-
-**Förväntat resultat:**
-
-\-Kommentaren visas direkt under tråden tillsammans med användarens namn och datum.
-
-\-Användare kan svara på andra kommentarer.
-
-**Åtgärdsförslag:**
-
-\-Implementera en bekräftelse för att undvika oavsiktliga kommentarer.
-
-3.---
-
-**Kategori:**
-
-\-Användarprofil
-
-**Scenario:**
-
-\-En användare vill uppdatera sin profilinformation.
+**Scenario:** En användare vill logga in för att delta i forumet.
 
 **Teststeg:**
+1. Navigera till `/Account/Login`
+2. Ange e-postadress och lösenord
+3. Klicka på "Log in"
 
-\-Logga in på forumet.
+**Förväntat resultat:** Användaren omdirigeras till startsidan och hälsas med sitt användarnamn.
 
-\-Navigera till "Manage Account"-sidan.
+---
 
-\-Klicka på "Redigera profil".
+### 2. Skapa en tråd
 
-\-Uppdatera önskade fält (t.ex. användarnamn, telefonnummer).
+**Scenario:** En inloggad användare vill starta en diskussion i en kategori.
 
-\-Klicka på "Spara ändringar".
+**Teststeg:**
+1. Navigera till "Categories" i navmenyn
+2. Välj en kategori (t.ex. Games)
+3. Klicka på "Create New Thread"
+4. Fyll i titel och beskrivning, klicka på "Create"
 
-**Förväntat resultat:**
+**Förväntat resultat:** Tråden visas i kategorilistan.
 
-\-De uppdaterade uppgifterna sparas och visas korrekt på användarens profil.
+---
 
-\-Ett bekräftelsemeddelande visas, t.ex. "Profil uppdaterad framgångsrikt".
+### 3. Svara på ett meddelande
 
-**Åtgärdsförslag:**
+**Scenario:** En användare vill svara på ett befintligt meddelande i en tråd.
 
-\-Validera inmatade uppgifter (t.ex. e-postformat, begränsningar för användarnamn).
+**Teststeg:**
+1. Navigera till en tråd
+2. Klicka på "Reply" på ett meddelande
+3. Skriv ett svar och skicka
 
-\-Säkerställ att ändringar sparas korrekt i databasen och uppdateras direkt i UI.
+**Förväntat resultat:** Svaret visas indraget under originalmeddelandet.
 
+---
+
+### 4. Adminmoderation
+
+**Scenario:** En admin vill radera ett olämpligt meddelande.
+
+**Teststeg:**
+1. Logga in som admin eller mainadmin
+2. Navigera till `/log`
+3. Hitta meddelandet och klicka på "Delete"
+
+**Förväntat resultat:** Meddelandet tas bort för alla användare.
+
+---
+
+### 5. Hantera användarroller (mainadmin)
+
+**Scenario:** Mainadmin vill ge en användare adminrättigheter.
+
+**Teststeg:**
+1. Logga in med mainadmin-kontot
+2. Navigera till `/mainadmin`
+3. Hitta användaren i listan och klicka på "Make Admin"
+
+**Förväntat resultat:** Användaren får admin-rollen och tillgång till `/admin`.
