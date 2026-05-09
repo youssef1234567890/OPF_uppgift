@@ -5,8 +5,7 @@ obj/
 # Visual Studio local files
 .vs/
 
-# Database files
-*.db
+# Database files (chat.db inkluderas medvetet med testdata)
 *.db-shm
 *.db-wal
 
