@@ -13,6 +13,8 @@ namespace BlazorApp.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<Thread> Threads  { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -36,6 +38,13 @@ namespace BlazorApp.Data
                 .WithMany(m => m.Replies)
                 .HasForeignKey(m => m.ParentMessageId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // ─── Thread to Category relationship ───
+            builder.Entity<Thread>()
+                .HasOne(t => t.CategoryEntity)
+                .WithMany(c => c.Threads)
+                .HasForeignKey(t => t.CategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
